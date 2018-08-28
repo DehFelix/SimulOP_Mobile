@@ -1,0 +1,14 @@
+{
+  "title": "SimulOP",
+  "@title": {
+    "description": "The title of the App bar",
+    "type": "text",
+    "placeholders": {}
+  },
+  "uo1Name": "UO I",
+  "@uo1Name": {
+    "description": "Unit Operations I name",
+    "type": "text",
+    "placeholders": {}
+  }
+}

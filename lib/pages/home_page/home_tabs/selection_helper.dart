@@ -27,7 +27,7 @@ Widget tileSelectionBuilder(BuildContext context, SelectionTile tile) {
         padding: EdgeInsets.only(right: 16.0),
         child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
           FlatButton(
-            child: Text("More info"),
+            child: Text("More info",style: TextStyle(color: Theme.of(context).accentColor,)),
             onPressed: () {_lunchURL();},
           ),
           RaisedButton(
@@ -36,7 +36,7 @@ Widget tileSelectionBuilder(BuildContext context, SelectionTile tile) {
               "Lunch App",
               style: TextStyle(color: Colors.white),
             ),
-            color: Colors.blue[400],
+            color: Theme.of(context).primaryColor,
           ),
         ]),
       ),

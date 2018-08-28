@@ -1,0 +1,15 @@
+{
+  "@@last_modified": "2018-08-23T20:59:54.507873",
+  "title": "SimulOP",
+  "@title": {
+    "description": "The title of the App bar",
+    "type": "text",
+    "placeholders": {}
+  },
+  "uo1Name": "UO I",
+  "@uo1Name": {
+    "description": "Unit Operations I name",
+    "type": "text",
+    "placeholders": {}
+  }
+}

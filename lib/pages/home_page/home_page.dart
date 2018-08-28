@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:simulop_v1/pages/home_page/home_tabs/uo_1_selection.dart';
 import 'package:simulop_v1/pages/home_page/home_tabs/uo_2_selection.dart';
 import 'package:simulop_v1/pages/home_page/home_tabs/uo_3_selection.dart';
+import 'package:simulop_v1/locale/locales.dart';
+import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
+
+final helpItems = [HelpItem("info", "/default")];
 
 class HomePage extends StatefulWidget {
   @override
   HomePageState createState() {
-    return new HomePageState();
+    return HomePageState();
   }
 }
 
-class HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  
   TabController tabController;
 
   @override
@@ -32,15 +36,15 @@ class HomePageState extends State<HomePage>
       tabs: <Tab>[
         Tab(
           icon: Icon(Icons.home),
-          text: "Home",
+          text: AppLocalizations.of(context).uo1Name,
         ),
         Tab(
           icon: Icon(Icons.settings),
-          text: "Settings",
+          text: "UO II",
         ),
         Tab(
-          icon: Icon(Icons.sentiment_very_satisfied),
-          text: "Page 3",
+          icon: Icon(Icons.mood),
+          text: "UO III",
         ),
       ],
       controller: tabController,
@@ -57,14 +61,34 @@ class HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("SimulOP v0.1"),
+        appBar: AppBar(           
+          elevation: 2.0,          
+          title: Text(AppLocalizations.of(context).title),
           bottom: makeTabBar(),
+          actions: <Widget>[
+            PopupMenuButton(
+              itemBuilder: (context) => _appBarMenu(),
+              onSelected: _selectMenu,
+            ),
+          ],
         ),
         body: makeTabBarView(<Widget>[
           OU1Selection(),
           OU2Selection(),
           OU3Selection(),
         ]));
+  }
+
+  void _selectMenu(dynamic item) {
+    Navigator.of(context).pushNamed(item.route);
+  }
+
+  List<Widget> _appBarMenu() {
+    return helpItems.map((HelpItem item) {
+      return PopupMenuItem(
+        value: item,
+        child: Text(item.name),
+      );
+    }).toList();
   }
 }
