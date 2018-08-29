@@ -3,13 +3,13 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/input_data.dart';
+import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/pumping_of_fluids_results.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
-final _normalTextStyle = TextStyle(fontSize: 16.0);
 
 final helpItems = [
-  HelpItem("More info", "/default"),
-  HelpItem("About", "/default"),
+  HelpItem("More info", "/default", ActionType.route),
+  HelpItem("About", "/default", ActionType.route),
 ];
 
 final fluidFormKey = GlobalKey<FormState>();
@@ -22,6 +22,7 @@ final inletTubeInputModel = InletTubeInput();
 final outleTubeInputModel = OutletTubeInput();
 final distancesInputModel = DistancesInput();
 
+/// The input Widget
 class PumpingOfFluidsInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -37,9 +38,27 @@ class PumpingOfFluidsInput extends StatelessWidget {
         floatingActionButton: ScopedModelDescendant<PumpingOfFluidsInputModel>(
           rebuildOnChange: false,
           builder: (context, _, model) => FloatingActionButton(
-                child: Icon(Icons.refresh),
+                child: Icon(Icons.build),
                 onPressed: () {
-                  model.debugPrint();
+                  if (!model.canCreateSimulation()) {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 2),
+                      content: Text("Incomple inputs"),                      
+                      action: SnackBarAction(
+                        label: "Ok",
+                        onPressed: () {},
+                      ),
+                    ));
+                    return;
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PumpingOfFluidsResults(
+                            simulation: model.createSimulation(),
+                          ),
+                    ),
+                  );
                 },
               ),
         ),
@@ -53,7 +72,7 @@ class PumpingOfFluidsInput extends StatelessWidget {
       children: <Widget>[
         _picCard(),
         Container(
-          height: 400.0,
+          height: 340.0,
           child: ListView(
             scrollDirection: Axis.horizontal,
             addAutomaticKeepAlives: true,
@@ -119,7 +138,7 @@ class __FluidInputAppBarState extends State<_FluidInputAppBar> {
   }
 
   void _selectMenu(dynamic item) {
-    Navigator.of(context).pushNamed(item.route);
+    Navigator.of(context).pushNamed(item.action);
   }
 }
 
@@ -343,8 +362,7 @@ class _DistancesInputCard extends StatelessWidget {
             distancesFormKey.currentState.save();
           }
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.straighten),
@@ -411,6 +429,7 @@ class _DistancesInputCard extends StatelessWidget {
   }
 }
 
+/// The sumary card
 class _SumaryCard extends StatelessWidget {
   final _titleStyle = TextStyle(
       fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black);
@@ -423,7 +442,7 @@ class _SumaryCard extends StatelessWidget {
     String viscosity;
     String vaporPressure;
 
-    if (model.createFluid()) {
+    if (model.validadeFluid()) {
       fluid = "Fluid - ${model.fluidInput.name} \n";
       density = "Density: 1000 kg/m^3 \n";
       viscosity = "Viscosity: 1 cP \n";
@@ -447,7 +466,7 @@ class _SumaryCard extends StatelessWidget {
     String lenth;
     String elevation;
 
-    if (model.createInletTube()) {
+    if (model.validateInletTube()) {
       tube = "Inlet Tube - ${model.inletTubeInput.material} \n";
       roughness = "Roughness: 0.001 cm \n";
       diametre = "Diametre: ${model.inletTubeInput.diametre} cm \n";
@@ -471,7 +490,7 @@ class _SumaryCard extends StatelessWidget {
     String lenth;
     String elevation;
 
-    if (model.createOutletTube()) {
+    if (model.validateOutletTube()) {
       tube = "Inlet Tube - ${model.outletTubeInput.material} \n";
       roughness = "Roughness: 0.001 cm \n";
       diametre = "Diametre: ${model.outletTubeInput.diametre} cm \n";
@@ -487,8 +506,6 @@ class _SumaryCard extends StatelessWidget {
       TextSpan(text: elevation, style: _textStyle),
     ]);
   }
-
-  TextSpan _distancesSumary(PumpingOfFluidsInputModel model) {}
 
   @override
   Widget build(BuildContext context) {

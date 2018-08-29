@@ -1,21 +1,26 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/simulation_data.dart';
 
+/// Model for handalling the inputs of the app
 class PumpingOfFluidsInputModel extends Model {
   final FluidInput fluidInputs;
   final InletTubeInput inletTubeInput;
   final OutletTubeInput outletTubeInput;
   final DistancesInput distancesInput;
+  final SimulationCreator simulationCreator = new SimulationCreator();
 
   FluidInput get fluidInput => fluidInputs;
 
-  PumpingOfFluidsInputModel(
-      {this.fluidInputs,
-      this.inletTubeInput,
-      this.outletTubeInput,
-      this.distancesInput});
+  PumpingOfFluidsInputModel({
+    this.fluidInputs,
+    this.inletTubeInput,
+    this.outletTubeInput,
+    this.distancesInput,
+  });
+
+  static PumpingOfFluidsInputModel of(BuildContext context) =>
+      ScopedModel.of<PumpingOfFluidsInputModel>(context);
 
   void setFluidName(String name) {
     fluidInputs.name = name;
@@ -76,22 +81,33 @@ class PumpingOfFluidsInputModel extends Model {
     distancesInput.lOutlet = l;
   }
 
-  bool createFluid() {
-    // TODO
+  bool validadeFluid() {
     return fluidInputs.validInput();
   }
 
-  bool createInletTube() {
-    // TODO
+  bool validateInletTube() {
     return (inletTubeInput.validInput() && distancesInput.validInput());
   }
 
-  bool createOutletTube() {
-    // TODO
+  bool validateOutletTube() {
     return (outletTubeInput.validInput() && distancesInput.validInput());
   }
 
-  bool createBomb() {}
+  bool canCreateSimulation() {
+    if (validadeFluid() && validateInletTube() && validateOutletTube()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  PumpingOfFluidsSimulation createSimulation() {
+    if (canCreateSimulation()) {
+      return simulationCreator.createSimulation(fluidInput, inletTubeInput, outletTubeInput, distancesInput);
+    } else {
+      return null;
+    }
+  }
 
   void debugPrint() {
     print(fluidInputs.toString());
@@ -392,5 +408,17 @@ class DistancesInput {
         "diametre = $lInlet \n" +
         "dzOutlet = $dzOutlet \n" +
         "lOutlet = $lOutlet \n";
+  }
+}
+
+class SimulationCreator {
+  final PumpingOfFluidsSimulation simulation = PumpingOfFluidsSimulation();
+
+  PumpingOfFluidsSimulation createSimulation(FluidInput fluidInput, InletTubeInput inletTubeInput,
+      OutletTubeInput outletTubeInput, DistancesInput distancesInput) {
+
+        simulation.string = fluidInput.toString() + inletTubeInput.toString() + outletTubeInput.toString() + distancesInput.toString();
+
+    return simulation;
   }
 }

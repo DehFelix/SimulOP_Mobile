@@ -6,7 +6,7 @@ import 'package:simulop_v1/pages/home_page/home_tabs/uo_3_selection.dart';
 import 'package:simulop_v1/locale/locales.dart';
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
 
-final helpItems = [HelpItem("info", "/default")];
+final helpItems = [HelpItem("info", "/default", ActionType.route)];
 
 class HomePage extends StatefulWidget {
   @override
@@ -80,7 +80,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   }
 
   void _selectMenu(dynamic item) {
-    Navigator.of(context).pushNamed(item.route);
+    Navigator.of(context).pushNamed(item.action);
   }
 
   List<Widget> _appBarMenu() {
