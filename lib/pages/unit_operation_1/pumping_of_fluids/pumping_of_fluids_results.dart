@@ -3,7 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
-import 'package:simulop_v1/pages/helper_classes/chart_helper.dart';
+import 'package:simulop_v1/pages/helper_classes/chart_items.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/simulation_data.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);

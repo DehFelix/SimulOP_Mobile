@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:simulop_v1/core/core.dart';
-import 'package:simulop_v1/core/interfaces/materials/liquid_material.dart';
+import 'package:simulop_v1/core/interfaces/materials/i_liquid_material.dart';
 
 /// Represents the liquid component
 class Liquid {
@@ -44,7 +44,7 @@ class Liquid {
   double convertPressureToM(double pressure){
     double pressureInM;
 
-    pressureInM = pressure / (this.material.density * Units.g);
+    pressureInM = pressure / (this.material.density * Units.gStatic);
     return pressureInM;
   }
 

@@ -1,11 +1,11 @@
 /// The base class for all materials
-class Material {
+class MaterialType {
   String _name;
 
   /// The name of the material
   String get name => _name;
 
-  Material(String name) {
+  MaterialType(String name) {
     this._name = name;
   }
 }

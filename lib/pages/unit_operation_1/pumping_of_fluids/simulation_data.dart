@@ -1,5 +1,5 @@
 import 'package:scoped_model/scoped_model.dart';
-import 'package:simulop_v1/pages/helper_classes/chart_helper.dart';
+import 'package:simulop_v1/pages/helper_classes/chart_items.dart';
 
 class PumpingOfFluidsSimulationModel extends Model {
   final PumpingOfFluidsSimulation _simulation;

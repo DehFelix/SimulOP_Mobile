@@ -1,9 +1,8 @@
 import 'package:simulop_v1/core/components/materials/material.dart';
-import 'package:simulop_v1/core/interfaces/materials/liquid_material.dart';
+import 'package:simulop_v1/core/interfaces/materials/i_liquid_material.dart';
 
 /// Represents a pure liquid component
-class LiquidMaterial extends Material implements ILiquidMaterial {
-
+class LiquidMaterial extends MaterialType implements ILiquidMaterial {
   double _temperature;
   double _density;
   double _viscosity;
@@ -11,13 +10,11 @@ class LiquidMaterial extends Material implements ILiquidMaterial {
   double _thermalConductivity;
   List<double> _antoineCoef;
 
-  // TODO: implement temperature
   @override
   double get temperature => _temperature;
 
   @override
   set temperature(double t) {
-    // TODO: implement
     if (t > 0.0) {
       _temperature = t;
     } else {
@@ -48,7 +45,7 @@ class LiquidMaterial extends Material implements ILiquidMaterial {
   LiquidMaterial(String name, double density, double viscosity) : super(name) {
     this._density = density;
     this._viscosity = viscosity;
-    throw Exception(); // TODO
+    //throw Exception(); // TODO
   }
 
   @override
