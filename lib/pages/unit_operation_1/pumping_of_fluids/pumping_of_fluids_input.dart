@@ -282,7 +282,7 @@ class _InletTubeInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.inletTubeInput.equivalentDistance,
-                        decoration: InputDecoration(labelText: "Distances (m)"),
+                        decoration: InputDecoration(labelText: "Resistances Lenghs (m)"),
                         validator:
                             model.inletTubeInput.equivalentDistancesValidator,
                         onSaved: model.setInletTubeEquivalentDistances,
@@ -349,7 +349,7 @@ class _OutletTubeInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.outletTubeInput.equivalentDistance,
-                        decoration: InputDecoration(labelText: "Distances (m)"),
+                        decoration: InputDecoration(labelText: "Resistances Lenghs (m)"),
                         validator:
                             model.outletTubeInput.equivalentDistancesValidator,
                         onSaved: model.setOutletTubeEquivalentDistances,
@@ -394,7 +394,7 @@ class _DistancesInputCard extends StatelessWidget {
                         autocorrect: false,
                         keyboardType: TextInputType.number,
                         initialValue: model.distancesInput.dzInlet,
-                        decoration: InputDecoration(labelText: "Dz inlet (m)"),
+                        decoration: InputDecoration(labelText: "Dz Inlet (m)"),
                         validator: model.distancesInput.heightValidator,
                         onSaved: model.setDistancesDzInlet,
                       ),
