@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
+import 'package:simulop_v1/core/units/units_uo1/units_1.dart';
 import 'package:simulop_v1/core/components/materials/liquid/liquid_material.dart';
 import 'package:simulop_v1/core/components/materials/tube/tube_material.dart';
 import 'package:simulop_v1/core/interfaces/i_local_resistances.dart';
-import 'package:simulop_v1/core/units_uo1/units_1.dart';
 
 class Tube extends UnitsI {
   /// Lengh of the Tube (m).
@@ -28,7 +28,7 @@ class Tube extends UnitsI {
   double elevationDiference;
 
   /// List of [ILocalResistance] in the pipe.
-  List<ILocalResistance> _localResistances;
+  List<ILocalResistance> _localResistances = List<ILocalResistance>();
 
   /// Presure drop of the pipe (m).
   double _pressureDrop;
@@ -37,7 +37,10 @@ class Tube extends UnitsI {
   FrictionFactorMethod frictionMethod;
 
   /// Sum of the equivalent lenghs of all local resistances (m).
-  double get equivalentLengh => _equivalentLengh;
+  double get equivalentLengh  {
+    _updateEquivalentLengh();
+    return _equivalentLengh;
+  }
 
   /// Material of the tube.
   TubeMaterial get material => _material;
@@ -59,11 +62,11 @@ class Tube extends UnitsI {
 
   /// Internal diametre of the tube (m).
   set internalDiametre(double d) {
-    if (d < 0.0) {
+    if (d > 0.0) {
       _internalDiametre = d;
       _relativeRoughness = material.roughness / d;
     } else {
-      throw Exception("Diametre must be > 0.");
+      throw Exception("Diametre must be > 0.0");
     }
   }
 
@@ -149,7 +152,7 @@ class Tube extends UnitsI {
     double invSqrFA;
 
     switch (frictionMethod) {
-      case FrictionFactorMethod.fanning:
+      case FrictionFactorMethod.haaland:
         re = reynolds(material, volumeFlow);
         a1 = math.pow(7.0 / re, 0.9);
         a2 = 0.27 * _relativeRoughness;
@@ -161,7 +164,7 @@ class Tube extends UnitsI {
 
         fA = 2 * math.pow(fA1 + fA2, 1.0 / 12.0); // fator de fanning
         break;
-      case FrictionFactorMethod.haaland:
+      case FrictionFactorMethod.fanning:
         re = reynolds(material, volumeFlow);
         a = math.pow(_relativeRoughness / (3.7 * _internalDiametre), 1.11);
         b = 6.9 / re;
@@ -185,14 +188,12 @@ class Tube extends UnitsI {
   /// [volumeFlow] = Volumetric flow (m^3/s).
   double computePressureDrop(LiquidMaterial material, double volumeFlow) {
     _computFrictionFactor(material, volumeFlow);
-    double totalLengh = lengh + _equivalentLengh;
+    double totalLengh = lengh + equivalentLengh;
 
     double averageVelocity =
         volumeFlow / (math.pi * math.pow(_internalDiametre / 2.0, 2.0));
 
-    double presureDrop = 4 *
-        _frictionFactor *
-        (totalLengh / _internalDiametre) *
+    double presureDrop = 4 * _frictionFactor * (totalLengh / _internalDiametre) *
         (math.pow(averageVelocity, 2.0) / (2 * g));
 
     _pressureDrop = presureDrop;

@@ -1,4 +1,4 @@
-import 'package:simulop_v1/core/components/materials/material.dart';
+import 'package:simulop_v1/core/components/materials/material_type.dart';
 import 'package:simulop_v1/core/interfaces/materials/i_liquid_material.dart';
 
 /// Represents a pure liquid component
@@ -42,9 +42,10 @@ class LiquidMaterial extends MaterialType implements ILiquidMaterial {
   @override
   List<double> get antoineCoef => _antoineCoef;
 
-  LiquidMaterial(String name, double density, double viscosity) : super(name) {
+  LiquidMaterial(String name, double density, double viscosity, List<double> antoineCoef) : super(name) {
     this._density = density;
     this._viscosity = viscosity;
+    this._antoineCoef = antoineCoef;
     //throw Exception(); // TODO
   }
 

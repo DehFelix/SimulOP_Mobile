@@ -1,10 +1,21 @@
-abstract class Units {
-  static double get gStatic => 9.80665;
+/// Exports all the classes for the units calculations.
+library core;
 
-  double get g => 9.80665;
+// Components
+export 'package:simulop_v1/core/components/liquid/liquid.dart';
+export 'package:simulop_v1/core/components/materials/liquid/liquid_material.dart';
+export 'package:simulop_v1/core/components/materials/material_type.dart';
+export 'package:simulop_v1/core/components/materials/tube/tube_material.dart';
+export 'package:simulop_v1/core/components/component_inicializer.dart';
 
-  double findRoot(Function(double) fx, double infLimit, double uperLimit,
-      [double epsilon = 1e-4, int nInte = 100]) {
-    throw Exception();
-  }
-}
+// Interfaces
+export 'package:simulop_v1/core/interfaces/i_local_resistances.dart';
+export 'package:simulop_v1/core/interfaces/materials/i_liquid_material.dart';
+
+// Units
+export 'package:simulop_v1/core/units/units.dart';
+// Units I
+export 'package:simulop_v1/core/units/units_uo1/units_1.dart';
+export 'package:simulop_v1/core/units/units_uo1/local_resistance.dart';
+export 'package:simulop_v1/core/units/units_uo1/pump.dart';
+export 'package:simulop_v1/core/units/units_uo1/tube.dart';

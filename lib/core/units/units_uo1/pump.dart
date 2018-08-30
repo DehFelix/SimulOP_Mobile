@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:simulop_v1/core/components/liquid/liquid.dart';
-import 'package:simulop_v1/core/units_uo1/tube.dart';
-import 'package:simulop_v1/core/units_uo1/units_1.dart';
+import 'package:simulop_v1/core/units/units_uo1/units_1.dart';
+import 'package:simulop_v1/core/units/units_uo1/tube.dart';
 
 class Pump extends UnitsI {
   /// Volume flow of the liquid (m^3/s).
@@ -230,11 +230,20 @@ class CompletePump extends Pump {
 
   @override
   double computeNecessaryHead(double volumeFlow) {
-    _head = inletTube.computePressureDrop(liquid.material, volumeFlow) -
-        inletTube.elevationDiference +
-        outletTube.computePressureDrop(liquid.material, volumeFlow) +
-        outletTube.elevationDiference +
-        liquid.convertPressureToM(1e5 - inletPressure);
+    double h1 = inletTube.computePressureDrop(liquid.material, volumeFlow) -
+        inletTube.elevationDiference;
+
+    double h2 = outletTube.computePressureDrop(liquid.material, volumeFlow) +
+        outletTube.elevationDiference;
+
+    double h3 = liquid.convertPressureToM(1e5 - inletPressure);
+
+    _head = h1 + h2 + h3;
+    // _head = inletTube.computePressureDrop(liquid.material, volumeFlow) -
+    //     inletTube.elevationDiference +
+    //     outletTube.computePressureDrop(liquid.material, volumeFlow) +
+    //     outletTube.elevationDiference +
+    //     liquid.convertPressureToM(1e5 - inletPressure);
     return _head;
   }
 
@@ -249,7 +258,7 @@ class CompletePump extends Pump {
 
     pSuccao = liquid.convertPressureToM(inletPressure);
     diferenciaAltura = inletTube.elevationDiference;
-    pVap = this.liquid.vaporPressure / (liquid.material.density * g);
+    pVap = liquid.vaporPressure / (liquid.material.density * g);
     perdaCarga = inletTube.computePressureDrop(liquid.material, volumeFlow);
 
     return pSuccao - pVap - perdaCarga + diferenciaAltura;
@@ -295,7 +304,9 @@ class CompletePump extends Pump {
 
       hf = computeNecessaryHead(flow);
 
-      plotHead.add(math.Point(flow * 3600.0, hf));
+      //print(hf);
+
+      plotHead.add(math.Point(flow, hf));
     }
 
     return plotHead;
@@ -308,7 +319,7 @@ class CompletePump extends Pump {
   /// [finalFlow] = final volumetric flow to be plot (m^3/s).
   ///
   /// [div] = divisions (resolition) of the plot = 40.
-  List<math.Point<double>> plotNPSH(double initalFlow, double finalFlow,
+  List<math.Point> plotNPSH(double initalFlow, double finalFlow,
       [int div = 40]) {
     List<math.Point> plotHead = List<math.Point>();
 
@@ -320,7 +331,7 @@ class CompletePump extends Pump {
 
       npsh = availebleNPSH(flow);
 
-      plotHead.add(math.Point(flow * 3600.0, npsh));
+      plotHead.add(math.Point(flow, npsh));
     }
 
     return plotHead;

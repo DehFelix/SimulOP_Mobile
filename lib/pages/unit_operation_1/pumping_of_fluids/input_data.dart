@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/simulation_data.dart';
 
+import 'package:simulop_v1/core/core.dart' as core;
+
 /// Model for handalling the inputs of the app
 class PumpingOfFluidsInputModel extends Model {
   final FluidInput fluidInputs;
@@ -216,7 +218,7 @@ class InletTubeInput {
     if (value.isEmpty) return null;
 
     double min = 2.0;
-    double max = 40.0;
+    double max = 50.0;
     double _number;
 
     _number = double.tryParse(value) ?? null;
@@ -292,7 +294,7 @@ class OutletTubeInput {
     if (value.isEmpty) return null;
 
     double min = 2.0;
-    double max = 40.0;
+    double max = 50.0;
     double _number;
 
     _number = double.tryParse(value) ?? null;
@@ -417,7 +419,40 @@ class SimulationCreator {
   PumpingOfFluidsSimulation createSimulation(FluidInput fluidInput, InletTubeInput inletTubeInput,
       OutletTubeInput outletTubeInput, DistancesInput distancesInput) {
 
-        simulation.string = fluidInput.toString() + inletTubeInput.toString() + outletTubeInput.toString() + distancesInput.toString();
+      simulation.string = fluidInput.toString() + inletTubeInput.toString() + outletTubeInput.toString() + distancesInput.toString();
+      // Liquid
+      final core.LiquidMaterial liquidMaterial = core.Inicializer.liquidMaterial(fluidInput.name);
+      final double temp = double.parse(fluidInput.temperature) + 273.15;
+      final double pressure = double.parse(fluidInput.inletPressure) * 1e5;
+      simulation.liquid = new core.Liquid(liquidMaterial, temp);
+
+      // Inlet Tube
+      final core.TubeMaterial inletTubeMaterial = core.Inicializer.tubeMaterial(inletTubeInput.material);
+      final double inletDiametre = double.parse(inletTubeInput.diametre) / 100.0;
+      final double inletLengh = double.parse(distancesInput.lInlet);
+      final double inletElevation = double.parse(distancesInput.dzInlet);
+
+      simulation.inletTube = new core.Tube(inletDiametre, inletLengh, inletTubeMaterial, inletElevation);
+
+      simulation.inletResistance = new core.LocalResistance("Total", double.parse(inletTubeInput.equivalentDistance));
+      simulation.inletValve = new core.SimpleValve(2.0, 1000.0);
+
+      simulation.inletTube.addAllLocalResistances([simulation.inletResistance, simulation.inletValve]);
+
+      // Outlet Tube
+      final core.TubeMaterial outletTubeMaterial = core.Inicializer.tubeMaterial(outletTubeInput.material);
+      final double outletDiametre = double.parse(outletTubeInput.diametre) / 100.0;
+      final double outletLengh = double.parse(distancesInput.lOutlet);
+      final double outletElevation = double.parse(distancesInput.dzOutlet);
+
+      simulation.outletTube = new core.Tube(outletDiametre, outletLengh, outletTubeMaterial, outletElevation);
+
+      simulation.outletResistance = new core.LocalResistance("Total", double.parse(outletTubeInput.equivalentDistance));
+      simulation.outletValve = new core.SimpleValve(2.0, 1000.0);
+
+      simulation.outletTube.addAllLocalResistances([simulation.outletResistance, simulation.outletValve]);
+
+      simulation.pump = new core.CompletePump(simulation.liquid, simulation.inletTube, simulation.outletTube, pressure);
 
     return simulation;
   }

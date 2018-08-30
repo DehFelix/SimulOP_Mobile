@@ -1,5 +1,6 @@
 import 'dart:math' as math;
-import 'package:simulop_v1/core/core.dart';
+
+import 'package:simulop_v1/core/units/units.dart';
 
 /// Abstract class for all OUI units
 abstract class UnitsI extends Units {

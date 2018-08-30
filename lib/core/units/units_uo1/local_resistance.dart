@@ -1,5 +1,5 @@
 import 'package:simulop_v1/core/interfaces/i_local_resistances.dart';
-import 'package:simulop_v1/core/units_uo1/units_1.dart';
+import 'package:simulop_v1/core/units/units_uo1/units_1.dart';
 
 class LocalResistance extends UnitsI implements ILocalResistance {
   /// Type of local resistance
@@ -63,7 +63,8 @@ class SimpleValve extends LocalResistance {
   /// [openingFactor] = equivalent lengh of tube that multiplys the opening (m).
   SimpleValve(double equivalentLenghOpen, double openingFactor)
       : super("Simple Valve", equivalentLenghOpen) {
-    _openingFactor = openingFactor;
+    _equivalentLenghOpen = equivalentLenghOpen;
+    _openingFactor = openingFactor;    
     _opening = 1.0;
   }
 

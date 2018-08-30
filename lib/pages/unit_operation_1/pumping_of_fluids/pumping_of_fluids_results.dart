@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'dart:math' as math;
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
-import 'package:simulop_v1/pages/helper_classes/chart_items.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/simulation_data.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
@@ -41,13 +41,14 @@ class PumpingOfFluidsResults extends StatelessWidget {
   }
 }
 
+/// Drawer with the variables
 class _FluidResultsDrawer extends StatelessWidget {
-  /// Slider for the liquids variables
+  /// Sliders for the liquids variables
   Widget _liquidsVariables(BuildContext context) {
     final _flowSlider = ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
             min: 0.0,
-            max: 10.0,
+            max: 2.0,
             divisions: 20,
             value: model.getFlow,
             onChanged: model.onFlowChanged,
@@ -75,7 +76,7 @@ class _FluidResultsDrawer extends StatelessWidget {
           leading: Icon(Icons.format_color_fill),
         ),
         ListTile(
-          title: Text("Desired Flow: (m^3/h)"),
+          title: Text("Desired Flow: (m^3/s)"),
           subtitle: _flowSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) => Text(
@@ -96,7 +97,7 @@ class _FluidResultsDrawer extends StatelessWidget {
     );
   }
 
-  /// Slider for the inlet variables
+  /// Sliders for the inlet variables
   Widget _inletVariables(BuildContext context) {
     final _inletValveSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
@@ -134,7 +135,7 @@ class _FluidResultsDrawer extends StatelessWidget {
           subtitle: _inletValveSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) => Text(
-                  model.getInletValve.toStringAsFixed(1),
+                  (model.getInletValve / 10.0).toStringAsFixed(1),
                 ),
           ),
         ),
@@ -156,7 +157,7 @@ class _FluidResultsDrawer extends StatelessWidget {
     final _outletValveSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 0.0,
+            min: 1.0,
             max: 10.0,
             divisions: 20,
             value: model.getOutletValve,
@@ -168,7 +169,7 @@ class _FluidResultsDrawer extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(
-            "Liquid: ",
+            "Outlet: ",
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.arrow_back),
@@ -178,7 +179,7 @@ class _FluidResultsDrawer extends StatelessWidget {
           subtitle: _outletValveSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) =>
-                Text(model.getOutletValve.toStringAsFixed(1)),
+                Text((model.getOutletValve / 10.0).toStringAsFixed(1)),
           ),
         ),
       ],
@@ -258,34 +259,34 @@ class _ChartCard extends StatelessWidget {
   static const primaryMeasureAxisId = 'primaryMeasureAxisId';
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
 
-  List<charts.Series<ChartPoint, double>> _createSeries(
-      List<ChartPoint> data, List<ChartPoint> data2) {
+  List<charts.Series<math.Point, double>> _createSeries(
+      List<math.Point> dataHead, List<math.Point> dataNPSH) {
     return [
-      charts.Series<ChartPoint, double>(
-        id: "test",
-        domainFn: (ChartPoint point, _) => point.x,
-        measureFn: (ChartPoint point, _) => point.y,
-        data: data,
+      charts.Series<math.Point, double>(
+        id: "head",
+        domainFn: (math.Point point, _) => point.x,
+        measureFn: (math.Point point, _) => point.y,
+        data: dataHead,
       )..setAttribute(charts.measureAxisIdKey, primaryMeasureAxisId),
-      charts.Series<ChartPoint, double>(
-        id: "test2",
-        domainFn: (ChartPoint point, _) => point.x,
-        measureFn: (ChartPoint point, _) => point.y,
-        data: data2,
+      charts.Series<math.Point, double>(
+        id: "npsh",
+        domainFn: (math.Point point, _) => point.x,
+        measureFn: (math.Point point, _) => point.y,
+        data: dataNPSH,
       )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
     ];
   }
 
-  Widget _chart(List<ChartPoint> data, List<ChartPoint> data2) {
+  Widget _chart(List<math.Point> dataHead, List<math.Point> dataNPSH) {
     return charts.LineChart(
-      _createSeries(data, data2),
+      _createSeries(dataHead, dataNPSH),
       animate: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+              charts.BasicNumericTickProviderSpec(desiredTickCount: 5)),
       secondaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+              charts.BasicNumericTickProviderSpec(desiredTickCount: 5)),
     );
   }
 
@@ -307,8 +308,8 @@ class _ChartCard extends StatelessWidget {
               padding: EdgeInsets.only(left: 8.0, right: 8.0),
               child: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
                 builder: (context, _, model) => _chart(
-                      model.getPoints,
-                      model.getPoints2,
+                      model.getPointsHead,
+                      model.getPointsNPSH,
                     ),
               ),
             ),
@@ -327,14 +328,14 @@ class _ResultsCard extends StatelessWidget {
   final _textStyle = TextStyle(fontSize: 14.0, color: Colors.black);
 
   TextSpan _bombResult(PumpingOfFluidsSimulationModel model) {
-    String bombHead = "Necessary head: ${model.getFlow} m \n";
+    String bombHead = "Necessary head: ${model.getHead} m \n";
 
     return TextSpan(
         children: <TextSpan>[TextSpan(text: bombHead, style: _textStyle)]);
   }
 
   TextSpan _npshResults(PumpingOfFluidsSimulationModel model) {
-    String npshAvailable = "NPSH available: ${model.getTemperature} m \n";
+    String npshAvailable = "NPSH available: ${model.getNpsh} m \n";
 
     return TextSpan(
         children: <TextSpan>[TextSpan(text: npshAvailable, style: _textStyle)]);

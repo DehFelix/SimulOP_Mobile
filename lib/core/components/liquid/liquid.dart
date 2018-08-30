@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:simulop_v1/core/core.dart';
+import 'package:simulop_v1/core/units/units.dart';
 import 'package:simulop_v1/core/interfaces/materials/i_liquid_material.dart';
 
 /// Represents the liquid component
@@ -15,8 +15,8 @@ class Liquid {
 
   set temperature(double t) {
     material.temperature = t;
+    _temperature = t;
     _vaporPressure = pVap(t);
-    this._temperature = t;
   }
 
   double get vaporPressure => _vaporPressure;
@@ -37,7 +37,7 @@ class Liquid {
       pVap = 0.0;
     }
 
-    return pVap;
+    return pVap * 1e5;
   }
 
   /// Converts the given pressure (Pa) to meters of liquid

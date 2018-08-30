@@ -1,4 +1,4 @@
-import 'package:simulop_v1/core/components/materials/material.dart';
+import 'package:simulop_v1/core/components/materials/material_type.dart';
 
 /// Represents the material of the tube
 class TubeMaterial extends MaterialType {
