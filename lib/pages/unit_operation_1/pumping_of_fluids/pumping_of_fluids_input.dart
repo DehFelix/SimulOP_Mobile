@@ -8,6 +8,7 @@ import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/pumping_of_f
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
 final helpItems = [
+  HelpItem("Default inputs", "runWithDefaultInputs", ActionType.widgetAction),
   HelpItem("More info", "/default", ActionType.route),
   HelpItem("About", "/default", ActionType.route),
 ];
@@ -19,7 +20,7 @@ final distancesFormKey = GlobalKey<FormState>();
 
 final fluidInputModel = FluidInput();
 final inletTubeInputModel = InletTubeInput();
-final outleTubeInputModel = OutletTubeInput();
+final outletTubeInputModel = OutletTubeInput();
 final distancesInputModel = DistancesInput();
 
 /// The input Widget
@@ -30,20 +31,19 @@ class PumpingOfFluidsInput extends StatelessWidget {
       model: PumpingOfFluidsInputModel(
           fluidInputs: fluidInputModel,
           inletTubeInput: inletTubeInputModel,
-          outletTubeInput: outleTubeInputModel,
+          outletTubeInput: outletTubeInputModel,
           distancesInput: distancesInputModel),
       child: Scaffold(
         appBar: _FluidInputAppBar(),
         body: Container(child: _mainBody()),
         floatingActionButton: ScopedModelDescendant<PumpingOfFluidsInputModel>(
-          rebuildOnChange: false,
           builder: (context, _, model) => FloatingActionButton(
-                child: Icon(Icons.build),
+                child: Icon(model.getFabIcon),
                 onPressed: () {
                   if (!model.canCreateSimulation()) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       duration: Duration(seconds: 2),
-                      content: Text("Incomple inputs"),                      
+                      content: Text("Incomple inputs"),
                       action: SnackBarAction(
                         label: "Ok",
                         onPressed: () {},
@@ -128,7 +128,7 @@ class __FluidInputAppBarState extends State<_FluidInputAppBar> {
     );
   }
 
-  List<Widget> _appBarMenu() {
+  List<PopupMenuItem> _appBarMenu() {
     return helpItems.map((HelpItem item) {
       return PopupMenuItem(
         value: item,
@@ -138,11 +138,32 @@ class __FluidInputAppBarState extends State<_FluidInputAppBar> {
   }
 
   void _selectMenu(dynamic item) {
-    Navigator.of(context).pushNamed(item.action);
+    switch (item.actionType) {
+      case ActionType.route:
+        Navigator.of(context).pushNamed(item.action);
+        break;
+      case ActionType.url:
+        break;
+      case ActionType.widgetAction:
+        if (item.action == "runWithDefaultInputs") {
+          PumpingOfFluidsInputModel.of(context).setDefaultInputs();
+          var simalation = PumpingOfFluidsInputModel.of(context).createSimulation();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PumpingOfFluidsResults(
+                    simulation: simalation,
+                  ),
+            ),
+          );
+        }
+        break;
+      default:
+    }
   }
 }
 
-/// The Card for the fluid Input
+/// The Card for the Liquid Input
 class _FluidInputCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -161,7 +182,7 @@ class _FluidInputCard extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.format_color_fill),
               title: Text(
-                "Fluid Input: ",
+                "Liquid Input: ",
                 style: _headerTextStyle,
               ),
             ),
@@ -169,7 +190,7 @@ class _FluidInputCard extends StatelessWidget {
                 child: ScopedModelDescendant<PumpingOfFluidsInputModel>(
               builder: (context, _, model) => DropdownButton(
                   hint: Text(
-                    "Select Fluid",
+                    "Select Liquid",
                   ),
                   value: model.fluidInput.name,
                   items: model.fluidInput.fluidInputDropDownItems(),
@@ -179,7 +200,6 @@ class _FluidInputCard extends StatelessWidget {
               padding: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(children: <Widget>[
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         keyboardType: TextInputType.number,
@@ -191,7 +211,6 @@ class _FluidInputCard extends StatelessWidget {
                       ),
                 ),
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         autovalidate: true,
@@ -212,7 +231,7 @@ class _FluidInputCard extends StatelessWidget {
   }
 }
 
-/// The input card for the suction tube
+/// The input card for the Inlet tube
 class _InletTubeInputCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -248,7 +267,6 @@ class _InletTubeInputCard extends StatelessWidget {
               padding: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(children: <Widget>[
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         keyboardType: TextInputType.number,
@@ -259,7 +277,6 @@ class _InletTubeInputCard extends StatelessWidget {
                       ),
                 ),
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         autovalidate: true,
@@ -280,7 +297,7 @@ class _InletTubeInputCard extends StatelessWidget {
   }
 }
 
-/// The input card for the suction tube
+/// The input card for the Outlet tube
 class _OutletTubeInputCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -317,7 +334,6 @@ class _OutletTubeInputCard extends StatelessWidget {
               padding: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(children: <Widget>[
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         keyboardType: TextInputType.number,
@@ -328,7 +344,6 @@ class _OutletTubeInputCard extends StatelessWidget {
                       ),
                 ),
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         autovalidate: true,
@@ -349,7 +364,7 @@ class _OutletTubeInputCard extends StatelessWidget {
   }
 }
 
-/// The input card for the suction tube
+/// The input card for the Distances
 class _DistancesInputCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -375,7 +390,6 @@ class _DistancesInputCard extends StatelessWidget {
               padding: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(children: <Widget>[
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         keyboardType: TextInputType.number,
@@ -386,19 +400,17 @@ class _DistancesInputCard extends StatelessWidget {
                       ),
                 ),
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.distancesInput.lInlet,
                         decoration: InputDecoration(labelText: "L Inlet (m)"),
-                        validator: model.distancesInput.distanceValidator,
+                        validator: model.distancesInput.distanceInletValidator,
                         onSaved: model.setDistancesLInlet,
                       ),
                 ),
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         keyboardType: TextInputType.number,
@@ -409,14 +421,13 @@ class _DistancesInputCard extends StatelessWidget {
                       ),
                 ),
                 ScopedModelDescendant<PumpingOfFluidsInputModel>(
-                  rebuildOnChange: false,
                   builder: (context, _, model) => TextFormField(
                         autocorrect: false,
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.distancesInput.lOutlet,
                         decoration: InputDecoration(labelText: "L Outlet (m)"),
-                        validator: model.distancesInput.distanceValidator,
+                        validator: model.distancesInput.distanceOutletValidator,
                         onSaved: model.setDistancesLOutlet,
                       ),
                 )
@@ -444,9 +455,10 @@ class _SumaryCard extends StatelessWidget {
 
     if (model.validadeFluid()) {
       fluid = "Fluid - ${model.fluidInput.name} \n";
-      density = "Density: 1000 kg/m^3 \n";
-      viscosity = "Viscosity: 1 cP \n";
-      vaporPressure = "Vapor pressure: 300 KPa \n";
+      density = "Density: ${model.getSumaryLiquidDensity} kg/m^3 \n";
+      viscosity = "Viscosity: ${model.getSumaryLiquidViscosity} cP \n";
+      vaporPressure =
+          "Vapor pressure: ${model.getSumaryLiquidVaporPressure} KPa \n";
     }
 
     return TextSpan(
@@ -468,7 +480,7 @@ class _SumaryCard extends StatelessWidget {
 
     if (model.validateInletTube()) {
       tube = "Inlet Tube - ${model.inletTubeInput.material} \n";
-      roughness = "Roughness: 0.001 cm \n";
+      roughness = "Roughness: ${model.getSumaryInletTubeRoughness} mm \n";
       diametre = "Diametre: ${model.inletTubeInput.diametre} cm \n";
       lenth = "Lenth: ${model.distancesInput.lInlet} m \n";
       elevation = "Elevation: ${model.distancesInput.dzInlet} m \n";
@@ -492,7 +504,7 @@ class _SumaryCard extends StatelessWidget {
 
     if (model.validateOutletTube()) {
       tube = "Inlet Tube - ${model.outletTubeInput.material} \n";
-      roughness = "Roughness: 0.001 cm \n";
+      roughness = "Roughness: ${model.getSumaryOutletTubeRoughness} mm \n";
       diametre = "Diametre: ${model.outletTubeInput.diametre} cm \n";
       lenth = "Lenth: ${model.distancesInput.lOutlet} m \n";
       elevation = "Elevation: ${model.distancesInput.dzOutlet} m \n";

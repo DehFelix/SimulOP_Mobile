@@ -43,24 +43,16 @@ class PumpingOfFluidsResults extends StatelessWidget {
 
 /// Drawer with the variables
 class _FluidResultsDrawer extends StatelessWidget {
+  final int _sliderDiv = 40;
+
   /// Sliders for the liquids variables
   Widget _liquidsVariables(BuildContext context) {
-    final _flowSlider = ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
-      builder: (contex, _, model) => Slider(
-            min: 0.0,
-            max: 2.0,
-            divisions: 20,
-            value: model.getFlow,
-            onChanged: model.onFlowChanged,
-          ),
-    );
-
     final _temperatureSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
             min: 10.0,
             max: 90.0,
-            divisions: 20,
+            divisions: _sliderDiv,
             value: model.getTemperature,
             onChanged: model.onTemperatureChanged,
           ),
@@ -74,15 +66,6 @@ class _FluidResultsDrawer extends StatelessWidget {
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.format_color_fill),
-        ),
-        ListTile(
-          title: Text("Desired Flow: (m^3/s)"),
-          subtitle: _flowSlider,
-          trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
-            builder: (contex, _, model) => Text(
-                  model.getFlow.toStringAsFixed(1),
-                ),
-          ),
         ),
         ListTile(
           title: Text("Liquid Temperature: (°C)"),
@@ -104,7 +87,7 @@ class _FluidResultsDrawer extends StatelessWidget {
       builder: (contex, _, model) => Slider(
             min: 1.0,
             max: 10.0,
-            divisions: 20,
+            divisions: _sliderDiv,
             value: model.getInletValve,
             onChanged: model.onInletValveChange,
           ),
@@ -115,7 +98,7 @@ class _FluidResultsDrawer extends StatelessWidget {
       builder: (contex, _, model) => Slider(
             min: 0.2,
             max: 5.0,
-            divisions: 20,
+            divisions: _sliderDiv,
             value: model.getInletTankPressure,
             onChanged: model.onInletTankPressureChanged,
           ),
@@ -159,7 +142,7 @@ class _FluidResultsDrawer extends StatelessWidget {
       builder: (contex, _, model) => Slider(
             min: 1.0,
             max: 10.0,
-            divisions: 20,
+            divisions: _sliderDiv,
             value: model.getOutletValve,
             onChanged: model.onOutletValveChange,
           ),
@@ -180,6 +163,96 @@ class _FluidResultsDrawer extends StatelessWidget {
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) =>
                 Text((model.getOutletValve / 10.0).toStringAsFixed(1)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Sliders for the distances variables
+  Widget _distancesVariables(BuildContext context) {
+    final _dzInletSlider =
+        ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
+      builder: (contex, _, model) => Slider(
+            min: -20.0,
+            max: 20.0,
+            divisions: _sliderDiv,
+            value: model.getDzInlet,
+            onChanged: model.onDzInletChange,
+          ),
+    );
+
+    final _lInletSlider = ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
+      builder: (contex, _, model) => Slider(
+            min: 1.0,
+            max: 100.0,
+            divisions: _sliderDiv,
+            value: model.getLInlet,
+            onChanged: model.onLInletChange,
+          ),
+    );
+
+    final _dzOutletSlider =
+        ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
+      builder: (contex, _, model) => Slider(
+            min: -20.0,
+            max: 20.0,
+            divisions: _sliderDiv,
+            value: model.getDzOutlet,
+            onChanged: model.onDzOutletChange,
+          ),
+    );
+
+    final _lOutletSlider =
+        ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
+      builder: (contex, _, model) => Slider(
+            min: 1.0,
+            max: 1000.0,
+            divisions: _sliderDiv,
+            value: model.getLOutlet,
+            onChanged: model.onLOutletChange,
+          ),
+    );
+
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            "Distances: ",
+            style: _headerTextStyle,
+          ),
+          leading: Icon(Icons.straighten),
+        ),
+        ListTile(
+          title: Text("Dz Inlet: (m)"),
+          subtitle: _dzInletSlider,
+          trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getDzInlet).toStringAsFixed(1)),
+          ),
+        ),
+                ListTile(
+          title: Text("L Inlet: (m)"),
+          subtitle: _lInletSlider,
+          trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getLInlet).toStringAsFixed(1)),
+          ),
+        ),
+                ListTile(
+          title: Text("Dz Outlet: (m)"),
+          subtitle: _dzOutletSlider,
+          trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getDzOutlet).toStringAsFixed(1)),
+          ),
+        ),
+                ListTile(
+          title: Text("L Outlet: (m)"),
+          subtitle: _lOutletSlider,
+          trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getLOutlet).toStringAsFixed(1)),
           ),
         ),
       ],
@@ -208,6 +281,8 @@ class _FluidResultsDrawer extends StatelessWidget {
           _inletVariables(context),
           Divider(),
           _outletVariables(context),
+          Divider(),
+          _distancesVariables(context),
         ],
       ),
     );
@@ -230,7 +305,7 @@ class __FluidResultsAppBarState extends State<_FluidResultsAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2.0,
-      title: Text("Pumping of fluids - Results"),
+      title: Text("Results"),
       actions: <Widget>[
         PopupMenuButton(
           itemBuilder: (BuildContext context) => _appBarMenu(),
@@ -277,16 +352,31 @@ class _ChartCard extends StatelessWidget {
     ];
   }
 
-  Widget _chart(List<math.Point> dataHead, List<math.Point> dataNPSH) {
+  Widget _chart(List<math.Point> dataHead, List<math.Point> dataNPSH,
+      PumpingOfFluidsSimulationModel model) {
     return charts.LineChart(
       _createSeries(dataHead, dataNPSH),
       animate: false,
+      defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec:
               charts.BasicNumericTickProviderSpec(desiredTickCount: 5)),
       secondaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec:
               charts.BasicNumericTickProviderSpec(desiredTickCount: 5)),
+      domainAxis: charts.NumericAxisSpec(
+          tickProviderSpec:
+              charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+      behaviors: [        
+        charts.SeriesLegend(
+          position: charts.BehaviorPosition.top,
+          cellPadding: EdgeInsets.all(4.0),
+        ),
+        charts.Slider(
+          initialDomainValue: 1.0,
+          onChangeCallback: model.onSliderChanged,
+        ),
+      ],
     );
   }
 
@@ -298,7 +388,7 @@ class _ChartCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.insert_chart),
             title: Text(
-              "Graphs: ",
+              "Graph",
               style: _headerTextStyle,
             ),
           ),
@@ -307,10 +397,8 @@ class _ChartCard extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(left: 8.0, right: 8.0),
               child: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
-                builder: (context, _, model) => _chart(
-                      model.getPointsHead,
-                      model.getPointsNPSH,
-                    ),
+                builder: (context, _, model) =>
+                    _chart(model.getPointsHead, model.getPointsNPSH, model),
               ),
             ),
           ),
@@ -326,6 +414,13 @@ class _ChartCard extends StatelessWidget {
 /// The results card
 class _ResultsCard extends StatelessWidget {
   final _textStyle = TextStyle(fontSize: 14.0, color: Colors.black);
+
+  TextSpan _selectedFlow(PumpingOfFluidsSimulationModel model) {
+    String selectedFlow = "Selected flow: ${model.getFlow} m^3/s \n";
+
+    return TextSpan(
+        children: <TextSpan>[TextSpan(text: selectedFlow, style: _textStyle)]);
+  }
 
   TextSpan _bombResult(PumpingOfFluidsSimulationModel model) {
     String bombHead = "Necessary head: ${model.getHead} m \n";
@@ -350,7 +445,7 @@ class _ResultsCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.done_all),
             title: Text(
-              "Results: ",
+              "Results",
               style: _headerTextStyle,
             ),
           ),
@@ -360,6 +455,8 @@ class _ResultsCard extends StatelessWidget {
               builder: (context, _, model) => RichText(
                     text: TextSpan(
                       children: <TextSpan>[
+                        _selectedFlow(model),
+                        TextSpan(text: "\n"),
                         _bombResult(model),
                         TextSpan(text: "\n"),
                         _npshResults(model),

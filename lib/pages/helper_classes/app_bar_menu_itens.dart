@@ -9,4 +9,4 @@ class HelpItem {
   HelpItem(this.name, this.action, this.actionType);
 }
 
-enum ActionType {route, url}
+enum ActionType {route, url, widgetAction}

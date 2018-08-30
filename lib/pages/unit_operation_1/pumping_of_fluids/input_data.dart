@@ -24,6 +24,31 @@ class PumpingOfFluidsInputModel extends Model {
   static PumpingOfFluidsInputModel of(BuildContext context) =>
       ScopedModel.of<PumpingOfFluidsInputModel>(context);
 
+  void setDefaultInputs() {
+    // Liquid:
+    fluidInput.name = "Water";
+    fluidInput.temperature = "25";
+    fluidInput.inletPressure = "1";
+
+    // Inlet Tube:
+    inletTubeInput.material = "Steel";
+    inletTubeInput.diametre = "50";
+    inletTubeInput.equivalentDistance = "2";
+
+    //Outlet Tube:
+    outletTubeInput.material = "Steel";
+    outletTubeInput.diametre = "50";
+    outletTubeInput.equivalentDistance = "20";
+
+    // Distances
+    distancesInput.dzInlet = "-5";
+    distancesInput.lInlet = "1";
+    distancesInput.dzOutlet = "10";
+    distancesInput.lOutlet = "500";
+
+    notifyListeners();
+  }
+
   void setFluidName(String name) {
     fluidInputs.name = name;
     notifyListeners();
@@ -105,9 +130,67 @@ class PumpingOfFluidsInputModel extends Model {
 
   PumpingOfFluidsSimulation createSimulation() {
     if (canCreateSimulation()) {
-      return simulationCreator.createSimulation(fluidInput, inletTubeInput, outletTubeInput, distancesInput);
+      return simulationCreator.createSimulation(
+          fluidInput, inletTubeInput, outletTubeInput, distancesInput);
     } else {
       return null;
+    }
+  }
+
+  IconData get getFabIcon {
+    if (canCreateSimulation()) {
+      return Icons.build;
+    } else {
+      return Icons.not_interested;
+    }
+  }
+
+  String get getSumaryLiquidDensity {
+    if (validadeFluid()) {
+      simulationCreator.createLiquidSumary(fluidInput);
+      return simulationCreator.sumaryLiquid.material.density.toStringAsFixed(1);
+    } else {
+      return "";
+    }
+  }
+
+  String get getSumaryLiquidViscosity {
+    if (validadeFluid()) {
+      simulationCreator.createLiquidSumary(fluidInput);
+      return (simulationCreator.sumaryLiquid.material.viscosity * 1000.0)
+          .toStringAsFixed(2);
+    } else {
+      return "";
+    }
+  }
+
+  String get getSumaryLiquidVaporPressure {
+    if (validadeFluid()) {
+      simulationCreator.createLiquidSumary(fluidInput);
+      return (simulationCreator.sumaryLiquid.vaporPressure / 100.0)
+          .toStringAsFixed(1);
+    } else {
+      return "";
+    }
+  }
+
+  String get getSumaryInletTubeRoughness {
+    if (inletTubeInput.validInput()) {
+      simulationCreator.createInletTubeSumary(inletTubeInput);
+      return (simulationCreator.sumaryInletTubeMaterial.roughness * 1000.0)
+          .toStringAsFixed(3);
+    } else {
+      return "";
+    }
+  }
+
+  String get getSumaryOutletTubeRoughness {
+        if (outletTubeInput.validInput()) {
+      simulationCreator.createOutletTubeSumary(outletTubeInput);
+      return (simulationCreator.sumaryOutletTubeMaterial.roughness * 1000.0)
+          .toStringAsFixed(3);
+    } else {
+      return "";
     }
   }
 
@@ -370,12 +453,30 @@ class DistancesInput {
       return null;
   }
 
-  /// Input validator for the height diference (dz)
-  String distanceValidator(String value) {
+  /// Input validator for the lengh (lOutlet)
+  String distanceOutletValidator(String value) {
     if (value.isEmpty) return null;
 
     double min = 1.0;
     double max = 1000.0;
+    double _number;
+
+    _number = double.tryParse(value) ?? null;
+
+    if (_number == null) return "Not a number.";
+
+    if (_number < min || _number > max) {
+      return "$min <= Distance <= $max m";
+    } else
+      return null;
+  }
+
+  /// Input validator for the lengh (lInlet)
+  String distanceInletValidator(String value) {
+    if (value.isEmpty) return null;
+
+    double min = 1.0;
+    double max = 100.0;
     double _number;
 
     _number = double.tryParse(value) ?? null;
@@ -416,43 +517,79 @@ class DistancesInput {
 class SimulationCreator {
   final PumpingOfFluidsSimulation simulation = PumpingOfFluidsSimulation();
 
-  PumpingOfFluidsSimulation createSimulation(FluidInput fluidInput, InletTubeInput inletTubeInput,
-      OutletTubeInput outletTubeInput, DistancesInput distancesInput) {
+  core.Liquid sumaryLiquid;
+  core.TubeMaterial sumaryInletTubeMaterial;
+  core.TubeMaterial sumaryOutletTubeMaterial;
 
-      simulation.string = fluidInput.toString() + inletTubeInput.toString() + outletTubeInput.toString() + distancesInput.toString();
-      // Liquid
-      final core.LiquidMaterial liquidMaterial = core.Inicializer.liquidMaterial(fluidInput.name);
-      final double temp = double.parse(fluidInput.temperature) + 273.15;
-      final double pressure = double.parse(fluidInput.inletPressure) * 1e5;
-      simulation.liquid = new core.Liquid(liquidMaterial, temp);
+  void createLiquidSumary(FluidInput fluidInput) {
+    sumaryLiquid = new core.Liquid(
+        core.Inicializer.liquidMaterial(fluidInput.name),
+        double.parse(fluidInput.temperature) + 273.15);
+  }
 
-      // Inlet Tube
-      final core.TubeMaterial inletTubeMaterial = core.Inicializer.tubeMaterial(inletTubeInput.material);
-      final double inletDiametre = double.parse(inletTubeInput.diametre) / 100.0;
-      final double inletLengh = double.parse(distancesInput.lInlet);
-      final double inletElevation = double.parse(distancesInput.dzInlet);
+  void createInletTubeSumary(InletTubeInput inletTubeInput) {
+    sumaryInletTubeMaterial =
+        core.Inicializer.tubeMaterial(inletTubeInput.material);
+  }
 
-      simulation.inletTube = new core.Tube(inletDiametre, inletLengh, inletTubeMaterial, inletElevation);
+  void createOutletTubeSumary(OutletTubeInput outletTubeInput) {
+    sumaryOutletTubeMaterial =
+        core.Inicializer.tubeMaterial(outletTubeInput.material);
+  }
 
-      simulation.inletResistance = new core.LocalResistance("Total", double.parse(inletTubeInput.equivalentDistance));
-      simulation.inletValve = new core.SimpleValve(2.0, 1000.0);
+  PumpingOfFluidsSimulation createSimulation(
+      FluidInput fluidInput,
+      InletTubeInput inletTubeInput,
+      OutletTubeInput outletTubeInput,
+      DistancesInput distancesInput) {
+    simulation.string = fluidInput.toString() +
+        inletTubeInput.toString() +
+        outletTubeInput.toString() +
+        distancesInput.toString();
+    // Liquid
+    final core.LiquidMaterial liquidMaterial =
+        core.Inicializer.liquidMaterial(fluidInput.name);
+    final double temp = double.parse(fluidInput.temperature) + 273.15;
+    final double pressure = double.parse(fluidInput.inletPressure) * 1e5;
+    simulation.liquid = new core.Liquid(liquidMaterial, temp);
 
-      simulation.inletTube.addAllLocalResistances([simulation.inletResistance, simulation.inletValve]);
+    // Inlet Tube
+    final core.TubeMaterial inletTubeMaterial =
+        core.Inicializer.tubeMaterial(inletTubeInput.material);
+    final double inletDiametre = double.parse(inletTubeInput.diametre) / 100.0;
+    final double inletLengh = double.parse(distancesInput.lInlet);
+    final double inletElevation = double.parse(distancesInput.dzInlet);
 
-      // Outlet Tube
-      final core.TubeMaterial outletTubeMaterial = core.Inicializer.tubeMaterial(outletTubeInput.material);
-      final double outletDiametre = double.parse(outletTubeInput.diametre) / 100.0;
-      final double outletLengh = double.parse(distancesInput.lOutlet);
-      final double outletElevation = double.parse(distancesInput.dzOutlet);
+    simulation.inletTube = new core.Tube(
+        inletDiametre, inletLengh, inletTubeMaterial, inletElevation);
 
-      simulation.outletTube = new core.Tube(outletDiametre, outletLengh, outletTubeMaterial, outletElevation);
+    simulation.inletResistance = new core.LocalResistance(
+        "Total", double.parse(inletTubeInput.equivalentDistance));
+    simulation.inletValve = new core.SimpleValve(2.0, 1000.0);
 
-      simulation.outletResistance = new core.LocalResistance("Total", double.parse(outletTubeInput.equivalentDistance));
-      simulation.outletValve = new core.SimpleValve(2.0, 1000.0);
+    simulation.inletTube.addAllLocalResistances(
+        [simulation.inletResistance, simulation.inletValve]);
 
-      simulation.outletTube.addAllLocalResistances([simulation.outletResistance, simulation.outletValve]);
+    // Outlet Tube
+    final core.TubeMaterial outletTubeMaterial =
+        core.Inicializer.tubeMaterial(outletTubeInput.material);
+    final double outletDiametre =
+        double.parse(outletTubeInput.diametre) / 100.0;
+    final double outletLengh = double.parse(distancesInput.lOutlet);
+    final double outletElevation = double.parse(distancesInput.dzOutlet);
 
-      simulation.pump = new core.CompletePump(simulation.liquid, simulation.inletTube, simulation.outletTube, pressure);
+    simulation.outletTube = new core.Tube(
+        outletDiametre, outletLengh, outletTubeMaterial, outletElevation);
+
+    simulation.outletResistance = new core.LocalResistance(
+        "Total", double.parse(outletTubeInput.equivalentDistance));
+    simulation.outletValve = new core.SimpleValve(2.0, 1000.0);
+
+    simulation.outletTube.addAllLocalResistances(
+        [simulation.outletResistance, simulation.outletValve]);
+
+    simulation.pump = new core.CompletePump(simulation.liquid,
+        simulation.inletTube, simulation.outletTube, pressure);
 
     return simulation;
   }
