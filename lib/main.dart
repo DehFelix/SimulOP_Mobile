@@ -6,6 +6,7 @@ import 'package:simulop_v1/pages/home_page/home_page.dart';
 import 'package:simulop_v1/pages/home_page/default_page.dart' as Default;
 import 'package:simulop_v1/pages/unit_operation_1/example.dart' as UO1;
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/pumping_of_fluids_input.dart';
+import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/mccabe_thiele_input.dart';
 
 void main() => runApp(SimulOPAPP());
 
@@ -31,11 +32,12 @@ class SimulOPAPP extends StatelessWidget {
         "/default": (context) => Default.DefaultPage(),
         "/exemple1": (context) => UO1.ExempleOne(),
         "/pumpingOfFluidsInput": (context) => PumpingOfFluidsInput(),
+        "/mcCabeThieleMethod": (context) => McCabeThieleMethodInput(),
       },
     );
   }
 
   final ThemeData simulopTheme = ThemeData(
-    primarySwatch: Colors.purple,    
+    primarySwatch: Colors.blue,    
   );
 }

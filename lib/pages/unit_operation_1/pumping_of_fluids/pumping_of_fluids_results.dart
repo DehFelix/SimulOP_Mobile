@@ -5,6 +5,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/simulation_data.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
@@ -231,7 +232,7 @@ class _FluidResultsDrawer extends StatelessWidget {
                 Text((model.getDzInlet).toStringAsFixed(1)),
           ),
         ),
-                ListTile(
+        ListTile(
           title: Text("L Inlet: (m)"),
           subtitle: _lInletSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
@@ -239,7 +240,7 @@ class _FluidResultsDrawer extends StatelessWidget {
                 Text((model.getLInlet).toStringAsFixed(1)),
           ),
         ),
-                ListTile(
+        ListTile(
           title: Text("Dz Outlet: (m)"),
           subtitle: _dzOutletSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
@@ -247,7 +248,7 @@ class _FluidResultsDrawer extends StatelessWidget {
                 Text((model.getDzOutlet).toStringAsFixed(1)),
           ),
         ),
-                ListTile(
+        ListTile(
           title: Text("L Outlet: (m)"),
           subtitle: _lOutletSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
@@ -324,8 +325,26 @@ class __FluidResultsAppBarState extends State<_FluidResultsAppBar> {
     }).toList();
   }
 
+  void _lunchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw "Could not lunch $url";
+    }
+  }
+
   void _selectMenu(dynamic item) {
-    Navigator.of(context).pushNamed(item.action);
+    switch (item.actionType) {
+      case ActionType.route:
+        Navigator.of(context).pushNamed(item.action);
+        break;
+      case ActionType.url:
+        _lunchURL(item.action);
+        break;
+      case ActionType.widgetAction:
+        break;
+      default:
+    }
   }
 }
 
@@ -367,7 +386,7 @@ class _ChartCard extends StatelessWidget {
       domainAxis: charts.NumericAxisSpec(
           tickProviderSpec:
               charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
-      behaviors: [        
+      behaviors: [
         charts.SeriesLegend(
           position: charts.BehaviorPosition.top,
           cellPadding: EdgeInsets.all(4.0),

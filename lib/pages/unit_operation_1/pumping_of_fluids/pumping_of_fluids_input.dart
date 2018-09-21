@@ -4,6 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/input_data.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/pumping_of_fluids_results.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
@@ -137,17 +138,27 @@ class __FluidInputAppBarState extends State<_FluidInputAppBar> {
     }).toList();
   }
 
+  void _lunchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw "Could not lunch $url";
+    }
+  }
+
   void _selectMenu(dynamic item) {
     switch (item.actionType) {
       case ActionType.route:
         Navigator.of(context).pushNamed(item.action);
         break;
       case ActionType.url:
+        _lunchURL(item.action);
         break;
       case ActionType.widgetAction:
         if (item.action == "runWithDefaultInputs") {
           PumpingOfFluidsInputModel.of(context).setDefaultInputs();
-          var simalation = PumpingOfFluidsInputModel.of(context).createSimulation();
+          var simalation =
+              PumpingOfFluidsInputModel.of(context).createSimulation();
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -282,7 +293,8 @@ class _InletTubeInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.inletTubeInput.equivalentDistance,
-                        decoration: InputDecoration(labelText: "Resistances Lenghs (m)"),
+                        decoration: InputDecoration(
+                            labelText: "Resistances Lenghs (m)"),
                         validator:
                             model.inletTubeInput.equivalentDistancesValidator,
                         onSaved: model.setInletTubeEquivalentDistances,
@@ -349,7 +361,8 @@ class _OutletTubeInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.outletTubeInput.equivalentDistance,
-                        decoration: InputDecoration(labelText: "Resistances Lenghs (m)"),
+                        decoration: InputDecoration(
+                            labelText: "Resistances Lenghs (m)"),
                         validator:
                             model.outletTubeInput.equivalentDistancesValidator,
                         onSaved: model.setOutletTubeEquivalentDistances,

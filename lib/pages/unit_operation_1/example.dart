@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import 'package:simulop_v1/core/core.dart' as core;
+
 class ExempleOne extends StatelessWidget {
+
+  double _text(double x) {
+    return (math.pow(x, 2) - 4.0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +21,9 @@ class ExempleOne extends StatelessWidget {
         child: Container(
           height: 400.0,
           width: 300.0,
-          child: SimpleTimeSeriesChart.withSampleData(),
+          child: Text(
+            core.Units.findRoot(_text, 0.0, 10.0).toString()
+          ),
         ),
       ),
     );

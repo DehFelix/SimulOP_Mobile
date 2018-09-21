@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:simulop_v1/core/components/liquid/liquid.dart';
+import 'package:simulop_v1/core/units/units.dart';
 import 'package:simulop_v1/core/units/units_uo1/units_1.dart';
 import 'package:simulop_v1/core/units/units_uo1/tube.dart';
 
@@ -80,7 +81,7 @@ class Pump extends UnitsI {
   void computeFlow() {
     double volumeFlow;
 
-    volumeFlow = findRoot(bernoulli, 0.001, 10.0);
+    volumeFlow = Units.findRoot(bernoulli, 0.001, 10.0);
 
     _volumeFlow = volumeFlow;
     _head = pumpHead(volumeFlow);
@@ -220,7 +221,7 @@ class CompletePump extends Pump {
   void computeFlow() {
     double volumeFlow;
 
-    volumeFlow = findRoot(bernoulli, 0.001, 10.0);
+    volumeFlow = Units.findRoot(bernoulli, 0.001, 10.0);
 
     _volumeFlow = volumeFlow;
     _head = pumpHead(volumeFlow);
