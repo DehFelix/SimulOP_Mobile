@@ -6,8 +6,10 @@ class SelectionTile {
   final IconData icon;
   final String description;
   final String route;
+  final bool isDisable;
 
-  SelectionTile(this.title, this.icon, this.description, [this.route = "/default"]);
+  SelectionTile(this.title, this.icon, this.isDisable, this.description,
+      [this.route = "/default"]);
 }
 
 /// Builds the selection tile with the [SelectionTile] provided.
@@ -27,11 +29,20 @@ Widget tileSelectionBuilder(BuildContext context, SelectionTile tile) {
         padding: EdgeInsets.only(right: 16.0),
         child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
           FlatButton(
-            child: Text("More info",style: TextStyle(color: Theme.of(context).accentColor,)),
-            onPressed: () {_lunchURL();},
+            child: Text("More info",
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                )),
+            onPressed: () {
+              _lunchURL();
+            },
           ),
           RaisedButton(
-            onPressed: () {Navigator.of(context).pushNamed(tile.route);},
+            onPressed: (tile.isDisable)
+                ? null
+                : () {
+                    Navigator.of(context).pushNamed(tile.route);
+                  },
             child: Text(
               "Lunch App",
               style: TextStyle(color: Colors.white),
@@ -47,12 +58,12 @@ Widget tileSelectionBuilder(BuildContext context, SelectionTile tile) {
   );
 }
 
-void _lunchURL() async{
+void _lunchURL() async {
   const url = "https://github.com/rafaelterras/SimulOp";
   if (await canLaunch(url)) {
     await launch(url);
   } else {
-      throw "Could not lunch $url";
+    throw "Could not lunch $url";
   }
 }
 

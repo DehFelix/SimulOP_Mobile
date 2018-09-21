@@ -4,13 +4,20 @@ import 'package:simulop_v1/pages/home_page/home_tabs/selection_helper.dart';
 
 class OU1Selection extends StatelessWidget {
   final selectionTilesData = [
-    SelectionTile("Pumping of fluids", Icons.play_circle_filled, "Frint itaration of the pump Applet. Testing how the Text works when this big",
-    "/pumpingOfFluidsInput"),
-    SelectionTile("email", Icons.email,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus arcu id lobortis tincidunt. Mauris vitae lacinia purus. Nullam lacinia rhoncus volutpat. Phasellus sapien sapien, tempus eu lorem et, auctor elementum tortor. Mauris rhoncus erat nec lectus congue, quis cursus justo euismod. Donec at neque odio. Nam ut tempor lectus.",
-    "/exemple1"),
-    SelectionTile("Chat", Icons.chat,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut venenatis risus. Vivamus facilisis lorem nisl, at semper enim sodales sit amet. Vivamus ante diam, interdum sit amet ipsum quis, efficitur pharetra nulla. Phasellus at cursus massa. Ut sagittis turpis diam, elementum pretium dui tincidunt at. Suspendisse id purus sed."),
-    SelectionTile("News", Icons.new_releases,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sem arcu, elementum sit amet sagittis ut, iaculis et nulla. Praesent pulvinar tortor at malesuada efficitur. Nulla sed sem at eros hendrerit aliquet in ac sapien. Integer euismod fringilla dictum. Sed lacinia porta libero id tristique. Suspendisse quis mi dignissim, efficitur."),
-    SelectionTile("Net", Icons.network_wifi,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fringilla orci nunc, sit amet vulputate metus rhoncus sit amet. Sed consequat sem odio, et pellentesque lacus commodo at. Fusce mattis enim ut pulvinar hendrerit. Fusce faucibus eros vel ullamcorper ultrices. Donec non faucibus ipsum. Proin et dictum dolor. Etiam vestibulum."),
+    SelectionTile(
+        "Pumping of liquids",
+        Icons.play_circle_filled,
+        false,
+        "Frint itaration of the pump Applet. See what variables affects the NPSH and how to deal with tricky liquids",
+        "/pumpingOfFluidsInput"),
+    SelectionTile(
+        "Filters",
+        Icons.email,
+        true,
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus arcu id lobortis tincidunt. Mauris vitae lacinia purus. Nullam lacinia rhoncus volutpat. Phasellus sapien sapien, tempus eu lorem et, auctor elementum tortor. Mauris rhoncus erat nec lectus congue, quis cursus justo euismod. Donec at neque odio. Nam ut tempor lectus.",
+        "/exemple1"),
+    SelectionTile("Compressures", Icons.chat, true,
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut venenatis risus. Vivamus facilisis lorem nisl, at semper enim sodales sit amet. Vivamus ante diam, interdum sit amet ipsum quis, efficitur pharetra nulla. Phasellus at cursus massa. Ut sagittis turpis diam, elementum pretium dui tincidunt at. Suspendisse id purus sed."),
   ];
 
   @override
