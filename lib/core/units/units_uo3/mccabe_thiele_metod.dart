@@ -18,6 +18,8 @@ class McCabeThieleMethod {
 
   math.Point get pointP => _pointP;
 
+  List<math.Point> stagesPlot = List<math.Point>();
+
   McCabeThieleMethod(
       BinaryMixture binaryMixture,
       double targetXD,
@@ -145,7 +147,7 @@ class McCabeThieleMethod {
       x = xLK;
       y = opCurve(xLK);
       yLK = y;
-      plot.add(math.Point(x, y));      
+      plot.add(math.Point(x, y));
 
       if ((_pointP.x - x).abs() < dis) {
         dis = (_pointP.x - x).abs();
