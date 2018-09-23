@@ -342,22 +342,26 @@ class _ResultsCard extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
             child: ScopedModelDescendant<McCabeThieleSimulationModel>(
-              builder: (context, _, model) => RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: "Alpha value: ${model.getAlpha}\n",
-                            style: _textStyle),
-                        TextSpan(
-                            text:
-                                "Number of theoretical stages: ${model.getNumberStage}\n",
-                            style: _textStyle),
-                        TextSpan(
-                            text:
-                                "Idial feed stage: ${model.getOptimalStage}\n",
-                            style: _textStyle),
-                      ],
-                    ),
+              builder: (context, _, model) => StreamBuilder<Results>(
+                    stream: model.getResults,
+                    initialData: Results(idialStage: "0", numberOfStages: "0"),
+                    builder: (context, snapshot) => RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: "Alpha value: ${model.getAlpha}\n",
+                                  style: _textStyle),
+                              TextSpan(
+                                  text:
+                                      "Number of theoretical stages: ${snapshot.data.numberOfStages}\n",
+                                  style: _textStyle),
+                              TextSpan(
+                                  text:
+                                      "Idial feed stage: ${snapshot.data.idialStage}\n",
+                                  style: _textStyle),
+                            ],
+                          ),
+                        ),
                   ),
             ),
           ),

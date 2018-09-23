@@ -1,5 +1,8 @@
-import 'package:scoped_model/scoped_model.dart';
+import 'dart:async';
 import 'dart:math' as math;
+
+import 'package:scoped_model/scoped_model.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'package:simulop_v1/core/core.dart' as core;
 
@@ -14,7 +17,10 @@ class McCabeThieleSimulationModel extends Model {
       simulation.mcCabeThiele.plotOpCurve(40);
   List<math.Point> get getStages {
     var plot = simulation.mcCabeThiele.plotStages();
-    notifyListeners();
+    var results = Results(
+        numberOfStages: simulation.mcCabeThiele.numberStages.toString(),
+        idialStage: simulation.mcCabeThiele.idialStage.toString());
+    _resultsSubject.add(results);
     return plot;
   }
 
@@ -27,8 +33,10 @@ class McCabeThieleSimulationModel extends Model {
 
   String get getAlpha =>
       simulation.mcCabeThiele.binaryMixture.alpha.toStringAsFixed(2);
-  String get getNumberStage => simulation.mcCabeThiele.numberStages.toString();
-  String get getOptimalStage => simulation.mcCabeThiele.idialStage.toString();
+
+  Stream<Results> get getResults => _resultsSubject.stream;
+
+  final _resultsSubject = BehaviorSubject<Results>();
 
   void onFeedFractionChanged(double z) {
     simulation.mcCabeThiele.feedZf = z;
@@ -66,4 +74,11 @@ class McCabeThieleSimulation {
   core.Liquid liquidHK;
   core.BinaryMixture mixture;
   core.McCabeThieleMethod mcCabeThiele;
+}
+
+class Results {
+  final String numberOfStages;
+  final String idialStage;
+
+  Results({this.idialStage, this.numberOfStages});
 }
