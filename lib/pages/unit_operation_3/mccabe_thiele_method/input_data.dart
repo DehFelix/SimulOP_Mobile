@@ -25,8 +25,12 @@ class McCabeThieleInputData extends Model {
   double get getAlpha {
     if (input.validateInput()) {
       var tempMixture = core.BinaryMixture(
-          core.Liquid(core.Inicializer.liquidMaterial(input.liquidLK), 298.0),
-          core.Liquid(core.Inicializer.liquidMaterial(input.liquidHK), 298.0),
+          core.Liquid(
+              material: core.Inicializer.liquidMaterial(input.liquidLK),
+              temperature: 298.0),
+          core.Liquid(
+              material: core.Inicializer.liquidMaterial(input.liquidHK),
+              temperature: 298.0),
           0.5,
           298.0,
           1e5);
@@ -47,10 +51,12 @@ class McCabeThieleInputData extends Model {
   McCabeThieleSimulation createSimulation() {
     final McCabeThieleSimulation simulation = McCabeThieleSimulation();
 
-    final liquidLK =
-        core.Liquid(core.Inicializer.liquidMaterial(input.liquidLK), 298.0);
-    final liquidHK =
-        core.Liquid(core.Inicializer.liquidMaterial(input.liquidHK), 298.0);
+    final liquidLK = core.Liquid(
+        material: core.Inicializer.liquidMaterial(input.liquidLK),
+        temperature: 298.0);
+    final liquidHK = core.Liquid(
+        material: core.Inicializer.liquidMaterial(input.liquidHK),
+        temperature: 298.0);
     final mixture = core.BinaryMixture(liquidLK, liquidHK, 0.5, 298.0, 1e5);
 
     final mcCabeThiele =
@@ -111,10 +117,12 @@ class SimulationCreator {
   McCabeThieleSimulation createSimulation(MixtureInput input) {
     final McCabeThieleSimulation simulation = McCabeThieleSimulation();
 
-    final liquidLK =
-        core.Liquid(core.Inicializer.liquidMaterial(input.liquidLK), 298.0);
-    final liquidHK =
-        core.Liquid(core.Inicializer.liquidMaterial(input.liquidHK), 298.0);
+    final liquidLK = core.Liquid(
+        material: core.Inicializer.liquidMaterial(input.liquidLK),
+        temperature: 298.0);
+    final liquidHK = core.Liquid(
+        material: core.Inicializer.liquidMaterial(input.liquidHK),
+        temperature: 298.0);
     final mixture = core.BinaryMixture(liquidLK, liquidHK, 0.5, 298.0, 1e5);
 
     final mcCabeThiele =

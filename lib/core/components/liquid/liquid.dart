@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:math' as math;
 
 import 'package:simulop_v1/core/units/units.dart';
@@ -21,9 +22,9 @@ class Liquid {
 
   double get vaporPressure => _vaporPressure;
 
-  Liquid(ILiquidMaterial material, double t) {
+  Liquid({@required ILiquidMaterial material, @required double temperature}) {
     _material = material;
-    temperature = t;
+    temperature = temperature;
   }
 
   double pVap(double t) {
@@ -50,7 +51,10 @@ class Liquid {
   }
 
   Liquid clone() {
-    return new Liquid(_material.clone(), _temperature);
+    return new Liquid(
+      material: _material.clone(),
+      temperature: _temperature
+    );
   }
 }
 

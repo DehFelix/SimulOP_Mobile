@@ -1,13 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'dart:math' as math;
 
 import 'package:simulop_v1/core/units/units_uo1/units_1.dart';
+import 'package:simulop_v1/core/units/units_uo2/units_2.dart';
 import 'package:simulop_v1/core/components/materials/liquid/liquid_material.dart';
 import 'package:simulop_v1/core/components/materials/tube/tube_material.dart';
 import 'package:simulop_v1/core/interfaces/i_local_resistances.dart';
 
 class Tube extends UnitsI {
   /// Lengh of the Tube (m).
-  double lengh;
+  double length;
 
   /// Sum of the equivalent lenghs of all local resistances (m).
   double _equivalentLengh;
@@ -37,7 +39,7 @@ class Tube extends UnitsI {
   FrictionFactorMethod frictionMethod;
 
   /// Sum of the equivalent lenghs of all local resistances (m).
-  double get equivalentLengh  {
+  double get equivalentLengh {
     _updateEquivalentLengh();
     return _equivalentLengh;
   }
@@ -74,19 +76,22 @@ class Tube extends UnitsI {
   ///
   /// [internalDiametre] = lengh of the Tube (m).
   ///
-  /// [lengh] = lengh of the Tube (m).
+  /// [length] = lengh of the Tube (m).
   ///
   /// [material] = material of the tube ([TubeMaterial]).
   ///
   /// [elevationDiference] = elevation difence betwen the entry and exit of the tube (m).
   ///
   /// [frictionMethod] = [FrictionFactorMethod] for compiting the friction factor.
-  Tube(double internalDiametre, double lengh, TubeMaterial material,
-      double elevationDiference,
-      [FrictionFactorMethod frictionMethod = FrictionFactorMethod.fanning]) {
+  Tube(
+      {@required double internalDiametre,
+      @required double length,
+      @required TubeMaterial material,
+      @required double elevationDiference,
+      FrictionFactorMethod frictionMethod = FrictionFactorMethod.fanning}) {
     _material = material;
     this.internalDiametre = internalDiametre;
-    this.lengh = lengh;
+    this.length = length;
     this.elevationDiference = elevationDiference;
     this.frictionMethod = frictionMethod;
   }
@@ -124,7 +129,7 @@ class Tube extends UnitsI {
   /// The Rynolds number of a flow.
   ///
   /// [material] = [LiquidMaterial] of the liquid flowing.
-  /// 
+  ///
   /// [volumeFlow] = Volumetric flow (m^3/s).
   double reynolds(LiquidMaterial material, double volumeFlow) {
     double re;
@@ -138,7 +143,7 @@ class Tube extends UnitsI {
   /// Computes the friction factor with the [frictionMethod].
   ///
   /// [material] = [LiquidMaterial] of the liquid flowing.
-  /// 
+  ///
   /// [volumeFlow] = Volumetric flow (m^3/s).
   double _computFrictionFactor(LiquidMaterial material, double volumeFlow) {
     double re;
@@ -155,7 +160,7 @@ class Tube extends UnitsI {
       case FrictionFactorMethod.haaland:
         re = reynolds(material, volumeFlow);
         a1 = math.pow(7.0 / re, 0.9);
-        a2 = 0.27 * _relativeRoughness;
+        a2 = 0.27 * relativeRoughness;
         a = math.pow(-2.475 * math.log(a1 + a2) / math.ln10, 16.0);
         b = math.pow((37530 / re), 16.0);
 
@@ -166,7 +171,7 @@ class Tube extends UnitsI {
         break;
       case FrictionFactorMethod.fanning:
         re = reynolds(material, volumeFlow);
-        a = math.pow(_relativeRoughness / (3.7 * _internalDiametre), 1.11);
+        a = math.pow(relativeRoughness / (3.7 * internalDiametre), 1.11);
         b = 6.9 / re;
 
         invSqrFA = -3.6 * math.log(a + b) / math.ln10;
@@ -184,17 +189,79 @@ class Tube extends UnitsI {
   /// Computes the tube pressure drop.
   ///
   /// [material] = [LiquidMaterial] of the liquid flowing.
-  /// 
+  ///
   /// [volumeFlow] = Volumetric flow (m^3/s).
   double computePressureDrop(LiquidMaterial material, double volumeFlow) {
     _computFrictionFactor(material, volumeFlow);
-    double totalLengh = lengh + equivalentLengh;
+    double totalLengh = length + equivalentLengh;
 
     double averageVelocity =
-        volumeFlow / (math.pi * math.pow(_internalDiametre / 2.0, 2.0));
+        volumeFlow / (math.pi * math.pow(internalDiametre / 2.0, 2.0));
 
-    double presureDrop = 4 * _frictionFactor * (totalLengh / _internalDiametre) *
+    double presureDrop = 4 *
+        frictionFactor *
+        (totalLengh / internalDiametre) *
         (math.pow(averageVelocity, 2.0) / (2 * g));
+
+    _pressureDrop = presureDrop;
+
+    return presureDrop;
+  }
+}
+
+class DoublePibeTube extends Tube {
+  double thickness;
+  double externalDiametre;
+  double diametreOfInternalTube;
+  PipeType tubeType;
+
+  DoublePibeTube({
+    @required this.externalDiametre,
+    @required this.thickness,
+    @required double length,
+    @required TubeMaterial material,
+    @required this.tubeType,
+    @required double elevationDiference,
+    this.diametreOfInternalTube = 0.0,
+  }) : super(
+            internalDiametre:
+                (externalDiametre - thickness - diametreOfInternalTube),
+            length: length,
+            material: material,
+            elevationDiference: elevationDiference);
+
+  @override
+  double reynolds(LiquidMaterial material, double volumeFlow) {
+    double re, a;
+
+    if (tubeType == PipeType.outer) {
+      a = math.pi *
+          (math.pow(internalDiametre, 2.0) -
+              math.pow(diametreOfInternalTube, 2.0)) /
+          4.0;
+    } else {
+      a = math.pi * math.pow(internalDiametre, 2.0);
+    }
+
+    re = (material.density * volumeFlow * internalDiametre) /
+        (a * material.viscosity);
+
+    return re;
+  }
+
+  @override
+  double computePressureDrop(LiquidMaterial material, double volumeFlow) {
+    _computFrictionFactor(material, volumeFlow);
+    double totalLengh = length + equivalentLengh;
+
+    double averageVelocity =
+        volumeFlow / (math.pi * math.pow(internalDiametre / 2.0, 2.0));
+
+    double presureDrop = 4 *
+        frictionFactor *
+        material.density *
+        (totalLengh / internalDiametre) *
+        math.pow(averageVelocity, 2.0);
 
     _pressureDrop = presureDrop;
 

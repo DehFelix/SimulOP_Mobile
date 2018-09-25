@@ -24,9 +24,9 @@ class PumpingOfFluidsSimulationModel extends Model {
   double get getInletTankPressure => _simulation.pump.inletPressure / 1e5;
   double get getOutletValve => _simulation.outletValve.opening * 10.0;
   double get getDzInlet => _simulation.inletTube.elevationDiference;
-  double get getLInlet => _simulation.inletTube.lengh;
+  double get getLInlet => _simulation.inletTube.length;
   double get getDzOutlet => _simulation.outletTube.elevationDiference;
-  double get getLOutlet => _simulation.outletTube.lengh;
+  double get getLOutlet => _simulation.outletTube.length;
 
   void onTemperatureChanged(double t) {
     _simulation.liquid.temperature = t + 273.15;
@@ -54,7 +54,7 @@ class PumpingOfFluidsSimulationModel extends Model {
   }
 
   void onLInletChange(double l) {
-    _simulation.inletTube.lengh = l;
+    _simulation.inletTube.length = l;
     notifyListeners();
   }
 
@@ -64,7 +64,7 @@ class PumpingOfFluidsSimulationModel extends Model {
   }
 
   void onLOutletChange(double l) {
-    _simulation.outletTube.lengh = l;
+    _simulation.outletTube.length = l;
     notifyListeners();
   }
 

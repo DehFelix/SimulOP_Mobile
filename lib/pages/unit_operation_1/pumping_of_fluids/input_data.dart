@@ -185,7 +185,7 @@ class PumpingOfFluidsInputModel extends Model {
   }
 
   String get getSumaryOutletTubeRoughness {
-        if (outletTubeInput.validInput()) {
+    if (outletTubeInput.validInput()) {
       simulationCreator.createOutletTubeSumary(outletTubeInput);
       return (simulationCreator.sumaryOutletTubeMaterial.roughness * 1000.0)
           .toStringAsFixed(3);
@@ -523,8 +523,9 @@ class SimulationCreator {
 
   void createLiquidSumary(FluidInput fluidInput) {
     sumaryLiquid = new core.Liquid(
-        core.Inicializer.liquidMaterial(fluidInput.name),
-        double.parse(fluidInput.temperature) + 273.15);
+      material: core.Inicializer.liquidMaterial(fluidInput.name),
+      temperature: double.parse(fluidInput.temperature) + 273.15,
+    );
   }
 
   void createInletTubeSumary(InletTubeInput inletTubeInput) {
@@ -551,7 +552,8 @@ class SimulationCreator {
         core.Inicializer.liquidMaterial(fluidInput.name);
     final double temp = double.parse(fluidInput.temperature) + 273.15;
     final double pressure = double.parse(fluidInput.inletPressure) * 1e5;
-    simulation.liquid = new core.Liquid(liquidMaterial, temp);
+    simulation.liquid =
+        new core.Liquid(material: liquidMaterial, temperature: temp);
 
     // Inlet Tube
     final core.TubeMaterial inletTubeMaterial =
@@ -561,7 +563,10 @@ class SimulationCreator {
     final double inletElevation = double.parse(distancesInput.dzInlet);
 
     simulation.inletTube = new core.Tube(
-        inletDiametre, inletLengh, inletTubeMaterial, inletElevation);
+        internalDiametre: inletDiametre,
+        length: inletLengh,
+        material: inletTubeMaterial,
+        elevationDiference: inletElevation);
 
     simulation.inletResistance = new core.LocalResistance(
         "Total", double.parse(inletTubeInput.equivalentDistance));
@@ -579,7 +584,10 @@ class SimulationCreator {
     final double outletElevation = double.parse(distancesInput.dzOutlet);
 
     simulation.outletTube = new core.Tube(
-        outletDiametre, outletLengh, outletTubeMaterial, outletElevation);
+        internalDiametre: outletDiametre,
+        length: outletLengh,
+        material: outletTubeMaterial,
+        elevationDiference: outletElevation);
 
     simulation.outletResistance = new core.LocalResistance(
         "Total", double.parse(outletTubeInput.equivalentDistance));
