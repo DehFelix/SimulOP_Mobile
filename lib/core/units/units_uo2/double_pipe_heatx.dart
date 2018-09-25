@@ -235,6 +235,7 @@ class DoublePipeHeatX extends Units2 {
     return lmtd;
   }
 
+/*
   double _exitTemperature(ILiquidMaterial bulckMaterial,
       ExchangeFluid exchangeFluid, double flow, double inTemp) {
     double exitTemp;
@@ -251,6 +252,7 @@ class DoublePipeHeatX extends Units2 {
 
     return exitTemp;
   }
+*/
 
   double _computepressureDrop(DoublePibeTube tube, double flow) {
     double drop;

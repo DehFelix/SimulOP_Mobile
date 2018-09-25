@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:simulop_v1/core/components/materials/material_type.dart';
 import 'package:simulop_v1/core/interfaces/materials/i_liquid_material.dart';
+import 'package:simulop_v1/core/units/units_uo2/units_2.dart';
 
 /// Represents a pure liquid component
 class LiquidMaterial extends MaterialType implements ILiquidMaterial {
@@ -51,16 +52,12 @@ class LiquidMaterial extends MaterialType implements ILiquidMaterial {
   @override
   List<double> get antoineCoef => _antoineCoef;
 
-  @override
   List<double> get densityCoef => _densityCoef;
 
-  @override
   List<double> get specificHeatCoef => _specificHeatCoef;
 
-  @override
   List<double> get thermalConductivityCoef => _thermalConductivityCoef;
 
-  @override
   List<double> get viscosityCoef => _viscosityCoef;
 
   LiquidMaterial(
@@ -155,5 +152,109 @@ class LiquidMaterial extends MaterialType implements ILiquidMaterial {
         viscosityCoef: _viscosityCoef,
         specificHeatCoef: _specificHeatCoef,
         thermalConductivityCoef: _thermalConductivityCoef);
+  }
+}
+
+class ApiOilMaterial extends MaterialType implements ILiquidMaterial {
+  double apiDegree;
+  double _temperature;
+  double _density;
+  double _viscosity;
+  double _specificHeat;
+  double _thermalConductivity;
+  List<double> _antoineCoef = List<double>();
+
+  double get temperature => _temperature;
+
+  set temperature(double t) {
+    _temperature = t;
+    _updateProprieties(t);
+  }
+
+  @override
+  double get density => _density;
+
+  @override
+  double get viscosity => _viscosity;
+
+  @override
+  double get specificHeat => _specificHeat;
+
+  @override
+  double get thermalConductivity => _thermalConductivity;
+
+  @override
+  double get pr => specificHeat * viscosity / thermalConductivity;
+
+  @override
+  List<double> get antoineCoef => _antoineCoef;
+
+  ApiOilMaterial({@required double apiDegree, @required double temperature})
+      : super("Oil $apiDegree° API") {
+    this.apiDegree = apiDegree;
+    this.temperature = temperature;
+  }
+
+  void _updateProprieties(double t) {
+    _updateDensity(t);
+    _updateViscosity(t);
+    _updateSpecificHeat(t);
+    _updaTethermalConductivity(t);
+  }
+
+  void _updateDensity(double t) {
+    double den;
+
+    den = 141.5 / (apiDegree + 131.5);
+    den = den * Units2.waterDensityImperial; // Density in Kg/m^3
+
+    _density = den;
+  }
+
+  void _updateViscosity(double t) {
+    double vis;
+    double tempInF = 1.8 * t - 459.67;
+
+    double a1, a2, ex;
+
+    a1 = 0.32 + (1.8 * math.pow(10.0, 7.0)) / math.pow(apiDegree, 4.53);
+    a2 = 360.0 / (tempInF + 200.0);
+    ex = math.exp(0.43 + (8.33 / apiDegree));
+
+    a2 = math.pow(a2, ex);
+
+    vis = a1 * a2;
+
+    _viscosity = vis; // Vis in Pa*s
+  }
+
+  void _updateSpecificHeat(double t) {
+    double cp;
+    double tempInF = 1.8 * t - 459.67;
+    double a1, a2;
+
+    a1 = apiDegree * (-1.39 * math.pow(10.0, -6.0)) * tempInF +
+        1.847 * math.pow(10.0, -3.0);
+    a2 = 6.312 * math.pow(10.0, -4.0) * tempInF;
+    cp = a1 * a2 + 0.352;
+
+    cp = cp * 4186.798188; // cp in J/Kg K
+
+    _specificHeat = cp;
+  }
+
+  void _updaTethermalConductivity(double t) {
+    double k;
+
+    k = 0.826855 * (apiDegree + 131.5) * (0.85258 - 0.00054 * t);
+
+    k = k / 1000.0;
+
+    _thermalConductivity = k; // K in W/m K
+  }
+
+  @override
+  ILiquidMaterial clone() {
+    return new ApiOilMaterial(apiDegree: apiDegree, temperature: temperature);
   }
 }

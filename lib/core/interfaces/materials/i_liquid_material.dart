@@ -17,13 +17,5 @@ abstract class ILiquidMaterial {
 
   List<double> get antoineCoef;
 
-  List<double> get densityCoef;
-
-  List<double> get viscosityCoef;
-
-  List<double> get specificHeatCoef;
-
-  List<double> get thermalConductivityCoef;
-
   ILiquidMaterial clone();
 }
