@@ -522,7 +522,7 @@ class SimulationCreator {
   core.TubeMaterial sumaryOutletTubeMaterial;
 
   void createLiquidSumary(FluidInput fluidInput) {
-    sumaryLiquid = new core.Liquid(
+      sumaryLiquid = new core.Liquid(
       material: core.Inicializer.liquidMaterial(fluidInput.name),
       temperature: double.parse(fluidInput.temperature) + 273.15,
     );

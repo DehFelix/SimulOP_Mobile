@@ -24,7 +24,7 @@ class Liquid {
 
   Liquid({@required ILiquidMaterial material, @required double temperature}) {
     _material = material;
-    temperature = temperature;
+    this.temperature = temperature;
   }
 
   double pVap(double t) {

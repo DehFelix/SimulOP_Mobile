@@ -38,6 +38,10 @@ class McCabeThieleSimulationModel extends Model {
 
   final _resultsSubject = BehaviorSubject<Results>();
 
+  void dispose() {
+    _resultsSubject.close();
+  }
+
   void onFeedFractionChanged(double z) {
     simulation.mcCabeThiele.feedZf = z;
     notifyListeners();

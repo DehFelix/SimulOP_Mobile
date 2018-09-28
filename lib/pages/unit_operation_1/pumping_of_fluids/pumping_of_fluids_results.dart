@@ -24,10 +24,13 @@ class PumpingOfFluidsResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModel<PumpingOfFluidsSimulationModel>(
       model: PumpingOfFluidsSimulationModel(simulation),
-      child: Scaffold(
-        appBar: _FluidResultsAppBar(),
-        drawer: _FluidResultsDrawer(),
-        body: _mainBody(),
+      child: Theme(
+        data: ThemeData(primarySwatch: Colors.green),
+        child: Scaffold(
+          appBar: _FluidResultsAppBar(),
+          drawer: _FluidResultsDrawer(),
+          body: _mainBody(),
+        ),
       ),
     );
   }
@@ -357,13 +360,13 @@ class _ChartCard extends StatelessWidget {
       List<math.Point> dataHead, List<math.Point> dataNPSH) {
     return [
       charts.Series<math.Point, double>(
-        id: "head",
+        id: "Pump Head",
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataHead,
       )..setAttribute(charts.measureAxisIdKey, primaryMeasureAxisId),
       charts.Series<math.Point, double>(
-        id: "npsh",
+        id: "NPSH Available",
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataNPSH,
@@ -378,14 +381,14 @@ class _ChartCard extends StatelessWidget {
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
-          tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 5)),
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(
+              dataIsInWholeNumbers: false, desiredTickCount: 5)),
       secondaryMeasureAxis: charts.NumericAxisSpec(
-          tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 5)),
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(
+              dataIsInWholeNumbers: false, desiredTickCount: 5)),
       domainAxis: charts.NumericAxisSpec(
-          tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(
+              dataIsInWholeNumbers: false, desiredTickCount: 5)),
       behaviors: [
         charts.SeriesLegend(
           position: charts.BehaviorPosition.top,

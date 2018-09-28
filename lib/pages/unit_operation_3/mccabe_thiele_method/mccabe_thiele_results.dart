@@ -24,10 +24,13 @@ class McCabeThieleMethodResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModel<McCabeThieleSimulationModel>(
       model: McCabeThieleSimulationModel(simulation),
-      child: Scaffold(
-        appBar: _McCabeThieleResultsAppBar(),
-        drawer: _McCabeThieleResultsDrawer(),
-        body: _mainBody(),
+      child: Theme(
+        data: ThemeData(primarySwatch: Colors.blueGrey),
+              child: Scaffold(
+          appBar: _McCabeThieleResultsAppBar(),
+          drawer: _McCabeThieleResultsDrawer(),
+          body: _mainBody(),
+        ),
       ),
     );
   }
@@ -252,21 +255,22 @@ class _ChartCard extends StatelessWidget {
       List<math.Point> dataStages) {
     return [
       charts.Series<math.Point, double>(
-        id: "equilibrium",
+        id: "Equilibrium",
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataEquilibrium,
       ),
       charts.Series<math.Point, double>(
-        id: "operationCurves",
-        colorFn: (_, __) => charts.MaterialPalette.gray.shadeDefault,
-        dashPatternFn: (_, __) => [2, 3],
+        id: "Operation Curves",
+        colorFn: (_, __) => charts.MaterialPalette.gray.shade500,
+        dashPatternFn: (_, __) => [3, 3],
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataOperationCurves,
       ),
       charts.Series<math.Point, double>(
-        id: "stages",
+        id: "Stages",
+        colorFn: (_, __) => charts.MaterialPalette.gray.shade800,
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataStages,
@@ -280,10 +284,14 @@ class _ChartCard extends StatelessWidget {
           model.getEquilibrium, model.getOperationCurves, model.getStages),
       animate: false,
       defaultInteractions: false,
-      primaryMeasureAxis:
-          charts.NumericAxisSpec(viewport: charts.NumericExtents(0.0, 1.0)),
-      domainAxis:
-          charts.NumericAxisSpec(viewport: charts.NumericExtents(0.0, 1.0)),
+      primaryMeasureAxis: charts.NumericAxisSpec(
+        viewport: charts.NumericExtents(0.0, 1.0),
+          tickProviderSpec:
+              charts.BasicNumericTickProviderSpec(dataIsInWholeNumbers: false, desiredTickCount: 5)),
+      domainAxis: charts.NumericAxisSpec(
+        viewport: charts.NumericExtents(0.0, 1.0),
+          tickProviderSpec:
+              charts.BasicNumericTickProviderSpec(dataIsInWholeNumbers: false, desiredTickCount: 5)),
       behaviors: [
         charts.SeriesLegend(
           position: charts.BehaviorPosition.top,

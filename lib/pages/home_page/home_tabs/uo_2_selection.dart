@@ -4,8 +4,12 @@ import 'package:simulop_v1/pages/home_page/home_tabs/selection_helper.dart';
 
 class OU2Selection extends StatelessWidget {
   final selectionTilesData = [
-    SelectionTile("Double Pipe Heat Exchanger", Icons.home, false,
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dignissim sed arcu ac gravida. Aenean placerat sem quis leo suscipit, quis placerat quam varius. Sed porta neque elit, sed aliquam elit pulvinar at. In consequat metus eu tellus ultricies pellentesque. Quisque ac risus ac erat faucibus tempus sed id metus."),
+    SelectionTile(
+        "Double Pipe Heat Exchanger",
+        Icons.home,
+        false,
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dignissim sed arcu ac gravida. Aenean placerat sem quis leo suscipit, quis placerat quam varius. Sed porta neque elit, sed aliquam elit pulvinar at. In consequat metus eu tellus ultricies pellentesque. Quisque ac risus ac erat faucibus tempus sed id metus.",
+        "/doublePipeHeatX"),
     SelectionTile("Multi Pipe Heat Exchanger", Icons.email, true,
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate mattis nunc in elementum. Aliquam ante neque, sagittis non blandit dapibus, laoreet a tortor. Maecenas non rutrum risus, vel lacinia magna. Vivamus fringilla ut metus non dignissim. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer lobortis metus."),
     SelectionTile("Evaporator", Icons.chat, true,

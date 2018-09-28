@@ -4,13 +4,18 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:simulop_v1/locale/locales.dart';
 import 'package:simulop_v1/pages/home_page/home_page.dart';
 import 'package:simulop_v1/pages/home_page/default_page.dart' as Default;
-import 'package:simulop_v1/pages/unit_operation_1/example.dart' as UO1;
+import 'package:simulop_v1/pages/unit_operation_1/example.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/pumping_of_fluids_input.dart';
 import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/mccabe_thiele_input.dart';
+import 'package:simulop_v1/pages/unit_operation_2/double_pipe_heatx/double_pipe_input.dart';
 
 void main() => runApp(SimulOPAPP());
 
 class SimulOPAPP extends StatelessWidget {
+  final ThemeData simulopTheme = ThemeData(
+    primarySwatch: Colors.blue,
+  );
+  
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
@@ -21,23 +26,20 @@ class SimulOPAPP extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [
-        Locale("en",""),
-        Locale("pt",""),
+        Locale("en", ""),
+        Locale("pt", ""),
       ],
-      onGenerateTitle: (BuildContext context) => 
-      AppLocalizations.of(context).title,
+      onGenerateTitle: (BuildContext context) =>
+          AppLocalizations.of(context).title,
       theme: simulopTheme,
       home: HomePage(),
       routes: {
         "/default": (context) => Default.DefaultPage(),
-        "/exemple1": (context) => UO1.ExempleOne(),
+        "/exemple1": (context) => ExempleOne(),
         "/pumpingOfFluidsInput": (context) => PumpingOfFluidsInput(),
         "/mcCabeThieleMethod": (context) => McCabeThieleMethodInput(),
+        "/doublePipeHeatX": (context) => DoublePiPeInput()
       },
     );
   }
-
-  final ThemeData simulopTheme = ThemeData(
-    primarySwatch: Colors.blue,    
-  );
 }

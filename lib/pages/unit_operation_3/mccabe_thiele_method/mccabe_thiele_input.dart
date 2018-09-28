@@ -24,39 +24,42 @@ class McCabeThieleMethodInput extends StatelessWidget {
       model: McCabeThieleInputData(
         input: mixtureInputModel,
       ),
-      child: Scaffold(
-          appBar: _McCabeThieleInputAppBar(),
-          body: Container(child: _mainBody()),
-          floatingActionButton: ScopedModelDescendant<McCabeThieleInputData>(
-            builder: (context, _, model) => FloatingActionButton(
-                  child: Icon(model.getFabIcon),
-                  onPressed: () {
-                    if (!model.canCreateSimulation()) {
-                      String erro =
-                          (model.getAlpha < 1.0 && model.getAlpha != 0.0)
-                              ? "HK more volatile than LK"
-                              : "Incomplete inputs";
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        duration: Duration(seconds: 2),
-                        content: Text(erro),
-                        action: SnackBarAction(
-                          label: "Ok",
-                          onPressed: () {},
+      child: Theme(
+        data: ThemeData(primarySwatch: Colors.blueGrey),
+              child: Scaffold(
+            appBar: _McCabeThieleInputAppBar(),
+            body: Container(child: _mainBody()),
+            floatingActionButton: ScopedModelDescendant<McCabeThieleInputData>(
+              builder: (context, _, model) => FloatingActionButton(
+                    child: Icon(model.getFabIcon),
+                    onPressed: () {
+                      if (!model.canCreateSimulation()) {
+                        String erro =
+                            (model.getAlpha < 1.0 && model.getAlpha != 0.0)
+                                ? "HK more volatile than LK"
+                                : "Incomplete inputs";
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          duration: Duration(seconds: 2),
+                          content: Text(erro),
+                          action: SnackBarAction(
+                            label: "Ok",
+                            onPressed: () {},
+                          ),
+                        ));
+                        return;
+                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => McCabeThieleMethodResults(
+                                simulation: model.createSimulation(),
+                              ),
                         ),
-                      ));
-                      return;
-                    }
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => McCabeThieleMethodResults(
-                              simulation: model.createSimulation(),
-                            ),
-                      ),
-                    );
-                  },
-                ),
-          )),
+                      );
+                    },
+                  ),
+            )),
+      ),
     );
   }
 

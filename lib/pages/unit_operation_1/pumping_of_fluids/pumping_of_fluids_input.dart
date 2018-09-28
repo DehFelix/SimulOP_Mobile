@@ -34,34 +34,37 @@ class PumpingOfFluidsInput extends StatelessWidget {
           inletTubeInput: inletTubeInputModel,
           outletTubeInput: outletTubeInputModel,
           distancesInput: distancesInputModel),
-      child: Scaffold(
-        appBar: _FluidInputAppBar(),
-        body: Container(child: _mainBody()),
-        floatingActionButton: ScopedModelDescendant<PumpingOfFluidsInputModel>(
-          builder: (context, _, model) => FloatingActionButton(
-                child: Icon(model.getFabIcon),
-                onPressed: () {
-                  if (!model.canCreateSimulation()) {
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      duration: Duration(seconds: 2),
-                      content: Text("Incomple inputs"),
-                      action: SnackBarAction(
-                        label: "Ok",
-                        onPressed: () {},
-                      ),
-                    ));
-                    return;
-                  }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PumpingOfFluidsResults(
-                            simulation: model.createSimulation(),
-                          ),
-                    ),
-                  );
-                },
-              ),
+      child: Theme(
+        data: ThemeData(primarySwatch: Colors.green),
+        child: Scaffold(
+          appBar: _FluidInputAppBar(),
+          body: Container(child: _mainBody()),
+          floatingActionButton:
+              ScopedModelDescendant<PumpingOfFluidsInputModel>(
+            builder: (context, _, model) => FloatingActionButton(
+                  child: Icon(model.getFabIcon),
+                  onPressed: () {
+                    if (!model.canCreateSimulation()) {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        duration: Duration(seconds: 2),
+                        content: Text("Incomple inputs"),
+                        action: SnackBarAction(
+                          label: "Ok",
+                          onPressed: () {},
+                        ),
+                      ));
+                      return;
+                    }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PumpingOfFluidsResults(
+                                simulation: model.createSimulation(),
+                              ),
+                        ));
+                  },
+                ),
+          ),
         ),
       ),
     );
@@ -95,10 +98,11 @@ class PumpingOfFluidsInput extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         ListTile(
           leading: Icon(Icons.picture_in_picture),
-          title: Text("Picture:", style: _headerTextStyle),
+          title: Text("Picture", style: _headerTextStyle),
         ),
-        Image.network(
-            "https://preview.ibb.co/g5VPk9/Bombeamento_Completov2.png"),
+        Image(
+          image: AssetImage('assets/images/pumpingOfLiquids_placeholder.png'),
+        )
       ]),
     );
   }
