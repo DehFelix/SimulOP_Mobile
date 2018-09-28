@@ -100,11 +100,11 @@ class LiquidMaterial extends MaterialType implements ILiquidMaterial {
     double v;
     // Viscosity in cP
     v = math.pow(
-        10,
+        10.0,
         (_viscosityCoef[0] +
             _viscosityCoef[1] / t +
-            _viscosityCoef[2] * t +
-            _viscosityCoef[3] * math.pow(t, 2)));
+            (_viscosityCoef[2] * t) +
+            _viscosityCoef[3] * math.pow(t, 2.0)));
 
     _viscosity = v / 1000.0; // Viscosity in Pa*s.
   }
@@ -206,7 +206,7 @@ class ApiOilMaterial extends MaterialType implements ILiquidMaterial {
     double den;
 
     den = 141.5 / (apiDegree + 131.5);
-    den = den * Units2.waterDensityImperial; // Density in Kg/m^3
+    den = den * 999.0; // Density in Kg/m^3
 
     _density = den;
   }

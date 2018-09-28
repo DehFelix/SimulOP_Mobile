@@ -3,7 +3,7 @@ import 'package:simulop_v1/core/components/materials/liquid/liquid_material.dart
 
 /// Inicializer of components.
 class Inicializer {
-  static LiquidMaterial liquidMaterial(String material) {
+  static LiquidMaterial liquidMaterial(String material, {double temp = 298.15}) {
     double molarMass;
     List<double> antoineCoef;
     List<double> densityCoef;
@@ -41,7 +41,7 @@ class Inicializer {
     }
     return new LiquidMaterial(
         name: material,
-        temperature: 298.15,
+        temperature: temp,
         molarMass: molarMass,
         antoineCoef: antoineCoef,
         densityCoef: densityCoef,

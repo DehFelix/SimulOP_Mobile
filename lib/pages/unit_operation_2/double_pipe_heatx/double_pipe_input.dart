@@ -37,11 +37,21 @@ class DoublePiPeInput extends StatelessWidget {
             builder: (context, _, model) => FloatingActionButton(
                   child: Icon(model.getFabIcon()),
                   onPressed: () {
+                    if (!model.canCreateSimulation()) {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        duration: Duration(seconds: 2),
+                        content: Text(model.getErroMessage()),
+                        action: SnackBarAction(
+                          label: "Ok",
+                          onPressed: () {},
+                        ),
+                      ));
+                      return;
+                    }
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DoublePiPeResults()),
-                    );
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DoublePiPeResults()));
                   },
                 ),
           ),
@@ -228,7 +238,7 @@ class _OuterInputCard extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         initialValue: model.heatInput.outerDiametre,
                         decoration: InputDecoration(labelText: "Diametre (cm)"),
-                        validator: model.heatInput.diametreValidator,
+                        validator: model.outerInput.diametreValidator,
                         onSaved: model.setHeatOuterDiametre,
                       ),
                 ),
@@ -325,7 +335,7 @@ class _InnerInputCard extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         initialValue: model.heatInput.innerDiametre,
                         decoration: InputDecoration(labelText: "Diametre (cm)"),
-                        validator: model.heatInput.diametreValidator,
+                        validator: model.innerInput.diametreValidator,
                         onSaved: model.setHeatInnerDiametre,
                       ),
                 )
@@ -425,6 +435,42 @@ class _SumaryCard extends StatelessWidget {
 
   final _textStyle = TextStyle(fontSize: 14.0, color: Colors.black);
 
+  TextSpan _outerSumary(Sumary sumary) {
+    String liquid = sumary.outerLiquidName;
+    String bulckTemp = sumary.outerBulkTemp;
+    String density = sumary.outerLiquidDensity;
+    String viscosity = sumary.outerLiquidViscosity;
+    String specificyHeat = sumary.outerLiquidSpecificHeat;
+
+    return TextSpan(
+      children: <TextSpan>[
+        TextSpan(text: liquid, style: _titleStyle),
+        TextSpan(text: bulckTemp, style: _textStyle),
+        TextSpan(text: density, style: _textStyle),
+        TextSpan(text: viscosity, style: _textStyle),
+        TextSpan(text: specificyHeat, style: _textStyle),
+      ],
+    );
+  }
+
+  TextSpan _innerSumary(Sumary sumary) {
+    String liquid = sumary.innerLiquidName;
+    String bulckTemp = sumary.innerBulkTemp;
+    String density = sumary.innerLiquidDensity;
+    String viscosity = sumary.innerLiquidViscosity;
+    String specificyHeat = sumary.innerLiquidSpecificHeat;
+
+    return TextSpan(
+      children: <TextSpan>[
+        TextSpan(text: liquid, style: _titleStyle),
+        TextSpan(text: bulckTemp, style: _textStyle),
+        TextSpan(text: density, style: _textStyle),
+        TextSpan(text: viscosity, style: _textStyle),
+        TextSpan(text: specificyHeat, style: _textStyle),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -440,13 +486,19 @@ class _SumaryCard extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-          child: RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(text: "Sumary1: \n", style: _textStyle),
-                TextSpan(text: "Sumary2: \n", style: _textStyle),
-              ],
-            ),
+          child: ScopedModelDescendant<InputModel>(
+            builder: (context, _, model) {
+              Sumary sumary = model.simulation.getSumary();
+              return RichText(
+                text: TextSpan(
+                  children: <TextSpan>[
+                    _outerSumary(sumary),
+                    TextSpan(text: "\n"),
+                    _innerSumary(sumary),
+                  ],
+                ),
+              );
+            },
           ),
         )
       ],
