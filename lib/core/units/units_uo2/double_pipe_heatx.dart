@@ -269,7 +269,7 @@ class DoublePipeHeatX extends Units2 {
   void changeLiquidPossitions() {}
 
   List<List<math.Point>> plotresults(
-      double minExitTemp, double maxTempExit, int div) {
+      double minExitTemp, double maxExitTemp, int div) {
     List<List<math.Point>> plot = List<List<math.Point>>();
     List<math.Point> plotOuterPressureDrop = List<math.Point>();
     List<math.Point> plotInnerPressureDrop = List<math.Point>();
@@ -282,7 +282,7 @@ class DoublePipeHeatX extends Units2 {
     double lengh;
 
     for (int i = 0; i <= div; i++) {
-      exitTemp = 273.15 + minExitTemp + i * (maxTempExit - minExitTemp) / div;
+      exitTemp = 273.15 + minExitTemp + i * (maxExitTemp - minExitTemp) / div;
 
       if (outer == ExchangeFluid.hot) {
         outerExitTemp = exitTemp;

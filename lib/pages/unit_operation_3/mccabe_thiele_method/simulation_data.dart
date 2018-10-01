@@ -7,9 +7,9 @@ import 'package:rxdart/rxdart.dart';
 import 'package:simulop_v1/core/core.dart' as core;
 
 class McCabeThieleSimulationModel extends Model {
-  final McCabeThieleSimulation simulation;
+  McCabeThieleSimulation simulation;
 
-  McCabeThieleSimulationModel(this.simulation);
+  McCabeThieleSimulationModel({this.simulation});
 
   List<math.Point> get getEquilibrium =>
       simulation.mcCabeThiele.plotEquilibrium(40);

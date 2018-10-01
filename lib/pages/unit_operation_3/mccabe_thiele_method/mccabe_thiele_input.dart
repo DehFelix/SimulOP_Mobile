@@ -145,7 +145,7 @@ class _MixtureInputCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.format_color_fill),
+            leading: Icon(Icons.invert_colors_off),
             title: Text(
               "Mixture Input: ",
               style: _headerTextStyle,

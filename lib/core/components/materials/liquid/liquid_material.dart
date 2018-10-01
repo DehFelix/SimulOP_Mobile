@@ -3,7 +3,6 @@ import 'dart:math' as math;
 
 import 'package:simulop_v1/core/components/materials/material_type.dart';
 import 'package:simulop_v1/core/interfaces/materials/i_liquid_material.dart';
-import 'package:simulop_v1/core/units/units_uo2/units_2.dart';
 
 /// Represents a pure liquid component
 class LiquidMaterial extends MaterialType implements ILiquidMaterial {

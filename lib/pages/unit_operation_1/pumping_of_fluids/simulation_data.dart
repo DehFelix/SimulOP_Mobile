@@ -106,30 +106,4 @@ class PumpingOfFluidsSimulation{
   }
 
   String string = "Inside the Simulation";
-  String head = "40";
-  String npsh = "3";
-
-  double liquidTemperature = 30.0;
-  double inletValveOpeningFactor = 10.0;
-  double inletTankPressure = 5.0;
-  double outletValveOpeningFactor = 10.0;
-
-  final List<math.Point> data = [
-    math.Point(0.0, 0.0),
-    math.Point(0.2, 0.2),
-    math.Point(0.4, 0.4),
-    math.Point(0.6, 0.6),
-    math.Point(0.8, 5.0),
-    math.Point(1.0, 6.0),
-  ];
-
-   final List<math.Point> data2 = [
-    math.Point(1.0, 0.0 + 100.0),
-    math.Point(1.2, 0.2 + 100.0),
-    math.Point(1.4, 0.4 + 100.0),
-    math.Point(1.6, 0.6 + 100.0),
-    math.Point(1.8, 5.0 + 100.0),
-    math.Point(2.0, 6.0 + 100.0),
-  ]; 
-
 }

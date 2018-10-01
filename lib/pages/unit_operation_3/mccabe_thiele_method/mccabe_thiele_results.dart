@@ -14,19 +14,30 @@ final helpItems = [
   HelpItem("About", "/default", ActionType.route),
 ];
 
+final McCabeThieleSimulationModel simulationModel =
+    McCabeThieleSimulationModel();
+
 class McCabeThieleMethodResults extends StatelessWidget {
   final McCabeThieleSimulation simulation;
 
   McCabeThieleMethodResults({Key key, @required this.simulation})
-      : super(key: key);
+      : super(key: key) {
+    if (simulationModel.simulation == null ||
+        (simulationModel.simulation.liquidLK.material.name !=
+                simulation.liquidLK.material.name ||
+            simulationModel.simulation.liquidHK.material.name !=
+                simulation.liquidHK.material.name)) {
+      simulationModel.simulation = simulation;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return ScopedModel<McCabeThieleSimulationModel>(
-      model: McCabeThieleSimulationModel(simulation),
+      model: simulationModel,
       child: Theme(
         data: ThemeData(primarySwatch: Colors.blueGrey),
-              child: Scaffold(
+        child: Scaffold(
           appBar: _McCabeThieleResultsAppBar(),
           drawer: _McCabeThieleResultsDrawer(),
           body: _mainBody(),
@@ -285,13 +296,13 @@ class _ChartCard extends StatelessWidget {
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
-        viewport: charts.NumericExtents(0.0, 1.0),
-          tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(dataIsInWholeNumbers: false, desiredTickCount: 5)),
+          viewport: charts.NumericExtents(0.0, 1.0),
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(
+              dataIsInWholeNumbers: false, desiredTickCount: 5)),
       domainAxis: charts.NumericAxisSpec(
-        viewport: charts.NumericExtents(0.0, 1.0),
-          tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(dataIsInWholeNumbers: false, desiredTickCount: 5)),
+          viewport: charts.NumericExtents(0.0, 1.0),
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(
+              dataIsInWholeNumbers: false, desiredTickCount: 5)),
       behaviors: [
         charts.SeriesLegend(
           position: charts.BehaviorPosition.top,

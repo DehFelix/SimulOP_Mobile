@@ -210,25 +210,48 @@ class Tube extends UnitsI {
 }
 
 class DoublePibeTube extends Tube {
-  double thickness;
-  double externalDiametre;
-  double diametreOfInternalTube;
+  double _thickness;
+  double _externalDiametre;
+  double _diametreOfInternalTube;
   PipeType tubeType;
 
+  double get thickness => _thickness;
+  double get externalDiametre => _externalDiametre;
+  double get diametreOfInternalTube => _diametreOfInternalTube;
+
+  set thickness(double t) {
+    _thickness = t;
+    _internalDiametre = externalDiametre - thickness - diametreOfInternalTube;
+  }
+
+  set externalDiametre(double d) {
+    _externalDiametre = d;
+    _internalDiametre = externalDiametre - thickness - diametreOfInternalTube;
+  }
+
+  set diametreOfInternalTube(double d) {
+    _diametreOfInternalTube = d;
+    _internalDiametre = externalDiametre - thickness - diametreOfInternalTube;
+  }
+
   DoublePibeTube({
-    @required this.externalDiametre,
-    @required this.thickness,
+    @required externalDiametre,
+    @required thickness,
     @required double length,
     @required TubeMaterial material,
     @required this.tubeType,
     @required double elevationDiference,
-    this.diametreOfInternalTube = 0.0,
+    diametreOfInternalTube = 0.0,
   }) : super(
             internalDiametre:
                 (externalDiametre - thickness - diametreOfInternalTube),
             length: length,
             material: material,
-            elevationDiference: elevationDiference);
+            elevationDiference: elevationDiference) {
+    _thickness = thickness;
+    _externalDiametre = externalDiametre;
+    _diametreOfInternalTube = diametreOfInternalTube;
+  }
 
   @override
   double reynolds(LiquidMaterial material, double volumeFlow) {

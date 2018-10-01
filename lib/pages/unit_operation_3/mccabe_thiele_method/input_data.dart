@@ -83,7 +83,7 @@ class MixtureInput {
   String liquidLK;
   String liquidHK;
 
-  final List<String> _liquidOptions = ["Benzene", "Toluene"];
+  final List<String> _liquidOptions = ["Benzene", "Toluene", "water"];
 
   // Create the dropDown for the possibles fluids
   List<DropdownMenuItem<dynamic>> liquidInputDropDownItems() {

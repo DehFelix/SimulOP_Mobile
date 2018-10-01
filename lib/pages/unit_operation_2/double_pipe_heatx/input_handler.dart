@@ -1,8 +1,8 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:simulop_v1/core/core.dart' as core;
+import 'package:simulop_v1/pages/unit_operation_2/double_pipe_heatx/simulation_data.dart';
 
 class InputModel extends Model {
   final _outerInput = OuterInput();
@@ -25,10 +25,20 @@ class InputModel extends Model {
   void setDefaultInputs() {
     // Outer:
     _outerInput.liquid = "Water";
-
+    _outerInput.tempIN = "70.0";
+    _outerInput.tempExit = "37.0";
     // Inner:
-
+    _innerInput.liquid = "Water";
+    _innerInput.tempIN = "26.0";
+    _innerInput.tempExit = "48.0";
     // HeatX:
+    _heatXInput.hotFlow = "3.0";
+    _heatXInput.tubeMaterial = "Copper";
+    _heatXInput.foolingFactor = "0.0";
+    _heatXInput.thickness = "0.0";
+
+    _heatXInput.innerDiametre = "3.0";
+    _heatXInput.outerDiametre = "7.0";
 
     notifyListeners();
   }
@@ -55,7 +65,7 @@ class InputModel extends Model {
   }
 
   void setInnerLiquidName(String name) {
-    _innerInput.isOil = (name == "Oil (°API)") ? true : false;    
+    _innerInput.isOil = (name == "Oil (°API)") ? true : false;
     _innerInput.liquid = name;
     notifyListeners();
   }
@@ -119,7 +129,9 @@ class InputModel extends Model {
         : "Inclonplete Inputs";
   }
 
-  void dispose() {}
+  DoublePipeHeatXSimulation createSimulation() {
+    return _simulation.createSimulation();
+  }
 }
 
 class OuterInput {
@@ -329,7 +341,7 @@ class HeatXInput {
   String thicknessValidator(String value) {
     if (value.isEmpty) return null;
 
-    double min = 2.0;
+    double min = 0.0;
     double max = 20.0;
     double _number;
 
@@ -363,7 +375,7 @@ class HeatXInput {
   String foolingFactorValidator(String value) {
     if (value.isEmpty) return null;
 
-    double min = 2.0;
+    double min = 0.0;
     double max = 20.0;
     double _number;
 
@@ -411,6 +423,9 @@ class SimulationCreator {
     if (outerInput.validInput() &&
         innerInput.validInput() &&
         heatXInput.validInput()) {
+      erroMessage = "";
+      numbersErro = false;
+
       // Checking diametres
       double outerDiam = double.parse(heatXInput.outerDiametre);
       double innerDiam = double.parse(heatXInput.innerDiametre);
@@ -418,11 +433,33 @@ class SimulationCreator {
       if (outerDiam - innerDiam < 3.0) {
         erroMessage = "Outer Diametre too small";
         numbersErro = true;
-        return false;
-      } else {
-        numbersErro = false;
-        return true;
       }
+
+      // Checking temperature diference
+
+      double outerTempIn = double.parse(outerInput.tempIN);
+      double innerTempIn = double.parse(innerInput.tempIN);
+
+      if ((outerTempIn - innerTempIn).abs() < 2.0) {
+        erroMessage = "Check temperatures";
+        numbersErro = true;
+      }
+
+      core.PipeType hotTube = (outerTempIn > innerTempIn)
+          ? core.PipeType.outer
+          : core.PipeType.inner;
+
+      if (hotTube == core.PipeType.outer) {
+        if (outerTempIn < 40.0 || innerTempIn > 40.0) {
+          erroMessage = "Hot/Cold liquid not hot/cold enough";
+          numbersErro = true;
+        }
+      } else if (outerTempIn > 40.0 || innerTempIn < 40.0) {
+        erroMessage = "Hot/Cold liquid not hot/cold enough";
+        numbersErro = true;
+      }
+
+      return (!numbersErro);
     } else {
       return false;
     }
@@ -441,7 +478,8 @@ class SimulationCreator {
           ? core.ApiOilMaterial(apiDegree: api, temperature: bulckTemp)
           : core.Inicializer.liquidMaterial(outerInput.liquid, temp: bulckTemp);
 
-      sumary.outerLiquidName = "Outer Liquid - ${(outerInput.isOil) ? "Oil ($api °API)" : outerInput.liquid} \n";
+      sumary.outerLiquidName =
+          "Outer Liquid - ${(outerInput.isOil) ? "Oil ($api °API)" : outerInput.liquid} \n";
       sumary.outerBulkTemp =
           "Bulck Temperature ${(bulckTemp - 273.15).toStringAsFixed(1)} °C \n";
       sumary.outerLiquidDensity =
@@ -455,13 +493,15 @@ class SimulationCreator {
     if (innerInput.validInput()) {
       final bulckTemp = 273.15 +
           (double.parse(innerInput.tempIN) +
-              double.parse(innerInput.tempExit) / 2.0);
+                  double.parse(innerInput.tempExit)) /
+              2.0;
       final api = (innerInput.isOil) ? double.parse(innerInput.apiDegree) : 0.0;
       final core.ILiquidMaterial innerMaterial = (innerInput.isOil)
           ? core.ApiOilMaterial(apiDegree: api, temperature: bulckTemp)
           : core.Inicializer.liquidMaterial(innerInput.liquid, temp: bulckTemp);
 
-      sumary.innerLiquidName = "Inner Liquid - ${(innerInput.isOil) ? "Oil ($api °API)" : innerInput.liquid} \n";
+      sumary.innerLiquidName =
+          "Inner Liquid - ${(innerInput.isOil) ? "Oil ($api °API)" : innerInput.liquid} \n";
       sumary.innerBulkTemp =
           "Bulck Temperature ${(bulckTemp - 273.15).toStringAsFixed(1)} °C \n";
       sumary.innerLiquidDensity =
@@ -473,6 +513,83 @@ class SimulationCreator {
     }
 
     return sumary;
+  }
+
+  DoublePipeHeatXSimulation createSimulation() {
+    // Outer Liquid
+    final outerTempIn = double.parse(outerInput.tempIN) + 273.15;
+    final outerTempExit = double.parse(outerInput.tempExit) + 273.15;
+
+    final core.ILiquidMaterial outerLiquidMaterial = (outerInput.isOil)
+        ? core.ApiOilMaterial(
+            apiDegree: double.parse(outerInput.apiDegree),
+            temperature: outerTempIn)
+        : core.Inicializer.liquidMaterial(outerInput.liquid);
+
+    final outerLiquid =
+        core.Liquid(material: outerLiquidMaterial, temperature: outerTempIn);
+
+    // Inner Liquid
+    final innerTempIn = double.parse(innerInput.tempIN) + 273.15;
+    final innerTempExit = double.parse(innerInput.tempExit) + 273.15;
+
+    final core.ILiquidMaterial innerLiquidMaterial = (innerInput.isOil)
+        ? core.ApiOilMaterial(
+            apiDegree: double.parse(innerInput.apiDegree),
+            temperature: innerTempIn)
+        : core.Inicializer.liquidMaterial(innerInput.liquid);
+
+    final innerLiquid =
+        core.Liquid(material: innerLiquidMaterial, temperature: innerTempIn);
+
+    // Pipes
+    final tubeMaterial = core.Inicializer.tubeMaterial(heatXInput.tubeMaterial);
+    final thicness = double.parse(heatXInput.thickness) * 1e-2;
+
+    // Inner Pipe
+    final innerDiametre = double.parse(heatXInput.innerDiametre) * 1e-2;
+    final innerTube = core.DoublePibeTube(
+        material: tubeMaterial,
+        externalDiametre: innerDiametre,
+        thickness: thicness,
+        tubeType: core.PipeType.inner,
+        elevationDiference: 0.0,
+        length: 1.0);
+
+    // Outer Pipe
+    final outerDiametre = double.parse(heatXInput.outerDiametre) * 1e-2;
+    final outerTube = core.DoublePibeTube(
+        material: tubeMaterial,
+        externalDiametre: outerDiametre,
+        thickness: thicness,
+        tubeType: core.PipeType.outer,
+        elevationDiference: 0.0,
+        length: 1.0,
+        diametreOfInternalTube: innerDiametre);
+
+    // HeatX
+    final hotFlow = double.parse(heatXInput.hotFlow) / 3600.0;
+    final foolingFactor = double.parse(heatXInput.foolingFactor) * 1e-3;
+
+    final heatX = core.DoublePipeHeatX(
+        hotFlow: hotFlow,
+        outerLiquidIn: outerLiquid,
+        outerExitTemp: outerTempExit,
+        outerPipe: outerTube,
+        innerLiquidIn: innerLiquid,
+        innerExitTemp: innerTempExit,
+        innerPipe: innerTube,
+        foulingFactor: foolingFactor,
+        config: core.HeaterConfig.counterCurrent);
+
+    final simulation = DoublePipeHeatXSimulation(
+        heatX: heatX,
+        innerLiquid: innerLiquid,
+        innerTube: innerTube,
+        outterLiquid: outerLiquid,
+        outterTube: outerTube);
+
+    return simulation;
   }
 }
 

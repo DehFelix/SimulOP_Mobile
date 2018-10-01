@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:math' as math;
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
+import 'package:simulop_v1/pages/unit_operation_2/double_pipe_heatx/simulation_data.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
@@ -14,14 +16,21 @@ final helpItems = [
 ];
 
 class DoublePiPeResults extends StatelessWidget {
+  final DoublePipeHeatXSimulation simulation;
+
+  DoublePiPeResults({Key key, @required this.simulation}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(primarySwatch: Colors.teal),
-      child: Scaffold(
-        appBar: _DoublePipeAppBar(),
-        drawer: _DoublePipeDrawer(),
-        body: _mainBody(),
+      child: ScopedModel<DoublePipeBloc>(
+        model: DoublePipeBloc(simulation),
+        child: Scaffold(
+          appBar: _DoublePipeAppBar(),
+          drawer: _DoublePipeDrawer(),
+          body: _mainBody(),
+        ),
       ),
     );
   }
@@ -102,25 +111,26 @@ class __DoublePipeAppBarState extends State<_DoublePipeAppBar> {
 }
 
 class _ChartCard extends StatelessWidget {
-  Widget _chartChoise() {
-    return Switch(
-      value: false,
-      onChanged: (value) {},
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Column(
         children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.insert_chart),
-            title: Text(
-              "Graph - Temperatures",
-              style: _headerTextStyle,
-            ),
-            trailing: _chartChoise(),
+          ScopedModelDescendant<DoublePipeBloc>(
+            builder: (context, _, model) => ListTile(
+                  leading: Icon(Icons.insert_chart),
+                  title: Text(
+                    model.getChartText(),
+                    style: _headerTextStyle,
+                  ),
+                  trailing: Switch(
+                    value: model.getChartView(),
+                    onChanged: (val) {
+                      model.toggleChartView(val);
+                    },
+                  ),
+                  onTap: () {model.toggleChartView(!model.getChartView());},
+                ),
           ),
           Container(
             height: 300.0,

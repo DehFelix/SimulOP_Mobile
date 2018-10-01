@@ -51,7 +51,9 @@ class DoublePiPeInput extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DoublePiPeResults()));
+                            builder: (context) => DoublePiPeResults(
+                                  simulation: model.createSimulation(),
+                                )));
                   },
                 ),
           ),
@@ -146,7 +148,16 @@ class __DoublePipeInputAppBarState extends State<_DoublePipeInputAppBar> {
         _lunchURL(item.action);
         break;
       case ActionType.widgetAction:
-        if (item.action == "runWithDefaultInputs") {}
+        if (item.action == "runWithDefaultInputs") {
+          InputModel.of(context).setDefaultInputs();
+          var simulation = InputModel.of(context).createSimulation();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DoublePiPeResults(
+                        simulation: simulation,
+                      )));
+        }
         break;
       default:
         break;
@@ -403,7 +414,7 @@ class _HeatXInputCard extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         initialValue: model.heatInput.foolingFactor,
                         decoration:
-                            InputDecoration(labelText: "Fooling Factor (??)"),
+                            InputDecoration(labelText: "Fooling Factor (mm)"),
                         validator: model.heatInput.foolingFactorValidator,
                         onSaved: model.setHeatFoolingFactor,
                       ),
