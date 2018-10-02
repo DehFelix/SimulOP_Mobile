@@ -176,8 +176,8 @@ class DoublePipeHeatXSimulation {
       sliders.maxOuterExit = 38.0;
       sliders.maxInnerIn = 40.0;
 
-      sliders.minOuterExit = innerLiquid.temperature + 2.0;
-      sliders.maxInnerExit = outerLiquid.temperature - 2.0;
+      sliders.minOuterExit = innerLiquid.temperature - 273.15 + 2.0;
+      sliders.maxInnerExit = outerLiquid.temperature - 273.15 - 2.0;
     } else {
       sliders.minInnerIn = 40.0;
       sliders.minOuterIn = 10.0;
@@ -187,13 +187,18 @@ class DoublePipeHeatXSimulation {
       sliders.maxInnerExit = 38.0;
       sliders.maxOuterIn = 40.0;
 
-      sliders.minInnerExit = outerLiquid.temperature + 2.0;
-      sliders.maxOuterExit = innerLiquid.temperature - 2.0;
+      sliders.minInnerExit = outerLiquid.temperature - 273.15 + 2.0;
+      sliders.maxOuterExit = innerLiquid.temperature - 273.15 - 2.0;
     }
   }
 
   Results getResults() {
-    heatX.outerExitTemp = chartTemp + 273.15;
+    if (hotTube == core.PipeType.outer) {
+      heatX.outerExitTemp = chartTemp + 273.15;
+    } else {
+      heatX.innerExitTemp = chartTemp + 273.15;
+    }
+
     heatX.computeExchange();
     return Results(
       exitTemp: chartTemp.toStringAsFixed(1),
