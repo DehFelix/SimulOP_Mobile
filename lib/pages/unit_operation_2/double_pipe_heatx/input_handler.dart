@@ -586,8 +586,8 @@ class SimulationCreator {
         heatX: heatX,
         innerLiquid: innerLiquid,
         innerTube: innerTube,
-        outterLiquid: outerLiquid,
-        outterTube: outerTube);
+        outerLiquid: outerLiquid,
+        outerTube: outerTube);
 
     return simulation;
   }

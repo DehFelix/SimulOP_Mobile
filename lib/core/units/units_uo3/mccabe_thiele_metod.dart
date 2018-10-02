@@ -115,7 +115,7 @@ class McCabeThieleMethod {
       } else {
         x = xLK;
         y = opCurve(xLK);
-        plot.add(math.Point(x, y));
+        if (y > 0.0 && y < 1.0) plot.add(math.Point(x, y));
       }
     }
 

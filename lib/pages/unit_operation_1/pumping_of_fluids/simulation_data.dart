@@ -15,8 +15,11 @@ class PumpingOfFluidsSimulationModel extends Model {
   List<math.Point> get getPointsHead => _simulation.plotNecessaryHead();
   List<math.Point> get getPointsNPSH => _simulation.plotAvailebleNPSH();
 
-  String get getHead => _simulation.pump.computeNecessaryHead(_simulation.volumeFlow).toStringAsFixed(1);
-  String get getNpsh => _simulation.pump.availebleNPSH(_simulation.volumeFlow).toStringAsFixed(1);
+  String get getHead => _simulation.pump
+      .computeNecessaryHead(_simulation.volumeFlow)
+      .toStringAsFixed(1);
+  String get getNpsh =>
+      _simulation.pump.availebleNPSH(_simulation.volumeFlow).toStringAsFixed(1);
   String get getFlow => _simulation.volumeFlow.toStringAsFixed(1);
 
   double get getTemperature => _simulation.liquid.temperature - 273.15;
@@ -68,14 +71,16 @@ class PumpingOfFluidsSimulationModel extends Model {
     notifyListeners();
   }
 
-  void onSliderChanged(math.Point<int> point, dynamic domain, charts.SliderListenerDragState dragState) {
-    _simulation.volumeFlow = domain;
-    notifyListeners();
+  void onSliderChanged(math.Point<int> point, dynamic domain,
+      charts.SliderListenerDragState dragState) {
+    if (dragState.index == 2) {
+      _simulation.volumeFlow = domain;
+      notifyListeners();
+    }
   }
-
 }
 
-class PumpingOfFluidsSimulation{
+class PumpingOfFluidsSimulation {
   core.Liquid liquid;
   core.Tube inletTube;
   core.LocalResistance inletResistance;
@@ -89,19 +94,19 @@ class PumpingOfFluidsSimulation{
 
   PumpingOfFluidsSimulation();
 
-  double getHead(){
+  double getHead() {
     return pump.computeNecessaryHead(volumeFlow);
   }
 
-  double getHPSH(){
+  double getHPSH() {
     return pump.availebleNPSH(volumeFlow);
   }
 
-  List<math.Point> plotNecessaryHead(){
+  List<math.Point> plotNecessaryHead() {
     return pump.plotRequeredHead(0.01, 2.0);
   }
 
-  List<math.Point> plotAvailebleNPSH(){
+  List<math.Point> plotAvailebleNPSH() {
     return pump.plotNPSH(0.01, 2.0);
   }
 

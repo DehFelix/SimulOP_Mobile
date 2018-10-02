@@ -46,12 +46,223 @@ class DoublePiPeResults extends StatelessWidget {
 }
 
 class _DoublePipeDrawer extends StatelessWidget {
+  final int _sliderDiv = 40;
+
+  /// Sliders for the outer tube
+  Widget _outerTubeVariables(BuildContext context) {
+    final _tempInSlider = ScopedModelDescendant<DoublePipeBloc>(
+      builder: (context, _, model) => Slider(
+            min: model.slidersMinMax.minOuterIn,
+            max: model.slidersMinMax.maxOuterIn,
+            divisions: _sliderDiv,
+            value: model.outerTempIn,
+            onChanged: model.setOuterTempIn,
+          ),
+    );
+
+    final _tempExitSlider = ScopedModelDescendant<DoublePipeBloc>(
+      builder: (context, _, model) => Slider(
+            min: model.slidersMinMax.minOuterExit,
+            max: model.slidersMinMax.maxOuterExit,
+            divisions: _sliderDiv,
+            value: model.outerTempExit,
+            onChanged: model.setOuterTempExit,
+          ),
+    );
+
+    final _diametreSlider = ScopedModelDescendant<DoublePipeBloc>(
+      builder: (context, _, model) => Slider(
+            min: 5.0,
+            max: 30.0,
+            divisions: _sliderDiv,
+            value: model.outerDiametre,
+            onChanged: model.setOuterDiametre,
+          ),
+    );
+
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            "Outer Tube: ",
+            style: _headerTextStyle,
+          ),
+          leading: Icon(Icons.trip_origin),
+        ),
+        ListTile(
+          title: Text("Entry Temperature: (°C)"),
+          subtitle: _tempInSlider,
+          trailing: ScopedModelDescendant<DoublePipeBloc>(
+            builder: (contex, _, model) => Text(
+                  model.outerTempIn.toStringAsFixed(1),
+                ),
+          ),
+        ),
+        ScopedModelDescendant<DoublePipeBloc>(
+          builder: (context, _, model) {
+            if (model.showOuterTempExit()) {
+              return ListTile(
+                title: Text("Exit Temperature: (°C)"),
+                subtitle: _tempExitSlider,
+                trailing: Text(
+                  model.outerTempExit.toStringAsFixed(1),
+                ),
+              );
+            } else {
+              return SizedBox();
+            }
+          },
+        ),
+        ListTile(
+          title: Text("Diametre: (cm)"),
+          subtitle: _diametreSlider,
+          trailing: ScopedModelDescendant<DoublePipeBloc>(
+            builder: (contex, _, model) => Text(
+                  model.outerDiametre.toStringAsFixed(1),
+                ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Sliders for the inner tube
+  Widget _innerTubeVariables(BuildContext context) {
+    final _tempInSlider = ScopedModelDescendant<DoublePipeBloc>(
+      builder: (context, _, model) => Slider(
+            min: model.slidersMinMax.minInnerIn,
+            max: model.slidersMinMax.maxInnerIn,
+            divisions: _sliderDiv,
+            value: model.innerTempIn,
+            onChanged: model.setInnerTempIn,
+          ),
+    );
+
+    final _tempExitSlider = ScopedModelDescendant<DoublePipeBloc>(
+      builder: (context, _, model) => Slider(
+            min: model.slidersMinMax.minInnerExit,
+            max: model.slidersMinMax.maxInnerExit,
+            divisions: _sliderDiv,
+            value: model.innerTempExit,
+            onChanged: model.setInnerTempExit,
+          ),
+    );
+
+    final _diametreSlider = ScopedModelDescendant<DoublePipeBloc>(
+      builder: (context, _, model) => Slider(
+            min: 2.0,
+            max: 10.0,
+            divisions: _sliderDiv,
+            value: model.innerDiametre,
+            onChanged: model.setInnerDiametre,
+          ),
+    );
+
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            "Inner Tube: ",
+            style: _headerTextStyle,
+          ),
+          leading: Icon(Icons.adjust),
+        ),
+        ListTile(
+          title: Text("Entry Temperature: (°C)"),
+          subtitle: _tempInSlider,
+          trailing: ScopedModelDescendant<DoublePipeBloc>(
+            builder: (contex, _, model) => Text(
+                  model.innerTempIn.toStringAsFixed(1),
+                ),
+          ),
+        ),
+        ScopedModelDescendant<DoublePipeBloc>(
+          builder: (context, _, model) {
+            if (model.showInnerTempExit()) {
+              return ListTile(
+                title: Text("Exit Temperature: (°C)"),
+                subtitle: _tempExitSlider,
+                trailing: Text(
+                  model.innerTempExit.toStringAsFixed(1),
+                ),
+              );
+            } else {
+              return SizedBox();
+            }
+          },
+        ),
+        ListTile(
+          title: Text("Diametre: (cm)"),
+          subtitle: _diametreSlider,
+          trailing: ScopedModelDescendant<DoublePipeBloc>(
+            builder: (contex, _, model) => Text(
+                  model.innerDiametre.toStringAsFixed(1),
+                ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Sliders for the heatX
+  Widget _heatXVariables(BuildContext context) {
+    final _hotFlowSlider = ScopedModelDescendant<DoublePipeBloc>(
+      builder: (context, _, model) => Slider(
+            min: 0.1,
+            max: 20.0,
+            divisions: _sliderDiv,
+            value: model.hotFlow,
+            onChanged: model.setHotFlow,
+          ),
+    );
+
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            "HeatX: ",
+            style: _headerTextStyle,
+          ),
+          leading: Icon(Icons.tune),
+        ),
+        ListTile(
+          title: Text("Hot Flow: (m^3/h)"),
+          subtitle: _hotFlowSlider,
+          trailing: ScopedModelDescendant<DoublePipeBloc>(
+            builder: (contex, _, model) => Text(
+                  model.hotFlow.toStringAsFixed(1),
+                ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: Center(
-      child: Text("data"),
-    ));
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Center(
+                child: Text(
+              "Variables: ",
+              style: TextStyle(fontSize: 35.0, color: Colors.white),
+              textAlign: TextAlign.center,
+            )),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          _outerTubeVariables(context),
+          Divider(),
+          _innerTubeVariables(context),
+          Divider(),
+          _heatXVariables(context),
+        ],
+      ),
+    );
   }
 }
 
@@ -111,6 +322,71 @@ class __DoublePipeAppBarState extends State<_DoublePipeAppBar> {
 }
 
 class _ChartCard extends StatelessWidget {
+  List<charts.Series<math.Point, double>> _createLenghtSeries(
+      List<math.Point> data) {
+    return [
+      charts.Series(
+        id: "Lenght",
+        data: data,
+        domainFn: (math.Point point, _) => point.x,
+        measureFn: (math.Point point, _) => point.y,
+      ),
+    ];
+  }
+
+  List<charts.Series<math.Point, double>> _createPressureDropSeries(
+      List<math.Point> outerData, List<math.Point> innerData) {
+    return [
+      charts.Series(
+        id: "Outer Tube",
+        data: outerData,
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (math.Point point, _) => point.x,
+        measureFn: (math.Point point, _) => point.y,
+      ),
+      charts.Series(
+        id: "Inner Tube",
+        data: innerData,
+        colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
+        domainFn: (math.Point point, _) => point.x,
+        measureFn: (math.Point point, _) => point.y,
+      ),
+    ];
+  }
+
+  Widget _chart(DoublePipeBloc model) {
+    return StreamBuilder<Plot>(
+      stream: model.getPlots,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Text("Loading...");
+        var chartSeries = (snapshot.data.isChartPressure)
+            ? _createPressureDropSeries(
+                snapshot.data.outerPlot, snapshot.data.innerPlot)
+            : _createLenghtSeries(snapshot.data.lenghtPlot);
+        return charts.LineChart(
+          chartSeries,
+          animate: false,
+          defaultInteractions: false,
+          primaryMeasureAxis: charts.NumericAxisSpec(
+              tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                  dataIsInWholeNumbers: false, desiredTickCount: 7)),
+          domainAxis: charts.NumericAxisSpec(
+              //viewport: charts.NumericExtents(28.0, 38.0),
+              tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                  zeroBound: false,
+                  dataIsInWholeNumbers: false,
+                  desiredTickCount: 6)),
+          behaviors: [
+            charts.Slider(
+              initialDomainValue: model.getSliderDomain,
+              onChangeCallback: model.onSliderCanged,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -129,13 +405,17 @@ class _ChartCard extends StatelessWidget {
                       model.toggleChartView(val);
                     },
                   ),
-                  onTap: () {model.toggleChartView(!model.getChartView());},
+                  onTap: () {
+                    model.toggleChartView(!model.getChartView());
+                  },
                 ),
           ),
           Container(
             height: 300.0,
             child: Padding(
               padding: EdgeInsets.only(left: 8.0, right: 8.0),
+              child: ScopedModelDescendant<DoublePipeBloc>(
+                  builder: (context, _, model) => _chart(model)),
             ),
           ),
           Padding(
@@ -168,13 +448,39 @@ class _ResultsCard extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-            child: RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(text: "Sumary1: \n", style: _textStyle),
-                  TextSpan(text: "Sumary2: \n", style: _textStyle),
-                ],
-              ),
+            child: ScopedModelDescendant<DoublePipeBloc>(
+              builder: (context, _, model) => StreamBuilder<Results>(
+                    initialData: Results(),
+                    stream: model.getResults,
+                    builder: (context, snapshot) => RichText(
+                          text: TextSpan(
+                            style: _textStyle,
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text:
+                                      "Hot Liquid Exit Temperature: ${snapshot.data.exitTemp} °C \n"),
+                              TextSpan(
+                                  text:
+                                      "Inner Pipe Pressure Drop: ${snapshot.data.innerPressureDrop} KPa \n"),
+                              TextSpan(
+                                  text:
+                                      "Outer Pipe Pressure Drop: ${snapshot.data.outerPressureDrop} KPa \n"),
+                              TextSpan(
+                                  text:
+                                      "Global Coeff: ${snapshot.data.globalCoef} W/m^2 K \n"),
+                              TextSpan(
+                                  text:
+                                      "HeatX lenght: ${snapshot.data.heatXLenght} m \n"),
+                              TextSpan(
+                                  text:
+                                      "Cold Flow: ${snapshot.data.coldFlow} m^3/h \n"),
+                              TextSpan(
+                                  text:
+                                      "Total Heat Exchanged: ${snapshot.data.heatExchanged} KW \n"),
+                            ],
+                          ),
+                        ),
+                  ),
             ),
           ),
         ],
