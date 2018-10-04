@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:simulop_v1/locale/locales.dart';
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
+import 'package:simulop_v1/pages/helper_classes/helper_dialog.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/input_data.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/pumping_of_fluids_results.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
-final helpItems = [
-  HelpItem("Default inputs", "runWithDefaultInputs", ActionType.widgetAction),
-  HelpItem("More info", "/default", ActionType.route),
-  HelpItem("About", "/default", ActionType.route),
-];
+List<HelpItem> helpItems = List<HelpItem>();
 
 final fluidFormKey = GlobalKey<FormState>();
 final inletTubeFormKey = GlobalKey<FormState>();
@@ -28,6 +26,13 @@ final distancesInputModel = DistancesInput();
 class PumpingOfFluidsInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    helpItems = [
+      HelpItem(
+          AppLocalizations.of(context).defaultInputs, "runWithDefaultInputs", ActionType.widgetAction),
+      HelpItem(AppLocalizations.of(context).moreInfoBtn, "showPumpingOfFluidsHelp", ActionType.widgetAction),
+      HelpItem("About", "/default", ActionType.route),
+    ];
+
     return ScopedModel<PumpingOfFluidsInputModel>(
       model: PumpingOfFluidsInputModel(
           fluidInputs: fluidInputModel,
@@ -38,7 +43,7 @@ class PumpingOfFluidsInput extends StatelessWidget {
         data: ThemeData(primarySwatch: Colors.green),
         child: Scaffold(
           appBar: _FluidInputAppBar(),
-          body: Container(child: _mainBody()),
+          body: Container(child: _mainBody(context)),
           floatingActionButton:
               ScopedModelDescendant<PumpingOfFluidsInputModel>(
             builder: (context, _, model) => FloatingActionButton(
@@ -71,10 +76,10 @@ class PumpingOfFluidsInput extends StatelessWidget {
   }
 
   /// The main body of the input forms.
-  Widget _mainBody() {
+  Widget _mainBody(BuildContext context) {
     return ListView(
       children: <Widget>[
-        _picCard(),
+        _picCard(context),
         Container(
           height: 340.0,
           child: ListView(
@@ -93,12 +98,12 @@ class PumpingOfFluidsInput extends StatelessWidget {
     );
   }
 
-  Widget _picCard() {
+  Widget _picCard(BuildContext context) {
     return Card(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         ListTile(
           leading: Icon(Icons.picture_in_picture),
-          title: Text("Picture", style: _headerTextStyle),
+          title: Text(AppLocalizations.of(context).picture, style: _headerTextStyle),
         ),
         Image(
           image: AssetImage('assets/images/pumpingOfLiquids_placeholder.png'),
@@ -123,7 +128,7 @@ class __FluidInputAppBarState extends State<_FluidInputAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2.0,
-      title: Text("Pumping of fluids"),
+      title: Text(AppLocalizations.of(context).pumpingOfLiquidsName),
       actions: <Widget>[
         PopupMenuButton(
           itemBuilder: (BuildContext context) => _appBarMenu(),
@@ -171,6 +176,11 @@ class __FluidInputAppBarState extends State<_FluidInputAppBar> {
                   ),
             ),
           );
+        } else if (item.action == "showPumpingOfFluidsHelp") {
+          showDialog(
+            context: context,
+            builder: (context) => HelpDialog("Helllow :")
+          );
         }
         break;
       default:
@@ -197,7 +207,7 @@ class _FluidInputCard extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.format_color_fill),
               title: Text(
-                "Liquid Input: ",
+                AppLocalizations.of(context).liquidInput,
                 style: _headerTextStyle,
               ),
             ),
@@ -220,7 +230,7 @@ class _FluidInputCard extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         initialValue: model.fluidInput.temperature,
                         decoration:
-                            InputDecoration(labelText: "Temperature (°C)"),
+                            InputDecoration(labelText: AppLocalizations.of(context).hintTemperature),
                         validator: model.fluidInput.temperatureValidator,
                         onSaved: model.setFluidTemperature,
                       ),
@@ -232,7 +242,7 @@ class _FluidInputCard extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         initialValue: model.fluidInput.inletPressure,
                         decoration:
-                            InputDecoration(labelText: "Pressure (bar)"),
+                            InputDecoration(labelText: AppLocalizations.of(context).hintPressure),
                         validator: model.fluidInput.pressureValidator,
                         onSaved: model.setFluidInletPressure,
                       ),
@@ -265,7 +275,7 @@ class _InletTubeInputCard extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.radio_button_checked),
               title: Text(
-                "Inlet Tube Input: ",
+                AppLocalizations.of(context).inletInput,
                 style: _headerTextStyle,
               ),
             ),
@@ -286,7 +296,7 @@ class _InletTubeInputCard extends StatelessWidget {
                         autocorrect: false,
                         keyboardType: TextInputType.number,
                         initialValue: model.inletTubeInput.diametre,
-                        decoration: InputDecoration(labelText: "Diametre (cm)"),
+                        decoration: InputDecoration(labelText: AppLocalizations.of(context).hintDiametre),
                         validator: model.inletTubeInput.diametreValidator,
                         onSaved: model.setInletTubeDiametre,
                       ),
@@ -298,7 +308,7 @@ class _InletTubeInputCard extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         initialValue: model.inletTubeInput.equivalentDistance,
                         decoration: InputDecoration(
-                            labelText: "Resistances Lenghs (m)"),
+                            labelText: AppLocalizations.of(context).hintResistancesLenghts),
                         validator:
                             model.inletTubeInput.equivalentDistancesValidator,
                         onSaved: model.setInletTubeEquivalentDistances,
@@ -332,7 +342,7 @@ class _OutletTubeInputCard extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.radio_button_checked),
               title: Text(
-                "Outlet Tube Input: ",
+                AppLocalizations.of(context).outletInput,
                 style: _headerTextStyle,
               ),
             ),
@@ -354,7 +364,7 @@ class _OutletTubeInputCard extends StatelessWidget {
                         autocorrect: false,
                         keyboardType: TextInputType.number,
                         initialValue: model.outletTubeInput.diametre,
-                        decoration: InputDecoration(labelText: "Diametre (cm)"),
+                        decoration: InputDecoration(labelText: AppLocalizations.of(context).hintDiametre),
                         validator: model.outletTubeInput.diametreValidator,
                         onSaved: model.setOutletTubeDiametre,
                       ),
@@ -366,7 +376,7 @@ class _OutletTubeInputCard extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         initialValue: model.outletTubeInput.equivalentDistance,
                         decoration: InputDecoration(
-                            labelText: "Resistances Lenghs (m)"),
+                            labelText: AppLocalizations.of(context).hintResistancesLenghts),
                         validator:
                             model.outletTubeInput.equivalentDistancesValidator,
                         onSaved: model.setOutletTubeEquivalentDistances,
@@ -399,7 +409,7 @@ class _DistancesInputCard extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.straighten),
               title: Text(
-                "Distances Input: ",
+               AppLocalizations.of(context).distancesInput,
                 style: _headerTextStyle,
               ),
             ),
@@ -411,7 +421,7 @@ class _DistancesInputCard extends StatelessWidget {
                         autocorrect: false,
                         keyboardType: TextInputType.number,
                         initialValue: model.distancesInput.dzInlet,
-                        decoration: InputDecoration(labelText: "Dz Inlet (m)"),
+                        decoration: InputDecoration(labelText: AppLocalizations.of(context).hintDzInlet),
                         validator: model.distancesInput.heightValidator,
                         onSaved: model.setDistancesDzInlet,
                       ),
@@ -422,7 +432,7 @@ class _DistancesInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.distancesInput.lInlet,
-                        decoration: InputDecoration(labelText: "L Inlet (m)"),
+                        decoration: InputDecoration(labelText: AppLocalizations.of(context).hintLInlet),
                         validator: model.distancesInput.distanceInletValidator,
                         onSaved: model.setDistancesLInlet,
                       ),
@@ -432,7 +442,7 @@ class _DistancesInputCard extends StatelessWidget {
                         autocorrect: false,
                         keyboardType: TextInputType.number,
                         initialValue: model.distancesInput.dzOutlet,
-                        decoration: InputDecoration(labelText: "Dz Outlet (m)"),
+                        decoration: InputDecoration(labelText: AppLocalizations.of(context).hintDzOutlet),
                         validator: model.distancesInput.heightValidator,
                         onSaved: model.setDistancesDzOutlet,
                       ),
@@ -443,7 +453,7 @@ class _DistancesInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.distancesInput.lOutlet,
-                        decoration: InputDecoration(labelText: "L Outlet (m)"),
+                        decoration: InputDecoration(labelText: AppLocalizations.of(context).hintLOutlet),
                         validator: model.distancesInput.distanceOutletValidator,
                         onSaved: model.setDistancesLOutlet,
                       ),
@@ -464,18 +474,18 @@ class _SumaryCard extends StatelessWidget {
 
   final _textStyle = TextStyle(fontSize: 14.0, color: Colors.black);
 
-  TextSpan _fluidSumary(PumpingOfFluidsInputModel model) {
+  TextSpan _fluidSumary(PumpingOfFluidsInputModel model, BuildContext context) {
     String fluid;
     String density;
     String viscosity;
     String vaporPressure;
 
     if (model.validadeFluid()) {
-      fluid = "Fluid - ${model.fluidInput.name} \n";
-      density = "Density: ${model.getSumaryLiquidDensity} kg/m^3 \n";
-      viscosity = "Viscosity: ${model.getSumaryLiquidViscosity} cP \n";
+      fluid = "${AppLocalizations.of(context).summaryLiquid} - ${model.fluidInput.name} \n";
+      density = "${AppLocalizations.of(context).summaryDensity}: ${model.getSumaryLiquidDensity} kg/m^3 \n";
+      viscosity = "${AppLocalizations.of(context).summaryViscosity}: ${model.getSumaryLiquidViscosity} cP \n";
       vaporPressure =
-          "Vapor pressure: ${model.getSumaryLiquidVaporPressure} KPa \n";
+          "${AppLocalizations.of(context).summaryVaporPre} ${model.getSumaryLiquidVaporPressure} KPa \n";
     }
 
     return TextSpan(
@@ -488,7 +498,7 @@ class _SumaryCard extends StatelessWidget {
     );
   }
 
-  TextSpan _inletTubeSumary(PumpingOfFluidsInputModel model) {
+  TextSpan _inletTubeSumary(PumpingOfFluidsInputModel model, BuildContext context) {
     String tube;
     String roughness;
     String diametre;
@@ -496,11 +506,11 @@ class _SumaryCard extends StatelessWidget {
     String elevation;
 
     if (model.validateInletTube()) {
-      tube = "Inlet Tube - ${model.inletTubeInput.material} \n";
-      roughness = "Roughness: ${model.getSumaryInletTubeRoughness} mm \n";
-      diametre = "Diametre: ${model.inletTubeInput.diametre} cm \n";
-      lenth = "Lenth: ${model.distancesInput.lInlet} m \n";
-      elevation = "Elevation: ${model.distancesInput.dzInlet} m \n";
+      tube = "${AppLocalizations.of(context).summayInletTube} - ${model.inletTubeInput.material} \n";
+      roughness = "${AppLocalizations.of(context).summaryRoughness} ${model.getSumaryInletTubeRoughness} mm \n";
+      diametre = "${AppLocalizations.of(context).summaryDiametre} ${model.inletTubeInput.diametre} cm \n";
+      lenth = "${AppLocalizations.of(context).summaryLenght} ${model.distancesInput.lInlet} m \n";
+      elevation = "${AppLocalizations.of(context).summaryElevation} ${model.distancesInput.dzInlet} m \n";
     }
 
     return TextSpan(children: <TextSpan>[
@@ -512,7 +522,7 @@ class _SumaryCard extends StatelessWidget {
     ]);
   }
 
-  TextSpan _outletTubeSumary(PumpingOfFluidsInputModel model) {
+  TextSpan _outletTubeSumary(PumpingOfFluidsInputModel model, BuildContext context) {
     String tube;
     String roughness;
     String diametre;
@@ -520,11 +530,11 @@ class _SumaryCard extends StatelessWidget {
     String elevation;
 
     if (model.validateOutletTube()) {
-      tube = "Inlet Tube - ${model.outletTubeInput.material} \n";
-      roughness = "Roughness: ${model.getSumaryOutletTubeRoughness} mm \n";
-      diametre = "Diametre: ${model.outletTubeInput.diametre} cm \n";
-      lenth = "Lenth: ${model.distancesInput.lOutlet} m \n";
-      elevation = "Elevation: ${model.distancesInput.dzOutlet} m \n";
+      tube = "${AppLocalizations.of(context).summayInletTube} - ${model.outletTubeInput.material} \n";
+      roughness = "${AppLocalizations.of(context).summaryRoughness} ${model.getSumaryOutletTubeRoughness} mm \n";
+      diametre = "${AppLocalizations.of(context).summaryDiametre} ${model.outletTubeInput.diametre} cm \n";
+      lenth = "${AppLocalizations.of(context).summaryLenght} ${model.distancesInput.lOutlet} m \n";
+      elevation = "${AppLocalizations.of(context).summaryElevation} ${model.distancesInput.dzOutlet} m \n";
     }
 
     return TextSpan(children: <TextSpan>[
@@ -545,7 +555,7 @@ class _SumaryCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.playlist_add_check),
             title: Text(
-              "Sumary",
+              AppLocalizations.of(context).summary,
               style: _titleStyle,
             ),
           ),
@@ -555,11 +565,11 @@ class _SumaryCard extends StatelessWidget {
               builder: (context, _, model) => RichText(
                     text: TextSpan(
                       children: <TextSpan>[
-                        _fluidSumary(model),
+                        _fluidSumary(model, context),
                         TextSpan(text: "\n"),
-                        _inletTubeSumary(model),
+                        _inletTubeSumary(model, context),
                         TextSpan(text: "\n"),
-                        _outletTubeSumary(model),
+                        _outletTubeSumary(model, context),
                       ],
                     ),
                   ),

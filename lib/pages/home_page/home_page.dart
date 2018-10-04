@@ -36,15 +36,15 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       tabs: <Tab>[
         Tab(
           icon: Icon(Icons.home),
-          text: AppLocalizations.of(context).uo1Name,
+          text: AppLocalizations.of(context).ouIName,
         ),
         Tab(
           icon: Icon(Icons.settings),
-          text: "UO II",
+          text: AppLocalizations.of(context).ouIIName,
         ),
         Tab(
           icon: Icon(Icons.mood),
-          text: "UO III",
+          text: AppLocalizations.of(context).ouIIIName,
         ),
       ],
       controller: tabController,

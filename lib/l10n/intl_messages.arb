@@ -1,14 +1,368 @@
 {
-  "@@last_modified": "2018-08-23T20:59:54.507873",
+  "@@last_modified": "2018-10-03T21:56:28.157387",
   "title": "SimulOP",
   "@title": {
     "description": "The title of the App bar",
     "type": "text",
     "placeholders": {}
   },
-  "uo1Name": "UO I",
-  "@uo1Name": {
-    "description": "Unit Operations I name",
+  "moreInfoBtn": "More info",
+  "@moreInfoBtn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "lunchAppBtn": "Lunch App",
+  "@lunchAppBtn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ouIName": "OU I",
+  "@ouIName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pumpingOfLiquidsName": "Pumping of Liquids",
+  "@pumpingOfLiquidsName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pumpingOfLiquidsDescription": "pumpingOfLiquidsDescription",
+  "@pumpingOfLiquidsDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "filterName": "Filter",
+  "@filterName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "filterDescription": "filterDescription",
+  "@filterDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "compressorName": "Compressor",
+  "@compressorName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "compressorDescription": "compressorDescription",
+  "@compressorDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ouIIName": "OU II",
+  "@ouIIName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeName": "Double Pipe Heat Exchanger",
+  "@doublePipeName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeDescription": "doublePipeDescription",
+  "@doublePipeDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "multiPipeName": "Multi Pipe Heat Exchanger",
+  "@multiPipeName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "multiPipeDescription": "multiPipeDescription",
+  "@multiPipeDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "evaporatorName": "Evaporator",
+  "@evaporatorName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "evaporatorDescription": "evaporatorDescription",
+  "@evaporatorDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dryerName": "Dryer",
+  "@dryerName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dryerDescription": "dryerDescription",
+  "@dryerDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "coolingTowerName": "Cooling Tower",
+  "@coolingTowerName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "coolingTowerDescription": "coolingTowerDescription",
+  "@coolingTowerDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ouIIIName": "OU III",
+  "@ouIIIName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mcCabeThieleName": "McCabe-Thiele Method",
+  "@mcCabeThieleName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mcCabeThieleDescription": "mcCabeThieleDescription",
+  "@mcCabeThieleDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "absorptionColumnName": "Absorption Column",
+  "@absorptionColumnName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "absorptionColumnDescription": "absorptionColumnDescription",
+  "@absorptionColumnDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "membranesName": "Separation Membranes",
+  "@membranesName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "membranesDescription": "membranesDescription",
+  "@membranesDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "crystalizerName": "Crystalizer",
+  "@crystalizerName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "crystalizerDescription": "crystalizerDescription",
+  "@crystalizerDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "distilationName": "Distillation Column",
+  "@distilationName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "distilationDescription": "distilationDescription",
+  "@distilationDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultInputs": "Default inputs",
+  "@defaultInputs": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "picture": "Picture",
+  "@picture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "liquidInput": "Liquid Input:",
+  "@liquidInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintTemperature": "Temperature (°C)",
+  "@hintTemperature": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "inletInput": "Inlet Tube Input:",
+  "@inletInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintPressure": "Pressure (bar)",
+  "@hintPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintDiametre": "Diametre (cm)",
+  "@hintDiametre": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintResistancesLenghts": "Resistances Lengths (m)",
+  "@hintResistancesLenghts": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "outletInput": "Outlet Tube Input:",
+  "@outletInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "distancesInput": "Distances Input:",
+  "@distancesInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintDzInlet": "Dz Inlet (m)",
+  "@hintDzInlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintLInlet": "L Inlet (m)",
+  "@hintLInlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintDzOutlet": "Dz Outlet (m)",
+  "@hintDzOutlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintLOutlet": "L Outlet (m)",
+  "@hintLOutlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summary": "Summary",
+  "@summary": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryLiquid": "Liquid",
+  "@summaryLiquid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryDensity": "Density:",
+  "@summaryDensity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryViscosity": "Viscosity:",
+  "@summaryViscosity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryVaporPre": "Vapor pressure:",
+  "@summaryVaporPre": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summayInletTube": "Inlet Tube",
+  "@summayInletTube": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryRoughness": "Roughness:",
+  "@summaryRoughness": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryDiametre": "Diametre:",
+  "@summaryDiametre": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryLenght": "Lenght:",
+  "@summaryLenght": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryElevation": "Elevation:",
+  "@summaryElevation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryOutletTube": "Outlet Tube",
+  "@summaryOutletTube": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "results": "Results",
+  "@rusults": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graph": "Graph",
+  "@graph": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "chartHeadLeg": "Pump Head",
+  "@chartHeadLeg": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "chartNPSH": "Avaliable NPSH",
+  "@chartNPSH": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsFlow": "Selecteed Flow:",
+  "@resultsFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsHead": "Necessary Head:",
+  "@resultsHead": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsNPSH": "Avaliable NPSH:",
+  "@resultsNPSH": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerVariables": "Variables:",
+  "@drawerVariables": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerLiquid": "Liquid:",
+  "@drawerLiquid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerLiquidTemp": "Liquid Temperature: (°C)",
+  "@drawerLiquidTemp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerInlet": "Inlet:",
+  "@drawerInlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerInletValve": "Inlet Valve Opening:",
+  "@drawerInletValve": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerInletPressure": "Inlet Tank Pressure: (bar)",
+  "@drawerInletPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerOutlet": "Outlet:",
+  "@drawerOutlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerOutletValve": "Outlet Valve Opening:",
+  "@drawerOutletValve": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerDistances": "Distances:",
+  "@drawerDistances": {
     "type": "text",
     "placeholders": {}
   }

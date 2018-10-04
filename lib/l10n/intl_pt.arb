@@ -1,13 +1,368 @@
 {
-  "title": "SimulOP em pt",
+  "@@last_modified": "2018-10-03T18:15:16.614720",
+  "title": "SimulOP",
   "@title": {
     "description": "The title of the App bar",
     "type": "text",
     "placeholders": {}
   },
-  "uo1Name": "OP I",
-  "@uo1Name": {
-    "description": "Unit Operations I name",
+  "moreInfoBtn": "Mais info",
+  "@moreInfoBtn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "lunchAppBtn": "Iniciar",
+  "@lunchAppBtn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ouIName": "OP I",
+  "@ouIName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pumpingOfLiquidsName": "Bombeamento de Liquido",
+  "@pumpingOfLiquidsName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pumpingOfLiquidsDescription": "pumpingOfLiquidsDescription",
+  "@pumpingOfLiquidsDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "filterName": "Filtro",
+  "@filterName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "filterDescription": "filterDescription",
+  "@filterDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "compressorName": "Compressor",
+  "@compressorName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "compressorDescription": "compressorDescription",
+  "@compressorDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ouIIName": "OP II",
+  "@ouIIName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeHeatXName": "Trocador de Calor Duplo Tubo",
+  "@doublePipeHeatXName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeHeatXDescription": "doublePipeHeatXDescription",
+  "@doublePipeHeatXDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "multiPipeHeatXName": "Trocador de Calor Multi Tubular",
+  "@multiPipeHeatXName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "multiPipeHeatXDescription": "multiPipeHeatXDescription",
+  "@multiPipeHeatXDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "evaporatorsName": "Evaporador",
+  "@evaporatorsName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "evaporatorsDescription": "evaporatorsDescription",
+  "@evaporatorsDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dryerName": "Secador",
+  "@dryerName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dryerDescription": "dryerDescription",
+  "@dryerDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "coolingTowerName": "Torre de Resfriamento",
+  "@coolingTowerName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "coolingTowerDescription": "coolingTowerDescription",
+  "@coolingTowerDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ouIIIName": "OP III",
+  "@ouIIIName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mcCabeTheileName": "Método de McCabe-Thile",
+  "@mcCabeTheileName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mcCabeTheileDescription": "mcCabeTheileDescription",
+  "@mcCabeTheileDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "absorptionColumnName": "Coluna de Absorção",
+  "@absorptionColumnName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "absorptionColumnDescription": "absorptionColumnDescription",
+  "@absorptionColumnDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "membranesName": "Membranas de Separação",
+  "@membranesName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "membranesDescription": "membranesDescription",
+  "@membranesDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "crystalizerName": "Cristalizador",
+  "@crystalizerName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "crystalizerDescription": "crystalizerDescription",
+  "@crystalizerDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "distilationColumnName": "Coluna de Destilação",
+  "@distilationColumnName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "distilationColumnDescription": "distilationColumnDescription",
+  "@distilationColumnDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultInputs": "Valores padrão",
+  "@defaultInputs": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "picture": "Figura",
+  "@picture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "liquidInput": "Liquido:",
+  "@liquidInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintTemperature": "Temperatura (°C)",
+  "@hintTemperature": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "inletInput": "Tubulação de Succção:",
+  "@inletInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintPressure": "Pressão (bar)",
+  "@hintPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintDiametre": "Diametro (cm)",
+  "@hintDiametre": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintResistancesLenghts": "Comprimento Equivalente (m)",
+  "@hintResistancesLenghts": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "outletInput": "Tubulação de Descarga:",
+  "@outletInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "distancesInput": "Distâncias:",
+  "@distancesInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintDzInlet": "Dz Sucção (m)",
+  "@hintDzInlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintLInlet": "L Sucção (m)",
+  "@hintLInlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintDzOutlet": "Dz Descarga (m)",
+  "@hintDzOutlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintLOutlet": "L Descarga (m)",
+  "@hintLOutlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summary": "Resumo",
+  "@summary": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryLiquid": "Liquido",
+  "@summaryLiquid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryDensity": "Densidade",
+  "@summaryDensity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryViscosity": "Viscosidade:",
+  "@summaryViscosity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryVaporPre": "Pressão de vapor:",
+  "@summaryVaporPre": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summayInletTube": "Tubulação de Sução",
+  "@summayInletTube": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryRoughness": "Rugosidade:",
+  "@summaryRoughness": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryDiametre:": "Diametro:",
+  "@summaryDiametre:": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryLenght": "Comprimento:",
+  "@summaryLenght": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryElevation": "Elevação:",
+  "@summaryElevation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryOutletTube": "Tubulação de Descarga",
+  "@summaryOutletTube": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "results": "Resultado",
+  "@results": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graph": "Gráico",
+  "@graph": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "chartHeadLeg": "Altura da Bomba",
+  "@chartHeadLeg": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "chartNPSH": "NPSH Disponivel",
+  "@chartNPSH": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsFlow": "Vazão selecionada:",
+  "@resultsFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsHead": "Altura necessária:",
+  "@resultsHead": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsNPSH": "NPSH Disponivel:",
+  "@resultsNPSH": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerVariables": "Variaveis:",
+  "@drawerVariables": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerLiquid": "Liquido:",
+  "@drawerLiquid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerLiquidTemp": "Temperatura do Liquido (°C)",
+  "@drawerLiquidTemp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerInlet": "Sucção:",
+  "@drawerInlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerInletValve": "Abertura Valvula de Sucção",
+  "@drawerInletValve": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerInletPressure": "Pressão no Tanque de Sucção (bar)",
+  "@drawerInletPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerOutlet": "Descarga:",
+  "@drawerOutlet": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerOutletValve": "Abertura Valvula de Descarga",
+  "@drawerOutletValve": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerDistances": "Distâncias:",
+  "@drawerDistances": {
     "type": "text",
     "placeholders": {}
   }

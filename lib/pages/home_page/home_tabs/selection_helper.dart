@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:simulop_v1/locale/locales.dart';
+
+
 class SelectionTile {
   final String title;
   final IconData icon;
@@ -29,7 +32,7 @@ Widget tileSelectionBuilder(BuildContext context, SelectionTile tile) {
         padding: EdgeInsets.only(right: 16.0),
         child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
           FlatButton(
-            child: Text("More info",
+            child: Text(AppLocalizations.of(context).moreInfoBtn,
                 style: TextStyle(
                   color: Theme.of(context).accentColor,
                 )),
@@ -44,7 +47,7 @@ Widget tileSelectionBuilder(BuildContext context, SelectionTile tile) {
                     Navigator.of(context).pushNamed(tile.route);
                   },
             child: Text(
-              "Lunch App",
+              AppLocalizations.of(context).lunchAppBtn,
               style: TextStyle(color: Colors.white),
             ),
             color: Theme.of(context).primaryColor,

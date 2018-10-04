@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:math' as math;
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:simulop_v1/locale/locales.dart';
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
+import 'package:simulop_v1/pages/helper_classes/helper_dialog.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/simulation_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -66,13 +68,18 @@ class _FluidResultsDrawer extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(
-            "Liquid: ",
+            AppLocalizations.of(context).drawerLiquid,
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.format_color_fill),
+          trailing: RawMaterialButton(
+              child: Icon(Icons.help),
+              onPressed: () => showDialog(
+                  context: context,
+                  builder: (context) => HelpDialog("Helllow :"))),
         ),
         ListTile(
-          title: Text("Liquid Temperature: (°C)"),
+          title: Text(AppLocalizations.of(context).drawerLiquidTemp),
           subtitle: _temperatureSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) => Text(
@@ -112,13 +119,13 @@ class _FluidResultsDrawer extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(
-            "Inlet: ",
+            AppLocalizations.of(context).drawerInlet,
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.arrow_forward),
         ),
         ListTile(
-          title: Text("Inlet Valve Opening: "),
+          title: Text(AppLocalizations.of(context).drawerInletValve),
           subtitle: _inletValveSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) => Text(
@@ -127,7 +134,7 @@ class _FluidResultsDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text("Inlet Tank Pressure: (bar)"),
+          title: Text(AppLocalizations.of(context).drawerInletPressure),
           subtitle: _inletPressureSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) => Text(
@@ -156,7 +163,7 @@ class _FluidResultsDrawer extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(
-            "Outlet: ",
+            AppLocalizations.of(context).drawerOutlet,
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.arrow_back),
@@ -222,13 +229,13 @@ class _FluidResultsDrawer extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(
-            "Distances: ",
+            AppLocalizations.of(context).drawerDistances,
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.straighten),
         ),
         ListTile(
-          title: Text("Dz Inlet: (m)"),
+          title: Text(AppLocalizations.of(context).hintDzInlet),
           subtitle: _dzInletSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) =>
@@ -236,7 +243,7 @@ class _FluidResultsDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text("L Inlet: (m)"),
+          title: Text(AppLocalizations.of(context).hintLInlet),
           subtitle: _lInletSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) =>
@@ -244,7 +251,7 @@ class _FluidResultsDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text("Dz Outlet: (m)"),
+          title: Text(AppLocalizations.of(context).hintDzOutlet),
           subtitle: _dzOutletSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) =>
@@ -252,7 +259,7 @@ class _FluidResultsDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text("L Outlet: (m)"),
+          title: Text(AppLocalizations.of(context).hintLOutlet),
           subtitle: _lOutletSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) =>
@@ -272,7 +279,7 @@ class _FluidResultsDrawer extends StatelessWidget {
           DrawerHeader(
             child: Center(
                 child: Text(
-              "Variables: ",
+              AppLocalizations.of(context).drawerVariables,
               style: TextStyle(fontSize: 35.0, color: Colors.white),
               textAlign: TextAlign.center,
             )),
@@ -309,7 +316,7 @@ class __FluidResultsAppBarState extends State<_FluidResultsAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2.0,
-      title: Text("Results"),
+      title: Text(AppLocalizations.of(context).results),
       actions: <Widget>[
         PopupMenuButton(
           itemBuilder: (BuildContext context) => _appBarMenu(),
@@ -357,16 +364,18 @@ class _ChartCard extends StatelessWidget {
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
 
   List<charts.Series<math.Point, double>> _createSeries(
-      List<math.Point> dataHead, List<math.Point> dataNPSH) {
+      List<math.Point> dataHead,
+      List<math.Point> dataNPSH,
+      BuildContext context) {
     return [
       charts.Series<math.Point, double>(
-        id: "Pump Head",
+        id: AppLocalizations.of(context).chartHeadLeg,
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataHead,
       )..setAttribute(charts.measureAxisIdKey, primaryMeasureAxisId),
       charts.Series<math.Point, double>(
-        id: "NPSH Available",
+        id: AppLocalizations.of(context).chartNPSH,
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataNPSH,
@@ -375,9 +384,9 @@ class _ChartCard extends StatelessWidget {
   }
 
   Widget _chart(List<math.Point> dataHead, List<math.Point> dataNPSH,
-      PumpingOfFluidsSimulationModel model) {
+      PumpingOfFluidsSimulationModel model, BuildContext context) {
     return charts.LineChart(
-      _createSeries(dataHead, dataNPSH),
+      _createSeries(dataHead, dataNPSH, context),
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
@@ -410,7 +419,7 @@ class _ChartCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.insert_chart),
             title: Text(
-              "Graph",
+              AppLocalizations.of(context).graph,
               style: _headerTextStyle,
             ),
           ),
@@ -419,8 +428,8 @@ class _ChartCard extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(left: 8.0, right: 8.0),
               child: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
-                builder: (context, _, model) =>
-                    _chart(model.getPointsHead, model.getPointsNPSH, model),
+                builder: (context, _, model) => _chart(
+                    model.getPointsHead, model.getPointsNPSH, model, context),
               ),
             ),
           ),
@@ -437,22 +446,28 @@ class _ChartCard extends StatelessWidget {
 class _ResultsCard extends StatelessWidget {
   final _textStyle = TextStyle(fontSize: 14.0, color: Colors.black);
 
-  TextSpan _selectedFlow(PumpingOfFluidsSimulationModel model) {
-    String selectedFlow = "Selected flow: ${model.getFlow} m^3/s \n";
+  TextSpan _selectedFlow(
+      PumpingOfFluidsSimulationModel model, BuildContext context) {
+    String selectedFlow =
+        "${AppLocalizations.of(context).resultsFlow} ${model.getFlow} m^3/s \n";
 
     return TextSpan(
         children: <TextSpan>[TextSpan(text: selectedFlow, style: _textStyle)]);
   }
 
-  TextSpan _bombResult(PumpingOfFluidsSimulationModel model) {
-    String bombHead = "Necessary head: ${model.getHead} m \n";
+  TextSpan _bombResult(
+      PumpingOfFluidsSimulationModel model, BuildContext context) {
+    String bombHead =
+        "${AppLocalizations.of(context).resultsHead} ${model.getHead} m \n";
 
     return TextSpan(
         children: <TextSpan>[TextSpan(text: bombHead, style: _textStyle)]);
   }
 
-  TextSpan _npshResults(PumpingOfFluidsSimulationModel model) {
-    String npshAvailable = "NPSH available: ${model.getNpsh} m \n";
+  TextSpan _npshResults(
+      PumpingOfFluidsSimulationModel model, BuildContext context) {
+    String npshAvailable =
+        "${AppLocalizations.of(context).resultsNPSH} ${model.getNpsh} m \n";
 
     return TextSpan(
         children: <TextSpan>[TextSpan(text: npshAvailable, style: _textStyle)]);
@@ -467,7 +482,7 @@ class _ResultsCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.done_all),
             title: Text(
-              "Results",
+              AppLocalizations.of(context).results,
               style: _headerTextStyle,
             ),
           ),
@@ -477,11 +492,11 @@ class _ResultsCard extends StatelessWidget {
               builder: (context, _, model) => RichText(
                     text: TextSpan(
                       children: <TextSpan>[
-                        _selectedFlow(model),
+                        _selectedFlow(model, context),
                         TextSpan(text: "\n"),
-                        _bombResult(model),
+                        _bombResult(model, context),
                         TextSpan(text: "\n"),
-                        _npshResults(model),
+                        _npshResults(model, context),
                       ],
                     ),
                   ),
