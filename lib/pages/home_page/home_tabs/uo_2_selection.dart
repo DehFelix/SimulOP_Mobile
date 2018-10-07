@@ -8,15 +8,15 @@ class OU2Selection extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectionTilesData = [
       SelectionTile(
-          AppLocalizations.of(context).doublePipeName,
+          AppLocalizations.of(context).doublePipeHeatXName,
           Icons.home,
           false,
-          AppLocalizations.of(context).doublePipeDescription,
+          AppLocalizations.of(context).doublePipeHeatXDescription,
           "/doublePipeHeatX"),
-      SelectionTile(AppLocalizations.of(context).multiPipeName, Icons.email,
-          true, AppLocalizations.of(context).multiPipeDescription),
-      SelectionTile(AppLocalizations.of(context).evaporatorName, Icons.chat,
-          true, AppLocalizations.of(context).evaporatorDescription),
+      SelectionTile(AppLocalizations.of(context).multiPipeHeatXName, Icons.email,
+          true, AppLocalizations.of(context).multiPipeHeatXDescription),
+      SelectionTile(AppLocalizations.of(context).evaporatorsName, Icons.chat,
+          true, AppLocalizations.of(context).evaporatorsDescription),
       SelectionTile(AppLocalizations.of(context).dryerName, Icons.new_releases,
           true, AppLocalizations.of(context).dryerDescription),
       SelectionTile(

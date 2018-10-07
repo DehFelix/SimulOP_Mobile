@@ -1,8 +1,7 @@
 {
-  "@@last_modified": "2018-10-03T21:56:28.157387",
-  "title": "SimulOP",
-  "@title": {
-    "description": "The title of the App bar",
+  "@@last_modified": "2018-10-06T23:24:32.624991",
+  "simulop": "SimulOP",
+  "@simulop": {
     "type": "text",
     "placeholders": {}
   },
@@ -21,7 +20,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "pumpingOfLiquidsName": "Pumping of Liquids",
+  "pumpingOfLiquidsName": "Pumping if Liquids",
   "@pumpingOfLiquidsName": {
     "type": "text",
     "placeholders": {}
@@ -56,33 +55,33 @@
     "type": "text",
     "placeholders": {}
   },
-  "doublePipeName": "Double Pipe Heat Exchanger",
-  "@doublePipeName": {
+  "doublePipeHeatXName": "Double Pipe Heat Exchanger",
+  "@doublePipeHeatXName": {
     "type": "text",
     "placeholders": {}
   },
-  "doublePipeDescription": "doublePipeDescription",
-  "@doublePipeDescription": {
+  "doublePipeHeatXDescription": "doublePipeHeatXDescription",
+  "@doublePipeHeatXDescription": {
     "type": "text",
     "placeholders": {}
   },
-  "multiPipeName": "Multi Pipe Heat Exchanger",
-  "@multiPipeName": {
+  "multiPipeHeatXName": "Multi Pipe Heat Exchanger",
+  "@multiPipeHeatXName": {
     "type": "text",
     "placeholders": {}
   },
-  "multiPipeDescription": "multiPipeDescription",
-  "@multiPipeDescription": {
+  "multiPipeHeatXDescription": "multiPipeHeatXDescription",
+  "@multiPipeHeatXDescription": {
     "type": "text",
     "placeholders": {}
   },
-  "evaporatorName": "Evaporator",
-  "@evaporatorName": {
+  "evaporatorsName": "Evaporator",
+  "@evaporatorsName": {
     "type": "text",
     "placeholders": {}
   },
-  "evaporatorDescription": "evaporatorDescription",
-  "@evaporatorDescription": {
+  "evaporatorsDescription": "evaporatorsDescription",
+  "@evaporatorsDescription": {
     "type": "text",
     "placeholders": {}
   },
@@ -111,13 +110,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "mcCabeThieleName": "McCabe-Thiele Method",
-  "@mcCabeThieleName": {
+  "mcCabeTheileName": "McCabe-Thile Method",
+  "@mcCabeTheileName": {
     "type": "text",
     "placeholders": {}
   },
-  "mcCabeThieleDescription": "mcCabeThieleDescription",
-  "@mcCabeThieleDescription": {
+  "mcCabeTheileDescription": "mcCabeTheileDescription",
+  "@mcCabeTheileDescription": {
     "type": "text",
     "placeholders": {}
   },
@@ -151,13 +150,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "distilationName": "Distillation Column",
-  "@distilationName": {
+  "distilationColumnName": "Distillation Column",
+  "@distilationColumnName": {
     "type": "text",
     "placeholders": {}
   },
-  "distilationDescription": "distilationDescription",
-  "@distilationDescription": {
+  "distilationColumnDescription": "distilationColumnDescription",
+  "@distilationColumnDescription": {
     "type": "text",
     "placeholders": {}
   },
@@ -287,7 +286,7 @@
     "placeholders": {}
   },
   "results": "Results",
-  "@rusults": {
+  "@results": {
     "type": "text",
     "placeholders": {}
   },
@@ -363,6 +362,191 @@
   },
   "drawerDistances": "Distances:",
   "@drawerDistances": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "outerPipe": "Outer Pipe:",
+  "@outerPipe": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintEntryTemperature": "Entry Temperature: (°C)",
+  "@hintEntryTemperature": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintExitTemperature": "Exit Temperature: (°C)",
+  "@hintExitTemperature": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "innerPipe": "Inner Pipe:",
+  "@innerPipe": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "heatX": "HeatX:",
+  "@heatX": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintHotFlow": "Hot Flow: (m^3/h)",
+  "@hintHotFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintFoolingFactor": "Fooling Factor ()",
+  "@hintFoolingFactor": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintThicknnes": "Thicknnes (cm)",
+  "@hintThicknnes": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryOuterLiquid": "Outer Liquid",
+  "@summaryOuterLiquid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryBulckTemp": "Bulck Temperature:",
+  "@summaryBulckTemp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summarySpecificHeat": "Specific Heat:",
+  "@summarySpecificHeat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryInnerLiquid": "Inner Liquid",
+  "@summaryInnerLiquid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphLenght": "Graph - Lenght",
+  "@graphLenght": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphPressure": "Graph - Pressure Drop",
+  "@graphPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsHotExitTemp": "Hot Liquid Exit Temperature:",
+  "@resultsHotExitTemp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsInnerPressure": "Inner Pipe Pressure Drop:",
+  "@resultsInnerPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsOuterPressure": "Outer Pipe Pressure Drop:",
+  "@resultsOuterPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsGlobalCoef": "Global Coeff:",
+  "@resultsGlobalCoef": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsHeatXLenght": "HeatX Lenght:",
+  "@resultsHeatXLenght": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsColdFlow": "Cold Flow:",
+  "@resultsColdFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsHeatExchanged": "Total Heat Exchanged:",
+  "@resultsHeatExchanged": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mixtureInput": "Mixture Input",
+  "@mixtureInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "liquidLK": "Liquid LK",
+  "@liquidLK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintLiquidLK": "Select Liquid LK",
+  "@hintLiquidLK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "liquidHK": "Liquid HK",
+  "@liquidHK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintLiquidHK": "Select Liquid HK",
+  "@hintLiquidHK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "alphaValue": "Alpha Value:",
+  "@alphaValue": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphEquilibrium": "Equilibrium",
+  "@graphEquilibrium": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphOperationCurves": "Operation Curves",
+  "@graphOperationCurves": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphStages": "Stages",
+  "@graphStages": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsNumberOfStages": "Number of Theoretical Stages:",
+  "@resultsNumberOfStages": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsIdialFeed": "Idial Feed Stage:",
+  "@resultsIdialFeed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerLKFeed": "LK Feed Fraction:",
+  "@drawerLKFeed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerFeedCond": "Feed Condition:",
+  "@drawerFeedCond": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerReflxRatio": "Reflux Ratio:",
+  "@drawerReflxRatio": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerTargetXD": "Target XD:",
+  "@drawerTargetXD": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerTargetXB": "Target XB:",
+  "@drawerTargetXB": {
     "type": "text",
     "placeholders": {}
   }

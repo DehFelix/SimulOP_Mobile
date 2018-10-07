@@ -7,7 +7,7 @@ class HelpDialog extends StatelessWidget {
 
   HelpDialog(this.help);
 
-  final tes = "Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n Help not found \n Please report on GitHub \n ";
+  final tes = "Help not found \nHelp not found \nHelp not found \n";
 
   @override
   Widget build(BuildContext context) {    

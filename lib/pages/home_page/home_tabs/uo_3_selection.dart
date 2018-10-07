@@ -8,10 +8,10 @@ class OU3Selection extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectionTilesData = [
       SelectionTile(
-          AppLocalizations.of(context).mcCabeThieleName,
+          AppLocalizations.of(context).mcCabeTheileName,
           Icons.cast_connected,
           false,
-          AppLocalizations.of(context).mcCabeThieleDescription,
+          AppLocalizations.of(context).mcCabeTheileDescription,
           "/mcCabeThieleMethod"),
       SelectionTile(
           AppLocalizations.of(context).absorptionColumnName,
@@ -26,10 +26,10 @@ class OU3Selection extends StatelessWidget {
           true,
           AppLocalizations.of(context).crystalizerDescription),
       SelectionTile(
-          AppLocalizations.of(context).distilationName,
+          AppLocalizations.of(context).distilationColumnName,
           Icons.new_releases,
           true,
-          AppLocalizations.of(context).distilationDescription),
+          AppLocalizations.of(context).distilationColumnDescription),
     ];
 
     return ListView.builder(

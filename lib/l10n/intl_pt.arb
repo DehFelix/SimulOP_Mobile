@@ -1,8 +1,7 @@
 {
-  "@@last_modified": "2018-10-03T18:15:16.614720",
-  "title": "SimulOP",
-  "@title": {
-    "description": "The title of the App bar",
+  "@@last_modified": "2018-10-06T18:33:52.101439",
+  "simulop": "SimulOP",
+  "@simulop": {
     "type": "text",
     "placeholders": {}
   },
@@ -363,6 +362,191 @@
   },
   "drawerDistances": "Distâncias:",
   "@drawerDistances": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "outerPipe": "Tubo Anular:",
+  "@outerPipe": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintEntryTemperature": "Temperatura de Entrada: (°C)",
+  "@hintEntryTemperature": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintExitTemperature": "Temperatura de Saida: (°C)",
+  "@hintExitTemperature": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "innerPipe": "Tubo Interno:",
+  "@innerPipe": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "heatX": "Trocador:",
+  "@heatX": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintHotFlow": "Vazão Quente (m^3/h)",
+  "@hintHotFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintFoolingFactor": "Fator de Encrustação ()",
+  "@hintFoolingFactor": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintThicknnes": "Espeçura (cm)",
+  "@hintThicknnes": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryOuterLiquid": "Liquido Anular",
+  "@summaryOuterLiquid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryBulckTemp": "Temperatura média:",
+  "@summaryBulckTemp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summarySpecificHeat": "Calor Especifico:",
+  "@summarySpecificHeat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "summaryInnerLiquid": "Liquido Interno",
+  "@summaryInnerLiquid": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphLenght": "Gráfico - Comprimento",
+  "@graphLenght": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphPressure": "Gráfico - Perda de Carga",
+  "@graphPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsHotExitTemp": "Temperatura de Saída do Liquido Quente:",
+  "@resultsHotExitTemp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsInnerPressure": "Preda de Carga no Tubo Interno:",
+  "@resultsInnerPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsOuterPressure": "Perda de Carga no Tubo Anular:",
+  "@resultsOuterPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsGlobalCoef": "Coeficiente Global:",
+  "@resultsGlobalCoef": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsHeatXLenght": "Comprimento do Trocador:",
+  "@resultsHeatXLenght": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsColdFlow": "Vazão do Liquido Frio:",
+  "@resultsColdFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsHeatExchanged": "Calor Total Trocado:",
+  "@resultsHeatExchanged": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mixtureInput": "Mistua",
+  "@mixtureInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "liquidLK": "Liquido LK",
+  "@liquidLK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintLiquidLK": "Selecione Liquid LK",
+  "@hintLiquidLK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "liquidHK": "Liquido HK",
+  "@liquidHK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintLiquidHK": "Selecione Liquido HK",
+  "@hintLiquidHK": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "alphaValue": "Valor do Alpha:",
+  "@alphaValue": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphEquilibrium": "Equilibrio",
+  "@graphEquilibrium": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphOperationCurves": "Curvas de Operação",
+  "@graphOperationCurves": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "graphStages": "Estágios",
+  "@graphStages": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsNumberOfStages": "Número de Estágios Teoricos:",
+  "@resultsNumberOfStages": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resultsIdialFeed": "Estágio de Alimentação Ideal:",
+  "@resultsIdialFeed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerLKFeed": "Fração LK na Entrada:",
+  "@drawerLKFeed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerFeedCond": "Condição da Entrada:",
+  "@drawerFeedCond": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerReflxRatio": "Taxa de Refluxo:",
+  "@drawerReflxRatio": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerTargetXD": "XD Desejado:",
+  "@drawerTargetXD": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "drawerTargetXB": "XB Desejado:",
+  "@drawerTargetXB": {
     "type": "text",
     "placeholders": {}
   }

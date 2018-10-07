@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:math' as math;
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:simulop_v1/locale/locales.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
@@ -10,10 +11,7 @@ import 'package:simulop_v1/pages/unit_operation_2/double_pipe_heatx/simulation_d
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
-final helpItems = [
-  HelpItem("More info", "/default", ActionType.route),
-  HelpItem("About", "/default", ActionType.route),
-];
+List<HelpItem> helpItems = List<HelpItem>();
 
 class DoublePiPeResults extends StatelessWidget {
   final DoublePipeHeatXSimulation simulation;
@@ -22,6 +20,11 @@ class DoublePiPeResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    helpItems = [
+      HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
+          ActionType.route),
+      HelpItem("About", "/default", ActionType.route),
+    ];
     return Theme(
       data: ThemeData(primarySwatch: Colors.teal),
       child: ScopedModel<DoublePipeBloc>(
@@ -84,13 +87,13 @@ class _DoublePipeDrawer extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(
-            "Outer Tube: ",
+            AppLocalizations.of(context).outerPipe,
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.trip_origin),
         ),
         ListTile(
-          title: Text("Entry Temperature: (°C)"),
+          title: Text(AppLocalizations.of(context).hintEntryTemperature),
           subtitle: _tempInSlider,
           trailing: ScopedModelDescendant<DoublePipeBloc>(
             builder: (contex, _, model) => Text(
@@ -102,7 +105,7 @@ class _DoublePipeDrawer extends StatelessWidget {
           builder: (context, _, model) {
             if (model.showOuterTempExit()) {
               return ListTile(
-                title: Text("Exit Temperature: (°C)"),
+                title: Text(AppLocalizations.of(context).hintExitTemperature),
                 subtitle: _tempExitSlider,
                 trailing: Text(
                   model.outerTempExit.toStringAsFixed(1),
@@ -114,7 +117,7 @@ class _DoublePipeDrawer extends StatelessWidget {
           },
         ),
         ListTile(
-          title: Text("Diametre: (cm)"),
+          title: Text(AppLocalizations.of(context).hintDiametre),
           subtitle: _diametreSlider,
           trailing: ScopedModelDescendant<DoublePipeBloc>(
             builder: (contex, _, model) => Text(
@@ -162,13 +165,13 @@ class _DoublePipeDrawer extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(
-            "Inner Tube: ",
+            AppLocalizations.of(context).innerPipe,
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.adjust),
         ),
         ListTile(
-          title: Text("Entry Temperature: (°C)"),
+          title: Text(AppLocalizations.of(context).hintEntryTemperature),
           subtitle: _tempInSlider,
           trailing: ScopedModelDescendant<DoublePipeBloc>(
             builder: (contex, _, model) => Text(
@@ -180,7 +183,7 @@ class _DoublePipeDrawer extends StatelessWidget {
           builder: (context, _, model) {
             if (model.showInnerTempExit()) {
               return ListTile(
-                title: Text("Exit Temperature: (°C)"),
+                title: Text(AppLocalizations.of(context).hintExitTemperature),
                 subtitle: _tempExitSlider,
                 trailing: Text(
                   model.innerTempExit.toStringAsFixed(1),
@@ -192,7 +195,7 @@ class _DoublePipeDrawer extends StatelessWidget {
           },
         ),
         ListTile(
-          title: Text("Diametre: (cm)"),
+          title: Text(AppLocalizations.of(context).hintDiametre),
           subtitle: _diametreSlider,
           trailing: ScopedModelDescendant<DoublePipeBloc>(
             builder: (contex, _, model) => Text(
@@ -220,13 +223,13 @@ class _DoublePipeDrawer extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(
-            "HeatX: ",
+            AppLocalizations.of(context).heatX,
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.tune),
         ),
         ListTile(
-          title: Text("Hot Flow: (m^3/h)"),
+          title: Text(AppLocalizations.of(context).hintHotFlow),
           subtitle: _hotFlowSlider,
           trailing: ScopedModelDescendant<DoublePipeBloc>(
             builder: (contex, _, model) => Text(
@@ -247,7 +250,7 @@ class _DoublePipeDrawer extends StatelessWidget {
           DrawerHeader(
             child: Center(
                 child: Text(
-              "Variables: ",
+              AppLocalizations.of(context).drawerVariables,
               style: TextStyle(fontSize: 35.0, color: Colors.white),
               textAlign: TextAlign.center,
             )),
@@ -279,7 +282,7 @@ class __DoublePipeAppBarState extends State<_DoublePipeAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2.0,
-      title: Text("Results"),
+      title: Text(AppLocalizations.of(context).results),
       actions: <Widget>[
         PopupMenuButton(
           itemBuilder: (BuildContext context) => _appBarMenu(),
@@ -371,7 +374,6 @@ class _ChartCard extends StatelessWidget {
               tickProviderSpec: charts.BasicNumericTickProviderSpec(
                   dataIsInWholeNumbers: false, desiredTickCount: 7)),
           domainAxis: charts.NumericAxisSpec(
-              //viewport: charts.NumericExtents(28.0, 38.0),
               tickProviderSpec: charts.BasicNumericTickProviderSpec(
                   zeroBound: false,
                   dataIsInWholeNumbers: false,
@@ -396,7 +398,7 @@ class _ChartCard extends StatelessWidget {
             builder: (context, _, model) => ListTile(
                   leading: Icon(Icons.insert_chart),
                   title: Text(
-                    model.getChartText(),
+                    model.getChartView() ? AppLocalizations.of(context).graphPressure : AppLocalizations.of(context).graphLenght,
                     style: _headerTextStyle,
                   ),
                   trailing: Switch(
@@ -442,7 +444,7 @@ class _ResultsCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.done_all),
             title: Text(
-              "Results",
+              AppLocalizations.of(context).results,
               style: _titleStyle,
             ),
           ),
@@ -458,25 +460,25 @@ class _ResultsCard extends StatelessWidget {
                             children: <TextSpan>[
                               TextSpan(
                                   text:
-                                      "Hot Liquid Exit Temperature: ${snapshot.data.exitTemp} °C \n"),
+                                      "${AppLocalizations.of(context).resultsHotExitTemp } ${snapshot.data.exitTemp} °C \n"),
                               TextSpan(
                                   text:
-                                      "Inner Pipe Pressure Drop: ${snapshot.data.innerPressureDrop} KPa \n"),
+                                      "${AppLocalizations.of(context).resultsInnerPressure} ${snapshot.data.innerPressureDrop} KPa \n"),
                               TextSpan(
                                   text:
-                                      "Outer Pipe Pressure Drop: ${snapshot.data.outerPressureDrop} KPa \n"),
+                                      "${AppLocalizations.of(context).resultsOuterPressure} ${snapshot.data.outerPressureDrop} KPa \n"),
                               TextSpan(
                                   text:
-                                      "Global Coeff: ${snapshot.data.globalCoef} W/m^2 K \n"),
+                                      "${AppLocalizations.of(context).resultsGlobalCoef} ${snapshot.data.globalCoef} W/m^2 K \n"),
                               TextSpan(
                                   text:
-                                      "HeatX lenght: ${snapshot.data.heatXLenght} m \n"),
+                                      "${AppLocalizations.of(context).resultsHeatXLenght} ${snapshot.data.heatXLenght} m \n"),
                               TextSpan(
                                   text:
-                                      "Cold Flow: ${snapshot.data.coldFlow} m^3/h \n"),
+                                      "${AppLocalizations.of(context).resultsColdFlow} ${snapshot.data.coldFlow} m^3/h \n"),
                               TextSpan(
                                   text:
-                                      "Total Heat Exchanged: ${snapshot.data.heatExchanged} KW \n"),
+                                      "${AppLocalizations.of(context).resultsHeatExchanged} ${snapshot.data.heatExchanged} KW \n"),
                             ],
                           ),
                         ),

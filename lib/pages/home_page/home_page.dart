@@ -5,6 +5,7 @@ import 'package:simulop_v1/pages/home_page/home_tabs/uo_2_selection.dart';
 import 'package:simulop_v1/pages/home_page/home_tabs/uo_3_selection.dart';
 import 'package:simulop_v1/locale/locales.dart';
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final helpItems = [HelpItem("info", "/default", ActionType.route)];
 
@@ -15,8 +16,8 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  
+class HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   TabController tabController;
 
   @override
@@ -51,7 +52,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     );
   }
 
-  TabBarView makeTabBarView(tabs) {
+  TabBarView makeTabBarView(List<Widget> tabs) {
     return TabBarView(
       children: tabs,
       controller: tabController,
@@ -61,34 +62,64 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(           
-          elevation: 2.0,          
-          title: Text(AppLocalizations.of(context).title),
-          bottom: makeTabBar(),
-          actions: <Widget>[
-            PopupMenuButton(
-              itemBuilder: (context) => _appBarMenu(),
-              onSelected: _selectMenu,
-            ),
-          ],
-        ),
-        body: makeTabBarView(<Widget>[
+      appBar: AppBar(
+        elevation: 2.0,
+        title: Text(AppLocalizations.of(context).simulop),
+        bottom: makeTabBar(),
+        actions: <Widget>[
+          PopupMenuButton(
+            itemBuilder: (context) => _appBarMenu(),
+            onSelected: _selectMenu,
+          ),
+        ],
+      ),
+      body: makeTabBarView(
+        <Widget>[
           OU1Selection(),
           OU2Selection(),
           OU3Selection(),
-        ]));
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          "POLI-USP. Engenharia Química. AndréAntonio, RafaelTerras, prof.MoisésTeles",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16.0, color: Colors.grey[600]),
+        ),
+      ),
+    );
   }
 
-  void _selectMenu(dynamic item) {
-    Navigator.of(context).pushNamed(item.action);
-  }
-
-  List<Widget> _appBarMenu() {
+  List<PopupMenuItem> _appBarMenu() {
     return helpItems.map((HelpItem item) {
       return PopupMenuItem(
         value: item,
         child: Text(item.name),
       );
     }).toList();
+  }
+
+  void _lunchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw "Could not lunch $url";
+    }
+  }
+
+  void _selectMenu(dynamic element) {
+    var item = element as HelpItem;
+    switch (item.actionType) {
+      case ActionType.route:
+        Navigator.of(context).pushNamed(item.action);
+        break;
+      case ActionType.url:
+        _lunchURL(item.action);
+        break;
+      case ActionType.widgetAction:
+        break;
+      default:
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simulop_v1/locale/locales.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -8,11 +9,7 @@ import 'package:simulop_v1/pages/unit_operation_2/double_pipe_heatx/input_handle
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
-final helpItems = [
-  HelpItem("Default inputs", "runWithDefaultInputs", ActionType.widgetAction),
-  HelpItem("More info", "/default", ActionType.route),
-  HelpItem("About", "/default", ActionType.route),
-];
+List<HelpItem> helpItems = List<HelpItem>();
 
 final outerFormKey = GlobalKey<FormState>();
 final innerFormKey = GlobalKey<FormState>();
@@ -23,6 +20,12 @@ final InputModel inputModel = InputModel();
 class DoublePiPeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    helpItems = [
+      HelpItem(
+          AppLocalizations.of(context).defaultInputs, "runWithDefaultInputs", ActionType.widgetAction),
+      HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default", ActionType.route),
+      HelpItem("About", "/default", ActionType.route),
+    ];
     return Theme(
       data:
           ThemeData(primarySwatch: Colors.teal, cursorColor: Colors.teal[500]),
@@ -31,7 +34,7 @@ class DoublePiPeInput extends StatelessWidget {
         child: Scaffold(
           appBar: _DoublePipeInputAppBar(),
           body: Center(
-            child: _mainBody(),
+            child: _mainBody(context),
           ),
           floatingActionButton: ScopedModelDescendant<InputModel>(
             builder: (context, _, model) => FloatingActionButton(
@@ -62,10 +65,10 @@ class DoublePiPeInput extends StatelessWidget {
     );
   }
 
-  Widget _mainBody() {
+  Widget _mainBody(BuildContext context) {
     return ListView(
       children: <Widget>[
-        _picCard(),
+        _picCard(context),
         SizedBox(
             height: 370.0,
             child: ListView(
@@ -81,14 +84,15 @@ class DoublePiPeInput extends StatelessWidget {
     );
   }
 
-  Widget _picCard() {
+  Widget _picCard(BuildContext context) {
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ListTile(
             leading: Icon(Icons.picture_in_picture),
-            title: Text("Picture", style: _headerTextStyle),
+            title: Text(AppLocalizations.of(context).picture,
+                style: _headerTextStyle),
           ),
           Image.asset("assets/images/double_pipe_heatx_placeholder.png"),
         ],
@@ -112,7 +116,7 @@ class __DoublePipeInputAppBarState extends State<_DoublePipeInputAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2.0,
-      title: Text("Double Pipe HeatX"),
+      title: Text(AppLocalizations.of(context).doublePipeHeatXName),
       actions: <Widget>[
         PopupMenuButton(
           itemBuilder: (BuildContext context) => _appBarMenu(),
@@ -183,7 +187,7 @@ class _OuterInputCard extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.trip_origin),
               title: Text(
-                "Outer Pipe: ",
+                AppLocalizations.of(context).outerPipe,
                 style: _headerTextStyle,
               ),
             ),
@@ -225,7 +229,8 @@ class _OuterInputCard extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         initialValue: model.outerInput.tempIN,
                         decoration: InputDecoration(
-                            labelText: "Entry Temperature (°C)"),
+                            labelText: AppLocalizations.of(context)
+                                .hintEntryTemperature),
                         validator: model.outerInput.temperatureValidator,
                         onSaved: model.setOuterTempIN,
                       ),
@@ -236,8 +241,9 @@ class _OuterInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.outerInput.tempExit,
-                        decoration:
-                            InputDecoration(labelText: "Exit Temperature (°C)"),
+                        decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context)
+                                .hintExitTemperature),
                         validator: model.outerInput.temperatureValidator,
                         onSaved: model.setOuterTempExit,
                       ),
@@ -248,7 +254,9 @@ class _OuterInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.heatInput.outerDiametre,
-                        decoration: InputDecoration(labelText: "Diametre (cm)"),
+                        decoration: InputDecoration(
+                            labelText:
+                                AppLocalizations.of(context).hintDiametre),
                         validator: model.outerInput.diametreValidator,
                         onSaved: model.setHeatOuterDiametre,
                       ),
@@ -280,7 +288,7 @@ class _InnerInputCard extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.adjust),
               title: Text(
-                "Inner Pipe: ",
+                AppLocalizations.of(context).innerPipe,
                 style: _headerTextStyle,
               ),
             ),
@@ -321,8 +329,9 @@ class _InnerInputCard extends StatelessWidget {
                         autocorrect: false,
                         keyboardType: TextInputType.number,
                         initialValue: model.innerInput.tempIN,
-                        decoration:
-                            InputDecoration(labelText: "Temperature In (°C)"),
+                        decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context)
+                                .hintEntryTemperature),
                         validator: model.innerInput.temperatureValidator,
                         onSaved: model.setInnerTempIN,
                       ),
@@ -333,8 +342,9 @@ class _InnerInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.innerInput.tempExit,
-                        decoration:
-                            InputDecoration(labelText: "Temperature Exit (°C)"),
+                        decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context)
+                                .hintExitTemperature),
                         validator: model.innerInput.temperatureValidator,
                         onSaved: model.setInnerTempExit,
                       ),
@@ -345,7 +355,9 @@ class _InnerInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.heatInput.innerDiametre,
-                        decoration: InputDecoration(labelText: "Diametre (cm)"),
+                        decoration: InputDecoration(
+                            labelText:
+                                AppLocalizations.of(context).hintDiametre),
                         validator: model.innerInput.diametreValidator,
                         onSaved: model.setHeatInnerDiametre,
                       ),
@@ -377,7 +389,7 @@ class _HeatXInputCard extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.tune),
               title: Text(
-                "Heat X: ",
+                AppLocalizations.of(context).heatX,
                 style: _headerTextStyle,
               ),
             ),
@@ -401,8 +413,9 @@ class _HeatXInputCard extends StatelessWidget {
                         autocorrect: false,
                         keyboardType: TextInputType.number,
                         initialValue: model.heatInput.hotFlow,
-                        decoration:
-                            InputDecoration(labelText: "Hot Flow (m^3/h)"),
+                        decoration: InputDecoration(
+                            labelText:
+                                AppLocalizations.of(context).hintHotFlow),
                         validator: model.heatInput.hotFlowValidator,
                         onSaved: model.setHeatHotFlow,
                       ),
@@ -413,8 +426,9 @@ class _HeatXInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.heatInput.foolingFactor,
-                        decoration:
-                            InputDecoration(labelText: "Fooling Factor (mm)"),
+                        decoration: InputDecoration(
+                            labelText:
+                                AppLocalizations.of(context).hintFoolingFactor),
                         validator: model.heatInput.foolingFactorValidator,
                         onSaved: model.setHeatFoolingFactor,
                       ),
@@ -425,8 +439,9 @@ class _HeatXInputCard extends StatelessWidget {
                         autovalidate: true,
                         keyboardType: TextInputType.number,
                         initialValue: model.heatInput.thickness,
-                        decoration:
-                            InputDecoration(labelText: "Thicknnes (cm)"),
+                        decoration: InputDecoration(
+                            labelText:
+                                AppLocalizations.of(context).hintFoolingFactor),
                         validator: model.heatInput.thicknessValidator,
                         onSaved: model.setThickness,
                       ),
@@ -491,7 +506,7 @@ class _SumaryCard extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.playlist_add_check),
           title: Text(
-            "Sumary",
+            AppLocalizations.of(context).summary,
             style: _titleStyle,
           ),
         ),
@@ -499,7 +514,7 @@ class _SumaryCard extends StatelessWidget {
           padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
           child: ScopedModelDescendant<InputModel>(
             builder: (context, _, model) {
-              Sumary sumary = model.simulation.getSumary();
+              Sumary sumary = model.simulation.getSumary(context);
               return RichText(
                 text: TextSpan(
                   children: <TextSpan>[

@@ -169,7 +169,7 @@ class _FluidResultsDrawer extends StatelessWidget {
           leading: Icon(Icons.arrow_back),
         ),
         ListTile(
-          title: Text("Outlet Valve Opening: "),
+          title: Text(AppLocalizations.of(context).drawerOutletValve),
           subtitle: _outletValveSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) =>

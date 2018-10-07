@@ -22,11 +22,10 @@ class AppLocalizations {
   }
 
   // Home Page
-  String get title {
+  String get simulop {
     return Intl.message(
       "SimulOP",
-      name: "title",
-      desc: "The title of the App bar",
+      name: "simulop",
     );
   }
 
@@ -44,7 +43,6 @@ class AppLocalizations {
     );
   }
 
-  // OU I
   String get ouIName {
     return Intl.message(
       "OU I",
@@ -54,7 +52,7 @@ class AppLocalizations {
 
   String get pumpingOfLiquidsName {
     return Intl.message(
-      "Pumping of Liquids",
+      "Pumping if Liquids",
       name: "pumpingOfLiquidsName",
     );
   }
@@ -94,7 +92,6 @@ class AppLocalizations {
     );
   }
 
-  // OU II
   String get ouIIName {
     return Intl.message(
       "OU II",
@@ -102,45 +99,45 @@ class AppLocalizations {
     );
   }
 
-  String get doublePipeName {
+  String get doublePipeHeatXName {
     return Intl.message(
       "Double Pipe Heat Exchanger",
-      name: "doublePipeName",
+      name: "doublePipeHeatXName",
     );
   }
 
-  String get doublePipeDescription {
+  String get doublePipeHeatXDescription {
     return Intl.message(
-      "doublePipeDescription",
-      name: "doublePipeDescription",
+      "doublePipeHeatXDescription",
+      name: "doublePipeHeatXDescription",
     );
   }
 
-  String get multiPipeName {
+  String get multiPipeHeatXName {
     return Intl.message(
       "Multi Pipe Heat Exchanger",
-      name: "multiPipeName",
+      name: "multiPipeHeatXName",
     );
   }
 
-  String get multiPipeDescription {
+  String get multiPipeHeatXDescription {
     return Intl.message(
-      "multiPipeDescription",
-      name: "multiPipeDescription",
+      "multiPipeHeatXDescription",
+      name: "multiPipeHeatXDescription",
     );
   }
 
-  String get evaporatorName {
+  String get evaporatorsName {
     return Intl.message(
       "Evaporator",
-      name: "evaporatorName",
+      name: "evaporatorsName",
     );
   }
 
-  String get evaporatorDescription {
+  String get evaporatorsDescription {
     return Intl.message(
-      "evaporatorDescription",
-      name: "evaporatorDescription",
+      "evaporatorsDescription",
+      name: "evaporatorsDescription",
     );
   }
 
@@ -172,7 +169,6 @@ class AppLocalizations {
     );
   }
 
-  // OU III
   String get ouIIIName {
     return Intl.message(
       "OU III",
@@ -180,17 +176,17 @@ class AppLocalizations {
     );
   }
 
-  String get mcCabeThieleName {
+  String get mcCabeTheileName {
     return Intl.message(
-      "McCabe-Thiele Method",
-      name: "mcCabeThieleName",
+      "McCabe-Thile Method",
+      name: "mcCabeTheileName",
     );
   }
 
-  String get mcCabeThieleDescription {
+  String get mcCabeTheileDescription {
     return Intl.message(
-      "mcCabeThieleDescription",
-      name: "mcCabeThieleDescription",
+      "mcCabeTheileDescription",
+      name: "mcCabeTheileDescription",
     );
   }
 
@@ -236,21 +232,21 @@ class AppLocalizations {
     );
   }
 
-  String get distilationName {
+  String get distilationColumnName {
     return Intl.message(
       "Distillation Column",
-      name: "distilationName",
+      name: "distilationColumnName",
     );
   }
 
-  String get distilationDescription {
+  String get distilationColumnDescription {
     return Intl.message(
-      "distilationDescription",
-      name: "distilationDescription",
+      "distilationColumnDescription",
+      name: "distilationColumnDescription",
     );
   }
 
-  //Pumping of Liquids Input
+  // Pumping of Liquids Input
   String get defaultInputs {
     return Intl.message(
       "Default inputs",
@@ -399,10 +395,7 @@ class AppLocalizations {
   }
 
   String get summaryDiametre {
-    return Intl.message(
-      "Diametre:",
-      name: "summaryDiametre",
-    );
+    return Intl.message("Diametre:", name: "summaryDiametre");
   }
 
   String get summaryLenght {
@@ -430,7 +423,7 @@ class AppLocalizations {
   String get results {
     return Intl.message(
       "Results",
-      name: "rusults",
+      name: "results",
     );
   }
 
@@ -536,6 +529,269 @@ class AppLocalizations {
     return Intl.message(
       "Distances:",
       name: "drawerDistances",
+    );
+  }
+
+// Double Pipe HeatX Input
+  String get outerPipe {
+    return Intl.message(
+      "Outer Pipe:",
+      name: "outerPipe",
+    );
+  }
+
+  String get hintEntryTemperature {
+    return Intl.message(
+      "Entry Temperature: (°C)",
+      name: "hintEntryTemperature",
+    );
+  }
+
+  String get hintExitTemperature {
+    return Intl.message(
+      "Exit Temperature: (°C)",
+      name: "hintExitTemperature",
+    );
+  }
+
+  String get innerPipe {
+    return Intl.message(
+      "Inner Pipe:",
+      name: "innerPipe",
+    );
+  }
+
+  String get heatX {
+    return Intl.message(
+      "HeatX:",
+      name: "heatX",
+    );
+  }
+
+  String get hintHotFlow {
+    return Intl.message(
+      "Hot Flow: (m^3/h)",
+      name: "hintHotFlow",
+    );
+  }
+
+  String get hintFoolingFactor {
+    return Intl.message(
+      "Fooling Factor ()",
+      name: "hintFoolingFactor",
+    );
+  }
+
+  String get hintThicknnes {
+    return Intl.message(
+      "Thicknnes (cm)",
+      name: "hintThicknnes",
+    );
+  }
+
+  String get summaryOuterLiquid {
+    return Intl.message(
+      "Outer Liquid",
+      name: "summaryOuterLiquid",
+    );
+  }
+
+  String get summaryBulckTemp {
+    return Intl.message(
+      "Bulck Temperature:",
+      name: "summaryBulckTemp",
+    );
+  }
+
+  String get summarySpecificHeat {
+    return Intl.message(
+      "Specific Heat:",
+      name: "summarySpecificHeat",
+    );
+  }
+
+  String get summaryInnerLiquid {
+    return Intl.message(
+      "Inner Liquid",
+      name: "summaryInnerLiquid",
+    );
+  }
+
+  // Double Pipe HeatX Results
+  String get graphLenght {
+    return Intl.message(
+      "Graph - Lenght",
+      name: "graphLenght",
+    );
+  }
+
+  String get graphPressure {
+    return Intl.message(
+      "Graph - Pressure Drop",
+      name: "graphPressure",
+    );
+  }
+
+  String get resultsHotExitTemp {
+    return Intl.message(
+      "Hot Liquid Exit Temperature:",
+      name: "resultsHotExitTemp",
+    );
+  }
+
+  String get resultsInnerPressure {
+    return Intl.message(
+      "Inner Pipe Pressure Drop:",
+      name: "resultsInnerPressure",
+    );
+  }
+
+  String get resultsOuterPressure {
+    return Intl.message(
+      "Outer Pipe Pressure Drop:",
+      name: "resultsOuterPressure",
+    );
+  }
+
+  String get resultsGlobalCoef {
+    return Intl.message(
+      "Global Coeff:",
+      name: "resultsGlobalCoef",
+    );
+  }
+
+  String get resultsHeatXLenght {
+    return Intl.message(
+      "HeatX Lenght:",
+      name: "resultsHeatXLenght",
+    );
+  }
+
+  String get resultsColdFlow {
+    return Intl.message(
+      "Cold Flow:",
+      name: "resultsColdFlow",
+    );
+  }
+
+  String get resultsHeatExchanged {
+    return Intl.message(
+      "Total Heat Exchanged:",
+      name: "resultsHeatExchanged",
+    );
+  }
+
+  // McCabe-Thiele Input
+  String get mixtureInput {
+    return Intl.message(
+      "Mixture Input",
+      name: "mixtureInput",
+    );
+  }
+
+  String get liquidLK {
+    return Intl.message(
+      "Liquid LK",
+      name: "liquidLK",
+    );
+  }
+
+  String get hintLiquidLK {
+    return Intl.message(
+      "Select Liquid LK",
+      name: "hintLiquidLK",
+    );
+  }
+
+  String get liquidHK {
+    return Intl.message(
+      "Liquid HK",
+      name: "liquidHK",
+    );
+  }
+
+  String get hintLiquidHK {
+    return Intl.message(
+      "Select Liquid HK",
+      name: "hintLiquidHK",
+    );
+  }
+
+  String get alphaValue {
+    return Intl.message(
+      "Alpha Value:",
+      name: "alphaValue",
+    );
+  }
+
+// McCabe-Thile Results
+  String get graphEquilibrium {
+    return Intl.message(
+      "Equilibrium",
+      name: "graphEquilibrium",
+    );
+  }
+
+  String get graphOperationCurves {
+    return Intl.message(
+      "Operation Curves",
+      name: "graphOperationCurves",
+    );
+  }
+
+  String get graphStages {
+    return Intl.message(
+      "Stages",
+      name: "graphStages",
+    );
+  }
+
+  String get resultsNumberOfStages {
+    return Intl.message(
+      "Number of Theoretical Stages:",
+      name: "resultsNumberOfStages",
+    );
+  }
+
+  String get resultsIdialFeed {
+    return Intl.message(
+      "Idial Feed Stage:",
+      name: "resultsIdialFeed",
+    );
+  }
+
+  String get drawerLKFeed {
+    return Intl.message(
+      "LK Feed Fraction:",
+      name: "drawerLKFeed",
+    );
+  }
+
+  String get drawerFeedCond {
+    return Intl.message(
+      "Feed Condition:",
+      name: "drawerFeedCond",
+    );
+  }
+
+  String get drawerReflxRatio {
+    return Intl.message(
+      "Reflux Ratio:",
+      name: "drawerReflxRatio",
+    );
+  }
+
+  String get drawerTargetXD {
+    return Intl.message(
+      "Target XD:",
+      name: "drawerTargetXD",
+    );
+  }
+
+  String get drawerTargetXB {
+    return Intl.message(
+      "Target XB:",
+      name: "drawerTargetXB",
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:simulop_v1/core/core.dart' as core;
+import 'package:simulop_v1/locale/locales.dart';
 import 'package:simulop_v1/pages/unit_operation_2/double_pipe_heatx/simulation_data.dart';
 
 class InputModel extends Model {
@@ -465,7 +466,7 @@ class SimulationCreator {
     }
   }
 
-  Sumary getSumary() {
+  Sumary getSumary(BuildContext context) {
     final sumary = Sumary();
 
     if (outerInput.validInput()) {
@@ -479,15 +480,15 @@ class SimulationCreator {
           : core.Inicializer.liquidMaterial(outerInput.liquid, temp: bulckTemp);
 
       sumary.outerLiquidName =
-          "Outer Liquid - ${(outerInput.isOil) ? "Oil ($api °API)" : outerInput.liquid} \n";
+          "${AppLocalizations.of(context).summaryOuterLiquid} - ${(outerInput.isOil) ? "Oil ($api °API)" : outerInput.liquid} \n";
       sumary.outerBulkTemp =
-          "Bulck Temperature ${(bulckTemp - 273.15).toStringAsFixed(1)} °C \n";
+          "${AppLocalizations.of(context).summaryBulckTemp} ${(bulckTemp - 273.15).toStringAsFixed(1)} °C \n";
       sumary.outerLiquidDensity =
-          "Density: ${outerMaterial.density.toStringAsFixed(1)} Kg/m^3 \n";
+          "${AppLocalizations.of(context).summaryDensity} ${outerMaterial.density.toStringAsFixed(1)} Kg/m^3 \n";
       sumary.outerLiquidViscosity =
-          "Viscosity: ${(outerMaterial.viscosity * 1000.0).toStringAsFixed(2)} cP \n";
+          "${AppLocalizations.of(context).summaryViscosity} ${(outerMaterial.viscosity * 1000.0).toStringAsFixed(2)} cP \n";
       sumary.outerLiquidSpecificHeat =
-          "Specific Heat: ${(outerMaterial.specificHeat / 1000.0).toStringAsFixed(2)} KJ/mol K \n";
+          "${AppLocalizations.of(context).summarySpecificHeat} ${(outerMaterial.specificHeat / 1000.0).toStringAsFixed(2)} KJ/mol K \n";
     }
 
     if (innerInput.validInput()) {
@@ -501,15 +502,15 @@ class SimulationCreator {
           : core.Inicializer.liquidMaterial(innerInput.liquid, temp: bulckTemp);
 
       sumary.innerLiquidName =
-          "Inner Liquid - ${(innerInput.isOil) ? "Oil ($api °API)" : innerInput.liquid} \n";
+          "${AppLocalizations.of(context).summaryInnerLiquid} - ${(innerInput.isOil) ? "Oil ($api °API)" : innerInput.liquid} \n";
       sumary.innerBulkTemp =
-          "Bulck Temperature ${(bulckTemp - 273.15).toStringAsFixed(1)} °C \n";
+          "${AppLocalizations.of(context).summaryBulckTemp} ${(bulckTemp - 273.15).toStringAsFixed(1)} °C \n";
       sumary.innerLiquidDensity =
-          "Density: ${innerMaterial.density.toStringAsFixed(1)} Kg/m^3 \n";
+          "${AppLocalizations.of(context).summaryDensity} ${innerMaterial.density.toStringAsFixed(1)} Kg/m^3 \n";
       sumary.innerLiquidViscosity =
-          "Viscosity: ${(innerMaterial.viscosity * 1000.0).toStringAsFixed(2)} cP \n";
+          "${AppLocalizations.of(context).summaryViscosity} ${(innerMaterial.viscosity * 1000.0).toStringAsFixed(2)} cP \n";
       sumary.innerLiquidSpecificHeat =
-          "Specific Heat: ${(innerMaterial.specificHeat / 1000.0).toStringAsFixed(2)} KJ/mol K \n";
+          "${AppLocalizations.of(context).summarySpecificHeat} ${(innerMaterial.specificHeat / 1000.0).toStringAsFixed(2)} KJ/mol K \n";
     }
 
     return sumary;

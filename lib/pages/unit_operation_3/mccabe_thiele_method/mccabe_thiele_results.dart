@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:simulop_v1/locale/locales.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:math' as math;
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -9,10 +10,7 @@ import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/simulatio
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
-final helpItems = [
-  HelpItem("More info", "/default", ActionType.route),
-  HelpItem("About", "/default", ActionType.route),
-];
+List<HelpItem> helpItems = List<HelpItem>();
 
 final McCabeThieleSimulationModel simulationModel =
     McCabeThieleSimulationModel();
@@ -33,6 +31,11 @@ class McCabeThieleMethodResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    helpItems = [
+      HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
+          ActionType.route),
+      HelpItem("About", "/default", ActionType.route),
+    ];
     return ScopedModel<McCabeThieleSimulationModel>(
       model: simulationModel,
       child: Theme(
@@ -126,7 +129,7 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
     return Column(
       children: <Widget>[
         ListTile(
-          title: Text("LK Feed Fraction: "),
+          title: Text(AppLocalizations.of(context).drawerLKFeed),
           subtitle: _feedFractionSlider,
           trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
             builder: (contex, _, model) =>
@@ -134,7 +137,7 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text("Feed Condition: "),
+          title: Text(AppLocalizations.of(context).drawerFeedCond),
           subtitle: _feedConditionSlider,
           trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
             builder: (contex, _, model) =>
@@ -142,7 +145,7 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text("Relux Ratio: "),
+          title: Text(AppLocalizations.of(context).drawerReflxRatio),
           subtitle: _refluxRationSlider,
           trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
             builder: (contex, _, model) =>
@@ -150,7 +153,7 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text("Target XD: "),
+          title: Text(AppLocalizations.of(context).drawerTargetXD),
           subtitle: _targetXDSlider,
           trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
             builder: (contex, _, model) =>
@@ -158,7 +161,7 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text("Target XB: "),
+          title: Text(AppLocalizations.of(context).drawerTargetXB),
           subtitle: _targetXBSlider,
           trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
             builder: (contex, _, model) =>
@@ -166,7 +169,7 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          title: Text("Pressure: (bar)"),
+          title: Text(AppLocalizations.of(context).hintPressure),
           subtitle: _pressureSlider,
           trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
             builder: (contex, _, model) =>
@@ -186,7 +189,7 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
           DrawerHeader(
             child: Center(
                 child: Text(
-              "Variables: ",
+              AppLocalizations.of(context).drawerVariables,
               style: TextStyle(fontSize: 35.0, color: Colors.white),
               textAlign: TextAlign.center,
             )),
@@ -217,7 +220,7 @@ class __McCabeThieleResultsAppBarState
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2.0,
-      title: Text("Results"),
+      title: Text(AppLocalizations.of(context).results),
       actions: <Widget>[
         PopupMenuButton(
           itemBuilder: (BuildContext context) => _appBarMenu(),
@@ -263,16 +266,17 @@ class _ChartCard extends StatelessWidget {
   List<charts.Series<math.Point, double>> _createSeries(
       List<math.Point> dataEquilibrium,
       List<math.Point> dataOperationCurves,
-      List<math.Point> dataStages) {
+      List<math.Point> dataStages,
+      BuildContext context) {
     return [
       charts.Series<math.Point, double>(
-        id: "Equilibrium",
+        id: AppLocalizations.of(context).graphEquilibrium,
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataEquilibrium,
       ),
       charts.Series<math.Point, double>(
-        id: "Operation Curves",
+        id: AppLocalizations.of(context).graphOperationCurves,
         colorFn: (_, __) => charts.MaterialPalette.gray.shade500,
         dashPatternFn: (_, __) => [3, 3],
         domainFn: (math.Point point, _) => point.x,
@@ -280,7 +284,7 @@ class _ChartCard extends StatelessWidget {
         data: dataOperationCurves,
       ),
       charts.Series<math.Point, double>(
-        id: "Stages",
+        id: AppLocalizations.of(context).graphStages,
         colorFn: (_, __) => charts.MaterialPalette.gray.shade800,
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
@@ -289,10 +293,10 @@ class _ChartCard extends StatelessWidget {
     ];
   }
 
-  Widget _chart(McCabeThieleSimulationModel model) {
+  Widget _chart(McCabeThieleSimulationModel model, BuildContext context) {
     return charts.LineChart(
       _createSeries(
-          model.getEquilibrium, model.getOperationCurves, model.getStages),
+          model.getEquilibrium, model.getOperationCurves, model.getStages, context),
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
@@ -320,7 +324,7 @@ class _ChartCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.insert_chart),
             title: Text(
-              "Graph",
+              AppLocalizations.of(context).graph,
               style: _headerTextStyle,
             ),
           ),
@@ -329,7 +333,7 @@ class _ChartCard extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(left: 8.0, right: 8.0),
               child: ScopedModelDescendant<McCabeThieleSimulationModel>(
-                builder: (context, _, model) => _chart(model),
+                builder: (context, _, model) => _chart(model, context),
               ),
             ),
           ),
@@ -354,7 +358,7 @@ class _ResultsCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.done_all),
             title: Text(
-              "Results",
+              AppLocalizations.of(context).results,
               style: _headerTextStyle,
             ),
           ),
@@ -368,15 +372,15 @@ class _ResultsCard extends StatelessWidget {
                           text: TextSpan(
                             children: <TextSpan>[
                               TextSpan(
-                                  text: "Alpha value: ${model.getAlpha}\n",
+                                  text: "${AppLocalizations.of(context).alphaValue} ${model.getAlpha}\n",
                                   style: _textStyle),
                               TextSpan(
                                   text:
-                                      "Number of theoretical stages: ${snapshot.data.numberOfStages}\n",
+                                      "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
                                   style: _textStyle),
                               TextSpan(
                                   text:
-                                      "Idial feed stage: ${snapshot.data.idialStage}\n",
+                                      "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
                                   style: _textStyle),
                             ],
                           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:simulop_v1/locale/locales.dart';
 import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/mccabe_thiele_results.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,10 +9,7 @@ import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/input_dat
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
-final helpItems = [
-  HelpItem("More info", "/default", ActionType.route),
-  HelpItem("About", "/default", ActionType.route),
-];
+List<HelpItem> helpItems = List<HelpItem>();
 
 final mixtureFormKey = GlobalKey<FormState>();
 
@@ -20,13 +18,18 @@ final mixtureInputModel = MixtureInput();
 class McCabeThieleMethodInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    helpItems = [
+      HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
+          ActionType.route),
+      HelpItem("About", "/default", ActionType.route),
+    ];
     return ScopedModel<McCabeThieleInputData>(
       model: McCabeThieleInputData(
         input: mixtureInputModel,
       ),
       child: Theme(
         data: ThemeData(primarySwatch: Colors.blueGrey),
-              child: Scaffold(
+        child: Scaffold(
             appBar: _McCabeThieleInputAppBar(),
             body: Container(child: _mainBody()),
             floatingActionButton: ScopedModelDescendant<McCabeThieleInputData>(
@@ -94,7 +97,7 @@ class _McCabeThieleInputAppBarState extends State<_McCabeThieleInputAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2.0,
-      title: Text("McCabe-Thiele Method"),
+      title: Text(AppLocalizations.of(context).mcCabeTheileName),
       actions: <Widget>[
         PopupMenuButton(
           itemBuilder: (BuildContext context) => _appBarMenu(),
@@ -147,7 +150,7 @@ class _MixtureInputCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.invert_colors_off),
             title: Text(
-              "Mixture Input: ",
+              AppLocalizations.of(context).mixtureInput,
               style: _headerTextStyle,
             ),
           ),
@@ -155,12 +158,12 @@ class _MixtureInputCard extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Text("Liquid LK: "),
+                child: Text(AppLocalizations.of(context).liquidLK),
               ),
               ScopedModelDescendant<McCabeThieleInputData>(
                 builder: (context, _, model) => DropdownButton(
                     hint: Text(
-                      "Select Liquid LK",
+                      AppLocalizations.of(context).hintLiquidLK,
                     ),
                     value: model.input.liquidLK,
                     items: model.input.liquidInputDropDownItems(),
@@ -172,12 +175,12 @@ class _MixtureInputCard extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Text("Liquid HK: "),
+                child: Text(AppLocalizations.of(context).liquidHK),
               ),
               ScopedModelDescendant<McCabeThieleInputData>(
                 builder: (context, _, model) => DropdownButton(
                     hint: Text(
-                      "Select Liquid HK",
+                      AppLocalizations.of(context).hintLiquidHK,
                     ),
                     value: model.input.liquidHK,
                     items: model.input.liquidInputDropDownItems(),
@@ -200,15 +203,18 @@ class _SumaryCard extends StatelessWidget {
 
   final _textStyle = TextStyle(fontSize: 14.0, color: Colors.black);
 
-  TextSpan _mixtureSumary(McCabeThieleInputData model) {
+  TextSpan _mixtureSumary(McCabeThieleInputData model, BuildContext context) {
     String liquidLK;
     String liquidHK;
     String alpha;
 
     if (model.input.validateInput()) {
-      liquidLK = "Liquid LK: ${model.input.liquidLK}\n";
-      liquidHK = "Liquid HK: ${model.input.liquidHK}\n";
-      alpha = "Alpha value: ${model.getAlpha.toStringAsFixed(2)}";
+      liquidLK =
+          "${AppLocalizations.of(context).liquidLK} ${model.input.liquidLK}\n";
+      liquidHK =
+          "${AppLocalizations.of(context).liquidHK} ${model.input.liquidHK}\n";
+      alpha =
+          "${AppLocalizations.of(context).alphaValue} ${model.getAlpha.toStringAsFixed(2)}";
     }
 
     return TextSpan(children: <TextSpan>[
@@ -227,7 +233,7 @@ class _SumaryCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.playlist_add_check),
             title: Text(
-              "Sumary",
+              AppLocalizations.of(context).summary,
               style: _titleStyle,
             ),
           ),
@@ -237,7 +243,7 @@ class _SumaryCard extends StatelessWidget {
               builder: (context, _, model) => RichText(
                     text: TextSpan(
                       children: <TextSpan>[
-                        _mixtureSumary(model),
+                        _mixtureSumary(model, context),
                       ],
                     ),
                   ),
