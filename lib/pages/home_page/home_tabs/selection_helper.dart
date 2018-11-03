@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:simulop_v1/locale/locales.dart';
 
-
 class SelectionTile {
   final String title;
   final IconData icon;
+  final String imagePath;
   final String description;
   final String route;
   final bool isDisable;
 
-  SelectionTile(this.title, this.icon, this.isDisable, this.description,
-      [this.route = "/default"]);
+  SelectionTile(
+      {@required this.description,
+      @required this.isDisable,
+      @required this.title,
+      this.imagePath = "",
+      this.icon = Icons.help,
+      this.route = "/default"});
+
+//  SelectionTile(this.title, this.icon, this.isDisable, this.description,
+  //    [this.route = "/default"]);
 }
 
 /// Builds the selection tile with the [SelectionTile] provided.
 Widget tileSelectionBuilder(BuildContext context, SelectionTile tile) {
   return ExpansionTile(
     title: Text(tile.title),
-    leading: Icon(tile.icon),
+    leading: (tile.imagePath != "")
+        ? Image.asset(
+            tile.imagePath,
+            scale: 2.0,
+            color: Colors.black45,
+          )
+        : Icon(tile.icon),
     children: <Widget>[
       Padding(
         padding: EdgeInsets.only(left: 16.0, right: 16.0),

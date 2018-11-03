@@ -8,28 +8,36 @@ class OU3Selection extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectionTilesData = [
       SelectionTile(
-          AppLocalizations.of(context).mcCabeTheileName,
-          Icons.cast_connected,
-          false,
-          AppLocalizations.of(context).mcCabeTheileDescription,
-          "/mcCabeThieleMethod"),
+        title: AppLocalizations.of(context).mcCabeTheileName,
+        description: AppLocalizations.of(context).mcCabeTheileDescription,
+        isDisable: false,
+        imagePath: "assets/icon/ic_mc_cabe_thiele.png",
+        route: "/mcCabeThieleMethod",
+      ),
       SelectionTile(
-          AppLocalizations.of(context).absorptionColumnName,
-          Icons.thumb_up,
-          true,
-          AppLocalizations.of(context).absorptionColumnDescription),
-      SelectionTile(AppLocalizations.of(context).membranesName, Icons.chat,
-          true, AppLocalizations.of(context).membranesDescription),
+        title: AppLocalizations.of(context).absorptionColumnName,
+        description: AppLocalizations.of(context).absorptionColumnDescription,
+        isDisable: true,
+        imagePath: "assets/icon/ic_absorbtion_columns.png", 
+      ),
       SelectionTile(
-          AppLocalizations.of(context).crystalizerName,
-          Icons.new_releases,
-          true,
-          AppLocalizations.of(context).crystalizerDescription),
+        title: AppLocalizations.of(context).membranesName,
+        description: AppLocalizations.of(context).membranesDescription,
+        isDisable: true,
+        imagePath: "assets/icon/ic_separation_membrane.png",
+      ),
       SelectionTile(
-          AppLocalizations.of(context).distilationColumnName,
-          Icons.new_releases,
-          true,
-          AppLocalizations.of(context).distilationColumnDescription),
+        title: AppLocalizations.of(context).crystalizerName,
+        description: AppLocalizations.of(context).crystalizerDescription,
+        isDisable: true,
+        imagePath: "assets/icon/ic_crystal.png"
+      ),
+      SelectionTile(
+        title: AppLocalizations.of(context).distilationColumnName,
+        description: AppLocalizations.of(context).distilationColumnDescription,
+        isDisable: true,
+        imagePath: "assets/icon/ic_distillation_column.png",
+      ),
     ];
 
     return ListView.builder(

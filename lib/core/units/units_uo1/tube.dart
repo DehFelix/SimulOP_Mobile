@@ -259,11 +259,11 @@ class DoublePibeTube extends Tube {
 
     if (tubeType == PipeType.outer) {
       a = math.pi *
-          (math.pow(internalDiametre, 2.0) -
+          (math.pow(externalDiametre, 2.0) -
               math.pow(diametreOfInternalTube, 2.0)) /
           4.0;
     } else {
-      a = math.pi * math.pow(internalDiametre, 2.0);
+      a = math.pi * math.pow(internalDiametre, 2.0) / 4.0;
     }
 
     re = (material.density * volumeFlow * internalDiametre) /

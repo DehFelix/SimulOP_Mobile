@@ -54,7 +54,19 @@ flutter:
 
   assets:
     - assets/images/double_pipe_heatx_placeholder.png
-    - assets/images/pumpingOfLiquids_placeholder.png
+    - assets/icon/ic_compressor.png
+    - assets/icon/ic_absorbtion_columns.png
+    - assets/icon/ic_dryer.png
+    - assets/icon/ic_heat_exchanger.png
+    - assets/icon/ic_pump.png
+    - assets/icon/ic_water_steam.png
+    - assets/icon/ic_filter.png
+    - assets/icon/ic_crystal.png
+    - assets/icon/ic_mc_cabe_thiele.png
+    - assets/icon/ic_double_pipe.png
+    - assets/icon/ic_cooling_tower.png
+    - assets/icon/ic_separation_membrane.png
+    - assets/icon/ic_distillation_column.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

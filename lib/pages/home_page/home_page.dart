@@ -36,15 +36,15 @@ class HomePageState extends State<HomePage>
     return TabBar(
       tabs: <Tab>[
         Tab(
-          icon: Icon(Icons.home),
+          icon: Image.asset("assets/icon/ic_pump.png", scale: 1.8, color: Colors.white54,),
           text: AppLocalizations.of(context).ouIName,
         ),
         Tab(
-          icon: Icon(Icons.settings),
+          icon: Image.asset("assets/icon/ic_heat_exchanger.png", scale: 1.8, color: Colors.white54,),
           text: AppLocalizations.of(context).ouIIName,
         ),
         Tab(
-          icon: Icon(Icons.mood),
+          icon: Image.asset("assets/icon/ic_absorbtion_columns.png", scale: 1.8, color: Colors.white54,),
           text: AppLocalizations.of(context).ouIIIName,
         ),
       ],

@@ -441,7 +441,7 @@ class _HeatXInputCard extends StatelessWidget {
                         initialValue: model.heatInput.thickness,
                         decoration: InputDecoration(
                             labelText:
-                                AppLocalizations.of(context).hintFoolingFactor),
+                                AppLocalizations.of(context).hintThicknnes),
                         validator: model.heatInput.thicknessValidator,
                         onSaved: model.setThickness,
                       ),

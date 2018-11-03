@@ -8,15 +8,23 @@ class OU1Selection extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectionTilesData = [
       SelectionTile(
-          AppLocalizations.of(context).pumpingOfLiquidsName,
-          Icons.play_circle_filled,
-          false,
-          AppLocalizations.of(context).pumpingOfLiquidsDescription,
-          "/pumpingOfFluidsInput"),
-      SelectionTile(AppLocalizations.of(context).filterName, Icons.email, true,
-          AppLocalizations.of(context).filterDescription),
-      SelectionTile(AppLocalizations.of(context).compressorName, Icons.chat,
-          true, AppLocalizations.of(context).compressorDescription),
+          title: AppLocalizations.of(context).pumpingOfLiquidsName,
+          description: AppLocalizations.of(context).pumpingOfLiquidsDescription,
+          isDisable: false,
+          imagePath: "assets/icon/ic_pump.png",
+          route: "/pumpingOfFluidsInput"),
+      SelectionTile(
+        title: AppLocalizations.of(context).filterName,
+        description: AppLocalizations.of(context).filterDescription,
+        imagePath: "assets/icon/ic_filter.png",
+        isDisable: true,
+      ),
+      SelectionTile(
+        title: AppLocalizations.of(context).compressorName,
+        description: AppLocalizations.of(context).compressorDescription,
+        isDisable: true,
+        imagePath: "assets/icon/ic_compressor.png",
+      ),
     ];
 
     return ListView.builder(
