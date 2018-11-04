@@ -21,9 +21,10 @@ class DoublePiPeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     helpItems = [
-      HelpItem(
-          AppLocalizations.of(context).defaultInputs, "runWithDefaultInputs", ActionType.widgetAction),
-      HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default", ActionType.route),
+      HelpItem(AppLocalizations.of(context).defaultInputs,
+          "runWithDefaultInputs", ActionType.widgetAction),
+      HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
+          ActionType.route),
       HelpItem("About", "/default", ActionType.route),
     ];
     return Theme(
@@ -153,14 +154,16 @@ class __DoublePipeInputAppBarState extends State<_DoublePipeInputAppBar> {
         break;
       case ActionType.widgetAction:
         if (item.action == "runWithDefaultInputs") {
-          InputModel.of(context).setDefaultInputs();
+          InputModel.of(context).setDefaultInputs(context);
           var simulation = InputModel.of(context).createSimulation();
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => DoublePiPeResults(
-                        simulation: simulation,
-                      )));
+            context,
+            MaterialPageRoute(
+              builder: (context) => DoublePiPeResults(
+                    simulation: simulation,
+                  ),
+            ),
+          );
         }
         break;
       default:
@@ -197,10 +200,11 @@ class _OuterInputCard extends StatelessWidget {
                       children: <Widget>[
                         DropdownButton(
                             hint: Text(
-                              "Select Liquid",
+                              AppLocalizations.of(context).hintSelectLiquid,
                             ),
                             value: model.outerInput.liquid,
-                            items: model.outerInput.fluidInputDropDownItems(),
+                            items: model.outerInput
+                                .fluidInputDropDownItems(context),
                             onChanged: (dynamic value) =>
                                 model.setOuterLiquidName(value)),
                         SizedBox(
@@ -298,10 +302,11 @@ class _InnerInputCard extends StatelessWidget {
                       children: <Widget>[
                         DropdownButton(
                             hint: Text(
-                              "Select Liquid",
+                              AppLocalizations.of(context).hintSelectLiquid,
                             ),
                             value: model.innerInput.liquid,
-                            items: model.innerInput.fluidInputDropDownItems(),
+                            items: model.innerInput
+                                .fluidInputDropDownItems(context),
                             onChanged: (dynamic value) =>
                                 model.setInnerLiquidName(value)),
                         SizedBox(
@@ -397,10 +402,10 @@ class _HeatXInputCard extends StatelessWidget {
               builder: (context, _, model) => Center(
                     child: DropdownButton(
                         hint: Text(
-                          "Select Tube Material",
+                          AppLocalizations.of(context).hintSelectTubeMaterial,
                         ),
                         value: model.heatInput.tubeMaterial,
-                        items: model.heatInput.tubeMaterialDropDownItems(),
+                        items: model.heatInput.tubeMaterialDropDownItems(context),
                         onChanged: (dynamic value) =>
                             model.setHeatTubeMaterial(value)),
                   ),

@@ -9,6 +9,8 @@ class PumpingOfFluidsSimulationModel extends Model {
 
   PumpingOfFluidsSimulationModel(this._simulation);
 
+  PumpingOfFluidsSimulation get simukation => _simulation;
+
   String get getMyData => _simulation.string;
   String get getDefault => "Default Text";
 

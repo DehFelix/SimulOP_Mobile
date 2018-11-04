@@ -7,8 +7,6 @@ import 'package:simulop_v1/locale/locales.dart';
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final helpItems = [HelpItem("info", "/default", ActionType.route)];
-
 class HomePage extends StatefulWidget {
   @override
   HomePageState createState() {
@@ -36,15 +34,27 @@ class HomePageState extends State<HomePage>
     return TabBar(
       tabs: <Tab>[
         Tab(
-          icon: Image.asset("assets/icon/ic_pump.png", scale: 1.8, color: Colors.white54,),
+          icon: Image.asset(
+            "assets/icon/ic_pump.png",
+            scale: 1.8,
+            color: Colors.white54,
+          ),
           text: AppLocalizations.of(context).ouIName,
         ),
         Tab(
-          icon: Image.asset("assets/icon/ic_heat_exchanger.png", scale: 1.8, color: Colors.white54,),
+          icon: Image.asset(
+            "assets/icon/ic_heat_exchanger.png",
+            scale: 1.8,
+            color: Colors.white54,
+          ),
           text: AppLocalizations.of(context).ouIIName,
         ),
         Tab(
-          icon: Image.asset("assets/icon/ic_absorbtion_columns.png", scale: 1.8, color: Colors.white54,),
+          icon: Image.asset(
+            "assets/icon/ic_absorbtion_columns.png",
+            scale: 1.8,
+            color: Colors.white54,
+          ),
           text: AppLocalizations.of(context).ouIIIName,
         ),
       ],
@@ -68,7 +78,7 @@ class HomePageState extends State<HomePage>
         bottom: makeTabBar(),
         actions: <Widget>[
           PopupMenuButton(
-            itemBuilder: (context) => _appBarMenu(),
+            itemBuilder: (context) => _appBarMenu(context),
             onSelected: _selectMenu,
           ),
         ],
@@ -91,8 +101,14 @@ class HomePageState extends State<HomePage>
     );
   }
 
-  List<PopupMenuItem> _appBarMenu() {
-    return helpItems.map((HelpItem item) {
+  List<PopupMenuItem> _appBarMenu(BuildContext context) {
+    final items = [
+      HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
+          ActionType.route),
+      HelpItem("About", "/about", ActionType.route),
+    ];
+
+    return items.map((HelpItem item) {
       return PopupMenuItem(
         value: item,
         child: Text(item.name),

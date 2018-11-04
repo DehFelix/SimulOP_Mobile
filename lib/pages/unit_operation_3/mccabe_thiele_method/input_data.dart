@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:simulop_v1/core/core.dart' as core;
+import 'package:simulop_v1/pages/helper_classes/options_input_helper.dart';
 import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/simulation_data.dart';
 
 class McCabeThieleInputData extends Model {
@@ -12,13 +13,13 @@ class McCabeThieleInputData extends Model {
   static McCabeThieleInputData of(BuildContext context) =>
       ScopedModel.of<McCabeThieleInputData>(context);
 
-  void setLiquidLKName(String name) {
-    input.liquidLK = name;
+  void setLiquidLKName(LiquidHelper liquid) {
+    input.liquidLK = liquid;
     notifyListeners();
   }
 
-  void setLiquidHKName(String name) {
-    input.liquidHK = name;
+  void setLiquidHKName(LiquidHelper liquid) {
+    input.liquidHK = liquid;
     notifyListeners();
   }
 
@@ -80,31 +81,33 @@ class McCabeThieleInputData extends Model {
 }
 
 class MixtureInput {
-  String liquidLK;
-  String liquidHK;
+  LiquidHelper liquidLK;
+  LiquidHelper liquidHK;
 
-  final List<String> _liquidOptions = ["Benzene", "Toluene", "water"];
+  List<DropdownMenuItem<LiquidHelper>> liquidOptions;
 
   // Create the dropDown for the possibles fluids
-  List<DropdownMenuItem<dynamic>> liquidInputDropDownItems() {
-    return _liquidOptions.map((String liquidName) {
-      return DropdownMenuItem(
-        value: liquidName,
-        child: Text(
-          liquidName,
-        ),
-      );
-    }).toList();
+  List<DropdownMenuItem<LiquidHelper>> fluidInputDropDownItems(
+      BuildContext context) {
+    if (liquidOptions == null) {
+      liquidOptions =
+          LiquidHelper.liquidsMcCabeThiele.map((LiquidOptions liquidName) {
+        var liquid = LiquidHelper(liquid: liquidName, context: context);
+        return DropdownMenuItem<LiquidHelper>(
+          value: liquid,
+          child: Text(
+            liquid.name,
+          ),
+        );
+      }).toList();
+    }
+    return liquidOptions;
   }
 
   bool validateInput() {
     if (liquidLK == null || liquidHK == null) return false;
-    if (liquidLK.isNotEmpty && liquidHK.isNotEmpty) {
-      if (liquidHK == liquidLK) return false;
-      return true;
-    } else {
-      return false;
-    }
+    if (liquidHK == liquidLK) return false;
+    return true;
   }
 
   @override

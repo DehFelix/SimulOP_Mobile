@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:simulop_v1/pages/helper_classes/options_input_helper.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/simulation_data.dart';
 
 import 'package:simulop_v1/core/core.dart' as core;
@@ -24,19 +25,22 @@ class PumpingOfFluidsInputModel extends Model {
   static PumpingOfFluidsInputModel of(BuildContext context) =>
       ScopedModel.of<PumpingOfFluidsInputModel>(context);
 
-  void setDefaultInputs() {
+  void setDefaultInputs(BuildContext context) {
     // Liquid:
-    fluidInput.name = "Water";
+    fluidInput.liquid =
+        LiquidHelper(liquid: LiquidOptions.water, context: context);
     fluidInput.temperature = "25";
     fluidInput.inletPressure = "1";
 
     // Inlet Tube:
-    inletTubeInput.material = "Steel";
+    inletTubeInput.material =
+        MaterialHelper(material: MaterialOptions.steel, context: context);
     inletTubeInput.diametre = "50";
     inletTubeInput.equivalentDistance = "2";
 
     //Outlet Tube:
-    outletTubeInput.material = "Steel";
+    outletTubeInput.material =
+        MaterialHelper(material: MaterialOptions.steel, context: context);
     outletTubeInput.diametre = "50";
     outletTubeInput.equivalentDistance = "20";
 
@@ -49,8 +53,8 @@ class PumpingOfFluidsInputModel extends Model {
     notifyListeners();
   }
 
-  void setFluidName(String name) {
-    fluidInputs.name = name;
+  void setFluid(LiquidHelper liquid) {
+    fluidInputs.liquid = liquid;
     notifyListeners();
   }
 
@@ -66,8 +70,8 @@ class PumpingOfFluidsInputModel extends Model {
     }
   }
 
-  void setInletTubeMaterial(String name) {
-    inletTubeInput.material = name;
+  void setInletTubeMaterial(MaterialHelper material) {
+    inletTubeInput.material = material;
     notifyListeners();
   }
 
@@ -79,8 +83,8 @@ class PumpingOfFluidsInputModel extends Model {
     inletTubeInput.equivalentDistance = distances;
   }
 
-  void setOutletTubeMaterial(String name) {
-    outletTubeInput.material = name;
+  void setOutletTubeMaterial(MaterialHelper material) {
+    outletTubeInput.material = material;
     notifyListeners();
   }
 
@@ -203,22 +207,28 @@ class PumpingOfFluidsInputModel extends Model {
 }
 
 class FluidInput {
-  String name;
+  LiquidHelper liquid;
   String temperature;
   String inletPressure;
 
-  final List<String> _fluidsOptions = ["Water", "Benzene", "Toluene"];
+  List<DropdownMenuItem<LiquidHelper>> liquidOptions;
 
   // Create the dropDown for the possibles fluids
-  List<DropdownMenuItem<dynamic>> fluidInputDropDownItems() {
-    return _fluidsOptions.map((String fluidName) {
-      return DropdownMenuItem(
-        value: fluidName,
-        child: Text(
-          fluidName,
-        ),
-      );
-    }).toList();
+  List<DropdownMenuItem<LiquidHelper>> fluidInputDropDownItems(
+      BuildContext context) {
+    if (liquidOptions == null) {
+      liquidOptions =
+          LiquidHelper.liquidsPumpingOfLiquids.map((LiquidOptions liquidName) {
+        var liquid = LiquidHelper(liquid: liquidName, context: context);
+        return DropdownMenuItem<LiquidHelper>(
+          value: liquid,
+          child: Text(
+            liquid.name,
+          ),
+        );
+      }).toList();
+    }
+    return liquidOptions;
   }
 
   /// Input validator for the temparature
@@ -259,9 +269,9 @@ class FluidInput {
   }
 
   bool validInput() {
-    if (name == null || temperature == null || inletPressure == null)
+    if (liquid == null || temperature == null || inletPressure == null)
       return false;
-    if (name.isNotEmpty && temperature.isNotEmpty && inletPressure.isNotEmpty) {
+    if (temperature.isNotEmpty && inletPressure.isNotEmpty) {
       return true;
     } else {
       return false;
@@ -271,29 +281,35 @@ class FluidInput {
   @override
   String toString() {
     return "Fluid : \n" +
-        "Name = $name \n" +
+        "Name = ${liquid.name} \n" +
         "temperature = $temperature \n" +
         "inletPressure = $inletPressure \n";
   }
 }
 
 class InletTubeInput {
-  String material;
+  MaterialHelper material;
   String diametre;
   String equivalentDistance;
 
-  final List<String> _materialOptions = ["Steel", "Copper", "Concrete", "PVC"];
+  List<DropdownMenuItem<MaterialHelper>> materialOptions;
 
   // Create the dropDown for the possibles materials
-  List<DropdownMenuItem<dynamic>> inletMaterialInputDropDownItems() {
-    return _materialOptions.map((String fluidName) {
-      return DropdownMenuItem(
-        value: fluidName,
-        child: Text(
-          fluidName,
-        ),
-      );
-    }).toList();
+  List<DropdownMenuItem<dynamic>> inletMaterialInputDropDownItems(
+      BuildContext context) {
+    if (materialOptions == null) {
+      materialOptions = MaterialHelper.materialPumpingOfLiquids
+          .map((MaterialOptions materialName) {
+        var material = MaterialHelper(material: materialName, context: context);
+        return DropdownMenuItem(
+          value: material,
+          child: Text(
+            material.name,
+          ),
+        );
+      }).toList();
+    }
+    return materialOptions;
   }
 
   /// Input validator for the diametre
@@ -335,9 +351,7 @@ class InletTubeInput {
   bool validInput() {
     if (material == null || diametre == null || equivalentDistance == null)
       return false;
-    if (material.isNotEmpty &&
-        diametre.isNotEmpty &&
-        equivalentDistance.isNotEmpty) {
+    if (diametre.isNotEmpty && equivalentDistance.isNotEmpty) {
       return true;
     } else {
       return false;
@@ -354,22 +368,28 @@ class InletTubeInput {
 }
 
 class OutletTubeInput {
-  String material;
+  MaterialHelper material;
   String diametre;
   String equivalentDistance;
 
-  final List<String> _materialOptions = ["Steel", "Copper", "Concrete", "PVC"];
+  List<DropdownMenuItem<MaterialHelper>> materialOptions;
 
   // Create the dropDown for the possibles materials
-  List<DropdownMenuItem<dynamic>> outletMaterialInputDropDownItems() {
-    return _materialOptions.map((String fluidName) {
-      return DropdownMenuItem(
-        value: fluidName,
-        child: Text(
-          fluidName,
-        ),
-      );
-    }).toList();
+  List<DropdownMenuItem<dynamic>> outletMaterialInputDropDownItems(
+      BuildContext context) {
+    if (materialOptions == null) {
+      materialOptions = MaterialHelper.materialPumpingOfLiquids
+          .map((MaterialOptions materialName) {
+        var material = MaterialHelper(material: materialName, context: context);
+        return DropdownMenuItem(
+          value: material,
+          child: Text(
+            material.name,
+          ),
+        );
+      }).toList();
+    }
+    return materialOptions;
   }
 
   /// Input validator for the diametre
@@ -411,8 +431,7 @@ class OutletTubeInput {
   bool validInput() {
     if (material == null || diametre == null || equivalentDistance == null)
       return false;
-    if (material.isNotEmpty &&
-        diametre.isNotEmpty &&
+    if (diametre.isNotEmpty &&
         equivalentDistance.isNotEmpty) {
       return true;
     } else {
@@ -522,8 +541,8 @@ class SimulationCreator {
   core.TubeMaterial sumaryOutletTubeMaterial;
 
   void createLiquidSumary(FluidInput fluidInput) {
-      sumaryLiquid = new core.Liquid(
-      material: core.Inicializer.liquidMaterial(fluidInput.name),
+    sumaryLiquid = new core.Liquid(
+      material: core.Inicializer.liquidMaterial(fluidInput.liquid),
       temperature: double.parse(fluidInput.temperature) + 273.15,
     );
   }
@@ -549,7 +568,7 @@ class SimulationCreator {
         distancesInput.toString();
     // Liquid
     final core.LiquidMaterial liquidMaterial =
-        core.Inicializer.liquidMaterial(fluidInput.name);
+        core.Inicializer.liquidMaterial(fluidInput.liquid);
     final double temp = double.parse(fluidInput.temperature) + 273.15;
     final double pressure = double.parse(fluidInput.inletPressure) * 1e5;
     simulation.liquid =

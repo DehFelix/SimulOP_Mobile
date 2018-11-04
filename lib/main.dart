@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:simulop_v1/locale/locales.dart';
+import 'package:simulop_v1/pages/home_page/about_page.dart';
 import 'package:simulop_v1/pages/home_page/home_page.dart';
 import 'package:simulop_v1/pages/home_page/default_page.dart';
 import 'package:simulop_v1/pages/unit_operation_1/example.dart';
@@ -38,7 +39,8 @@ class SimulOPAPP extends StatelessWidget {
         "/exemple1": (context) => ExempleOne(),
         "/pumpingOfFluidsInput": (context) => PumpingOfFluidsInput(),
         "/mcCabeThieleMethod": (context) => McCabeThieleMethodInput(),
-        "/doublePipeHeatX": (context) => DoublePiPeInput()
+        "/doublePipeHeatX": (context) => DoublePiPeInput(),
+        "/about": (context) => AboutPage(),
       },
     );
   }

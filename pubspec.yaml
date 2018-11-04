@@ -54,6 +54,7 @@ flutter:
 
   assets:
     - assets/images/double_pipe_heatx_placeholder.png
+    - assets/images/pumpingOfLiquids_placeholder.png
     - assets/icon/ic_compressor.png
     - assets/icon/ic_absorbtion_columns.png
     - assets/icon/ic_dryer.png

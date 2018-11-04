@@ -1,5 +1,45 @@
 {
   "@@last_modified": "2018-10-06T18:33:52.101439",
+  "steel": "Aço Carbono",
+  "@steel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "copper": "Cobre",
+  "@copper": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "concrete": "Concreto",
+  "@concrete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pvc": "PVC",
+  "@pvc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "water": "Água",
+  "@water": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "benzene": "Benzeno",
+  "@benzene": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "toluene": "Tolueno",
+  "@toluene": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "oil": "óleo",
+  "@oil": {
+    "type": "text",
+    "placeholders": {}
+  },
   "simulop": "SimulOP",
   "@simulop": {
     "type": "text",
@@ -175,6 +215,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "hintSelectLiquid": "Selecione o Líquido",
+  "@hintSelectLiquid": {
+    "type": "text",
+    "placeholders": {}
+  },
   "hintTemperature": "Temperatura (°C)",
   "@hintTemperature": {
     "type": "text",
@@ -187,6 +232,11 @@
   },
   "hintPressure": "Pressão (bar)",
   "@hintPressure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hintSelectMaterial": "Selecione Material",
+  "@hintSelectMaterial": {
     "type": "text",
     "placeholders": {}
   },
@@ -390,6 +440,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "hintSelectTubeMaterial": "Material dos Tubos",
+  "@hintSelectTubeMaterial": {
+    "type": "text",
+    "placeholders": {}
+  },
   "hintHotFlow": "Vazão Quente (m^3/h)",
   "@hintHotFlow": {
     "type": "text",
@@ -475,22 +530,22 @@
     "type": "text",
     "placeholders": {}
   },
-  "liquidLK": "Liquido LK",
+  "liquidLK": "Líquido LK",
   "@liquidLK": {
     "type": "text",
     "placeholders": {}
   },
-  "hintLiquidLK": "Selecione Liquid LK",
+  "hintLiquidLK": "Selecione Líquido LK",
   "@hintLiquidLK": {
     "type": "text",
     "placeholders": {}
   },
-  "liquidHK": "Liquido HK",
+  "liquidHK": "Líquido HK:",
   "@liquidHK": {
     "type": "text",
     "placeholders": {}
   },
-  "hintLiquidHK": "Selecione Liquido HK",
+  "hintLiquidHK": "Selecione Líquido HK",
   "@hintLiquidHK": {
     "type": "text",
     "placeholders": {}

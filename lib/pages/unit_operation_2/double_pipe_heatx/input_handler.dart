@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:simulop_v1/core/core.dart' as core;
 import 'package:simulop_v1/locale/locales.dart';
+import 'package:simulop_v1/pages/helper_classes/options_input_helper.dart';
 import 'package:simulop_v1/pages/unit_operation_2/double_pipe_heatx/simulation_data.dart';
 
 class InputModel extends Model {
@@ -23,18 +24,21 @@ class InputModel extends Model {
   static InputModel of(BuildContext context) =>
       ScopedModel.of<InputModel>(context);
 
-  void setDefaultInputs() {
+  void setDefaultInputs(BuildContext context) {
     // Outer:
-    _outerInput.liquid = "Water";
+    _outerInput.liquid =
+        LiquidHelper(liquid: LiquidOptions.water, context: context);
     _outerInput.tempIN = "70.0";
     _outerInput.tempExit = "37.0";
     // Inner:
-    _innerInput.liquid = "Water";
+    _innerInput.liquid =
+        LiquidHelper(liquid: LiquidOptions.water, context: context);
     _innerInput.tempIN = "26.0";
     _innerInput.tempExit = "48.0";
     // HeatX:
     _heatXInput.hotFlow = "3.0";
-    _heatXInput.tubeMaterial = "Copper";
+    _heatXInput.tubeMaterial =
+        MaterialHelper(material: MaterialOptions.copper, context: context);
     _heatXInput.foolingFactor = "0.0";
     _heatXInput.thickness = "0.0";
 
@@ -44,9 +48,9 @@ class InputModel extends Model {
     notifyListeners();
   }
 
-  void setOuterLiquidName(String name) {
-    _outerInput.isOil = (name == "Oil (°API)") ? true : false;
-    _outerInput.liquid = name;
+  void setOuterLiquidName(LiquidHelper liquid) {
+    _outerInput.isOil = (liquid.liquid == LiquidOptions.oil) ? true : false;
+    _outerInput.liquid = liquid;
     notifyListeners();
   }
 
@@ -65,9 +69,9 @@ class InputModel extends Model {
     notifyListeners();
   }
 
-  void setInnerLiquidName(String name) {
-    _innerInput.isOil = (name == "Oil (°API)") ? true : false;
-    _innerInput.liquid = name;
+  void setInnerLiquidName(LiquidHelper liquid) {
+    _innerInput.isOil = (liquid.liquid == LiquidOptions.oil) ? true : false;
+    _innerInput.liquid = liquid;
     notifyListeners();
   }
 
@@ -106,8 +110,8 @@ class InputModel extends Model {
     notifyListeners();
   }
 
-  void setHeatTubeMaterial(String m) {
-    _heatXInput.tubeMaterial = m;
+  void setHeatTubeMaterial(MaterialHelper material) {
+    _heatXInput.tubeMaterial = material;
     notifyListeners();
   }
 
@@ -136,29 +140,30 @@ class InputModel extends Model {
 }
 
 class OuterInput {
-  String liquid;
+  LiquidHelper liquid;
   bool isOil = false;
   String apiDegree;
   String tempIN;
   String tempExit;
 
-  final List<String> _fluidsOptions = [
-    "Water",
-    "Benzene",
-    "Toluene",
-    "Oil (°API)"
-  ];
+  List<DropdownMenuItem<LiquidHelper>> liquidOptions;
 
   // Create the dropDown for the possibles fluids
-  List<DropdownMenuItem<dynamic>> fluidInputDropDownItems() {
-    return _fluidsOptions.map((String fluidName) {
-      return DropdownMenuItem(
-        value: fluidName,
-        child: Text(
-          fluidName,
-        ),
-      );
-    }).toList();
+  List<DropdownMenuItem<LiquidHelper>> fluidInputDropDownItems(
+      BuildContext context) {
+    if (liquidOptions == null) {
+      liquidOptions =
+          LiquidHelper.liquidsDoublePipeHeatX.map((LiquidOptions liquidName) {
+        var liquid = LiquidHelper(liquid: liquidName, context: context);
+        return DropdownMenuItem<LiquidHelper>(
+          value: liquid,
+          child: Text(
+            liquid.name,
+          ),
+        );
+      }).toList();
+    }
+    return liquidOptions;
   }
 
   /// Input validator for the temparature
@@ -215,7 +220,7 @@ class OuterInput {
 
   bool validInput() {
     if (liquid == null || tempIN == null || tempExit == null) return false;
-    if (liquid.isNotEmpty && tempIN.isNotEmpty && tempExit.isNotEmpty) {
+    if (tempIN.isNotEmpty && tempExit.isNotEmpty) {
       if (isOil && apiDegree != null && apiDegree.isNotEmpty) {
         return true;
       } else
@@ -227,29 +232,30 @@ class OuterInput {
 }
 
 class InnerInput {
-  String liquid;
+  LiquidHelper liquid;
   bool isOil = false;
   String apiDegree;
   String tempIN;
   String tempExit;
 
-  final List<String> _fluidsOptions = [
-    "Water",
-    "Benzene",
-    "Toluene",
-    "Oil (°API)"
-  ];
+  List<DropdownMenuItem<LiquidHelper>> liquidOptions;
 
   // Create the dropDown for the possibles fluids
-  List<DropdownMenuItem<dynamic>> fluidInputDropDownItems() {
-    return _fluidsOptions.map((String fluidName) {
-      return DropdownMenuItem(
-        value: fluidName,
-        child: Text(
-          fluidName,
-        ),
-      );
-    }).toList();
+  List<DropdownMenuItem<LiquidHelper>> fluidInputDropDownItems(
+      BuildContext context) {
+    if (liquidOptions == null) {
+      liquidOptions =
+          LiquidHelper.liquidsDoublePipeHeatX.map((LiquidOptions liquidName) {
+        var liquid = LiquidHelper(liquid: liquidName, context: context);
+        return DropdownMenuItem<LiquidHelper>(
+          value: liquid,
+          child: Text(
+            liquid.name,
+          ),
+        );
+      }).toList();
+    }
+    return liquidOptions;
   }
 
   /// Input validator for the temparature
@@ -306,7 +312,7 @@ class InnerInput {
 
   bool validInput() {
     if (liquid == null || tempIN == null || tempExit == null) return false;
-    if (liquid.isNotEmpty && tempIN.isNotEmpty && tempExit.isNotEmpty) {
+    if (tempIN.isNotEmpty && tempExit.isNotEmpty) {
       if (isOil && apiDegree != null && apiDegree.isNotEmpty) {
         return true;
       } else
@@ -322,21 +328,27 @@ class HeatXInput {
   String innerDiametre;
   String thickness;
   String hotFlow;
-  String tubeMaterial;
+  MaterialHelper tubeMaterial;
   String foolingFactor;
 
-  final List<String> _materialOptions = ["Steel", "Copper"];
+  List<DropdownMenuItem<MaterialHelper>> materialOptions;
 
   // Create the dropDown for the possibles materials
-  List<DropdownMenuItem<dynamic>> tubeMaterialDropDownItems() {
-    return _materialOptions.map((String fluidName) {
-      return DropdownMenuItem(
-        value: fluidName,
-        child: Text(
-          fluidName,
-        ),
-      );
-    }).toList();
+  List<DropdownMenuItem<dynamic>> tubeMaterialDropDownItems(
+      BuildContext context) {
+    if (materialOptions == null) {
+      materialOptions = MaterialHelper.materialDoublePipeHeatX
+          .map((MaterialOptions materialName) {
+        var material = MaterialHelper(material: materialName, context: context);
+        return DropdownMenuItem(
+          value: material,
+          child: Text(
+            material.name,
+          ),
+        );
+      }).toList();
+    }
+    return materialOptions;
   }
 
   String thicknessValidator(String value) {
@@ -401,7 +413,6 @@ class HeatXInput {
         innerDiametre.isNotEmpty &&
         thickness.isNotEmpty &&
         hotFlow.isNotEmpty &&
-        tubeMaterial.isNotEmpty &&
         foolingFactor.isNotEmpty) {
       return true;
     } else {
@@ -517,6 +528,7 @@ class SimulationCreator {
   }
 
   DoublePipeHeatXSimulation createSimulation() {
+    
     // Outer Liquid
     final outerTempIn = double.parse(outerInput.tempIN) + 273.15;
     final outerTempExit = double.parse(outerInput.tempExit) + 273.15;
@@ -543,7 +555,7 @@ class SimulationCreator {
     final innerLiquid =
         core.Liquid(material: innerLiquidMaterial, temperature: innerTempIn);
 
-    // Pipes
+    // Pipes 
     final tubeMaterial = core.Inicializer.tubeMaterial(heatXInput.tubeMaterial);
     final thicness = double.parse(heatXInput.thickness) * 1e-2;
 

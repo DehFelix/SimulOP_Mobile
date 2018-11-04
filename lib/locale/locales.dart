@@ -21,6 +21,62 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  String get steel {
+    return Intl.message(
+      "Steel",
+      name: "steel",
+    );
+  }
+
+  String get copper {
+    return Intl.message(
+      "Copper",
+      name: "copper",
+    );
+  }
+
+  String get concrete {
+    return Intl.message(
+      "Concrete",
+      name: "concrete",
+    );
+  }
+
+    String get pvc {
+    return Intl.message(
+      "PVC",
+      name: "pvc",
+    );
+  }
+
+  String get water {
+    return Intl.message(
+      "Water",
+      name: "water",
+    );
+  }
+
+  String get benzene {
+    return Intl.message(
+      "Benzene",
+      name: "benzene",
+    );
+  }
+
+  String get toluene {
+    return Intl.message(
+      "Toluene",
+      name: "toluene",
+    );
+  }
+
+    String get oil {
+    return Intl.message(
+      "Oil",
+      name: "oil",
+    );
+  }
+
   // Home Page
   String get simulop {
     return Intl.message(
@@ -268,6 +324,13 @@ class AppLocalizations {
     );
   }
 
+  String get hintSelectLiquid {
+    return Intl.message(
+      "Select Liquid",
+      name: "hintSelectLiquid",
+    );
+  }
+
   String get hintTemperature {
     return Intl.message(
       "Temperature (°C)",
@@ -289,9 +352,16 @@ class AppLocalizations {
     );
   }
 
+  String get hintSelectMaterial {
+    return Intl.message(
+      "Select Material",
+      name: "hintSelectMaterial",
+    );
+  }
+
   String get hintDiametre {
     return Intl.message(
-      "Diametre (cm)",
+      "Diameter (cm)",
       name: "hintDiametre",
     );
   }
@@ -395,7 +465,7 @@ class AppLocalizations {
   }
 
   String get summaryDiametre {
-    return Intl.message("Diametre:", name: "summaryDiametre");
+    return Intl.message("Diameter:", name: "summaryDiametre");
   }
 
   String get summaryLenght {
@@ -568,6 +638,13 @@ class AppLocalizations {
     );
   }
 
+  String get hintSelectTubeMaterial {
+    return Intl.message(
+      "Select Tube Material",
+      name: "hintSelectTubeMaterial",
+    );
+  }
+
   String get hintHotFlow {
     return Intl.message(
       "Hot Flow: (m^3/h)",
@@ -691,7 +768,7 @@ class AppLocalizations {
 
   String get liquidLK {
     return Intl.message(
-      "Liquid LK",
+      "Liquid LK:",
       name: "liquidLK",
     );
   }
@@ -705,7 +782,7 @@ class AppLocalizations {
 
   String get liquidHK {
     return Intl.message(
-      "Liquid HK",
+      "Liquid HK:",
       name: "liquidHK",
     );
   }
