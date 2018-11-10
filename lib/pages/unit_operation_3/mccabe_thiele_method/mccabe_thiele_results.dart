@@ -295,18 +295,20 @@ class _ChartCard extends StatelessWidget {
 
   Widget _chart(McCabeThieleSimulationModel model, BuildContext context) {
     return charts.LineChart(
-      _createSeries(
-          model.getEquilibrium, model.getOperationCurves, model.getStages, context),
+      _createSeries(model.getEquilibrium, model.getOperationCurves,
+          model.getStages, context),
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
-          viewport: charts.NumericExtents(0.0, 1.0),
-          tickProviderSpec: charts.BasicNumericTickProviderSpec(
-              dataIsInWholeNumbers: false, desiredTickCount: 5)),
+        viewport: charts.NumericExtents(0.0, 1.0),
+        tickProviderSpec: charts.BasicNumericTickProviderSpec(
+            dataIsInWholeNumbers: false, desiredTickCount: 5),
+      ),
       domainAxis: charts.NumericAxisSpec(
-          viewport: charts.NumericExtents(0.0, 1.0),
-          tickProviderSpec: charts.BasicNumericTickProviderSpec(
-              dataIsInWholeNumbers: false, desiredTickCount: 5)),
+        viewport: charts.NumericExtents(0.0, 1.0),
+        tickProviderSpec: charts.BasicNumericTickProviderSpec(
+            dataIsInWholeNumbers: false, desiredTickCount: 5),
+      ),
       behaviors: [
         charts.SeriesLegend(
           position: charts.BehaviorPosition.top,
@@ -328,14 +330,30 @@ class _ChartCard extends StatelessWidget {
               style: _headerTextStyle,
             ),
           ),
-          Container(
-            height: 300.0,
-            child: Padding(
-              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-              child: ScopedModelDescendant<McCabeThieleSimulationModel>(
-                builder: (context, _, model) => _chart(model, context),
+          Row(
+            children: <Widget>[
+              RotatedBox(
+                  quarterTurns: 3,
+                  child: Text(
+                    "Primary Axixs",
+                    style: TextStyle(color: Colors.black87),
+                  )),
+              Expanded(
+                child: Container(
+                  height: 300.0,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: ScopedModelDescendant<McCabeThieleSimulationModel>(
+                      builder: (context, _, model) => _chart(model, context),
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
+          ),
+          Text(
+            "Domain Axis",
+            style: TextStyle(color: Colors.black87),
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
@@ -372,7 +390,8 @@ class _ResultsCard extends StatelessWidget {
                           text: TextSpan(
                             children: <TextSpan>[
                               TextSpan(
-                                  text: "${AppLocalizations.of(context).alphaValue} ${model.getAlpha}\n",
+                                  text:
+                                      "${AppLocalizations.of(context).alphaValue} ${model.getAlpha}\n",
                                   style: _textStyle),
                               TextSpan(
                                   text:

@@ -355,7 +355,7 @@ class _OutletTubeInputCard extends StatelessWidget {
             Center(
                 child: ScopedModelDescendant<PumpingOfFluidsInputModel>(
               builder: (context, _, model) => DropdownButton(
-                  hint: Text("Select material"),
+                  hint: Text(AppLocalizations.of(context).hintSelectMaterial),
                   value: model.outletTubeInput.material,
                   items:
                       model.outletTubeInput.outletMaterialInputDropDownItems(context),
@@ -527,7 +527,7 @@ class _SumaryCard extends StatelessWidget {
 
     if (model.validateInletTube()) {
       tube =
-          "${AppLocalizations.of(context).summayInletTube} - ${model.inletTubeInput.material} \n";
+          "${AppLocalizations.of(context).summayInletTube} - ${model.inletTubeInput.material.name} \n";
       roughness =
           "${AppLocalizations.of(context).summaryRoughness} ${model.getSumaryInletTubeRoughness} mm \n";
       diametre =
@@ -557,7 +557,7 @@ class _SumaryCard extends StatelessWidget {
 
     if (model.validateOutletTube()) {
       tube =
-          "${AppLocalizations.of(context).summayInletTube} - ${model.outletTubeInput.material} \n";
+          "${AppLocalizations.of(context).summayInletTube} - ${model.outletTubeInput.material.name} \n";
       roughness =
           "${AppLocalizations.of(context).summaryRoughness} ${model.getSumaryOutletTubeRoughness} mm \n";
       diametre =

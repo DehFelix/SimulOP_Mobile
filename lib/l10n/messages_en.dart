@@ -107,7 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "outletInput" : MessageLookupByLibrary.simpleMessage("Outlet Tube Input:"),
     "picture" : MessageLookupByLibrary.simpleMessage("Picture"),
     "pumpingOfLiquidsDescription" : MessageLookupByLibrary.simpleMessage("pumpingOfLiquidsDescription"),
-    "pumpingOfLiquidsName" : MessageLookupByLibrary.simpleMessage("Pumping if Liquids"),
+    "pumpingOfLiquidsName" : MessageLookupByLibrary.simpleMessage("Pumping of Liquids"),
     "pvc" : MessageLookupByLibrary.simpleMessage("PVC"),
     "results" : MessageLookupByLibrary.simpleMessage("Results"),
     "resultsColdFlow" : MessageLookupByLibrary.simpleMessage("Cold Flow:"),

@@ -108,7 +108,7 @@ class AppLocalizations {
 
   String get pumpingOfLiquidsName {
     return Intl.message(
-      "Pumping if Liquids",
+      "Pumping of Liquids",
       name: "pumpingOfLiquidsName",
     );
   }

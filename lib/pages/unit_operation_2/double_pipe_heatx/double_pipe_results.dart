@@ -357,7 +357,7 @@ class _ChartCard extends StatelessWidget {
     ];
   }
 
-  Widget _chart(DoublePipeBloc model) {
+  Widget _chart(DoublePipeBloc model, BuildContext context) {
     return StreamBuilder<Plot>(
       stream: model.getPlots,
       builder: (context, snapshot) {
@@ -398,7 +398,9 @@ class _ChartCard extends StatelessWidget {
             builder: (context, _, model) => ListTile(
                   leading: Icon(Icons.insert_chart),
                   title: Text(
-                    model.getChartView() ? AppLocalizations.of(context).graphPressure : AppLocalizations.of(context).graphLenght,
+                    model.getChartView()
+                        ? AppLocalizations.of(context).graphPressure
+                        : AppLocalizations.of(context).graphLenght,
                     style: _headerTextStyle,
                   ),
                   trailing: Switch(
@@ -412,13 +414,33 @@ class _ChartCard extends StatelessWidget {
                   },
                 ),
           ),
-          Container(
-            height: 300.0,
-            child: Padding(
-              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-              child: ScopedModelDescendant<DoublePipeBloc>(
-                  builder: (context, _, model) => _chart(model)),
-            ),
+          Row(
+            children: <Widget>[
+              RotatedBox(
+                quarterTurns: 3,
+                child: ScopedModelDescendant<DoublePipeBloc>(
+                    builder: (context, _, model) => Text(
+                          model.getChartView()
+                              ? "Primary Axis 1"
+                              : "Primary Axis 2",
+                          style: TextStyle(color: Colors.black87),
+                        )),
+              ),
+              Expanded(
+                child: Container(
+                  height: 300.0,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: ScopedModelDescendant<DoublePipeBloc>(
+                        builder: (context, _, model) => _chart(model, context)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Text(
+            "Domain Axis",
+            style: TextStyle(color: Colors.black87),
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
@@ -460,7 +482,7 @@ class _ResultsCard extends StatelessWidget {
                             children: <TextSpan>[
                               TextSpan(
                                   text:
-                                      "${AppLocalizations.of(context).resultsHotExitTemp } ${snapshot.data.exitTemp} °C \n"),
+                                      "${AppLocalizations.of(context).resultsHotExitTemp} ${snapshot.data.exitTemp} °C \n"),
                               TextSpan(
                                   text:
                                       "${AppLocalizations.of(context).resultsInnerPressure} ${snapshot.data.innerPressureDrop} KPa \n"),

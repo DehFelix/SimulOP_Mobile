@@ -26,19 +26,16 @@ class InputModel extends Model {
 
   void setDefaultInputs(BuildContext context) {
     // Outer:
-    _outerInput.liquid =
-        LiquidHelper(liquid: LiquidOptions.water, context: context);
+    _outerInput.liquid = _outerInput.liquidOptions[0].value;
     _outerInput.tempIN = "70.0";
     _outerInput.tempExit = "37.0";
     // Inner:
-    _innerInput.liquid =
-        LiquidHelper(liquid: LiquidOptions.water, context: context);
+    _innerInput.liquid = _innerInput.liquidOptions[0].value;
     _innerInput.tempIN = "26.0";
     _innerInput.tempExit = "48.0";
     // HeatX:
     _heatXInput.hotFlow = "3.0";
-    _heatXInput.tubeMaterial =
-        MaterialHelper(material: MaterialOptions.copper, context: context);
+    _heatXInput.tubeMaterial = _heatXInput.materialOptions[1].value;
     _heatXInput.foolingFactor = "0.0";
     _heatXInput.thickness = "0.0";
 
@@ -491,7 +488,7 @@ class SimulationCreator {
           : core.Inicializer.liquidMaterial(outerInput.liquid, temp: bulckTemp);
 
       sumary.outerLiquidName =
-          "${AppLocalizations.of(context).summaryOuterLiquid} - ${(outerInput.isOil) ? "Oil ($api °API)" : outerInput.liquid} \n";
+          "${AppLocalizations.of(context).summaryOuterLiquid} - ${(outerInput.isOil) ? "Oil ($api °API)" : outerInput.liquid.name} \n";
       sumary.outerBulkTemp =
           "${AppLocalizations.of(context).summaryBulckTemp} ${(bulckTemp - 273.15).toStringAsFixed(1)} °C \n";
       sumary.outerLiquidDensity =
@@ -513,7 +510,7 @@ class SimulationCreator {
           : core.Inicializer.liquidMaterial(innerInput.liquid, temp: bulckTemp);
 
       sumary.innerLiquidName =
-          "${AppLocalizations.of(context).summaryInnerLiquid} - ${(innerInput.isOil) ? "Oil ($api °API)" : innerInput.liquid} \n";
+          "${AppLocalizations.of(context).summaryInnerLiquid} - ${(innerInput.isOil) ? "Oil ($api °API)" : innerInput.liquid.name} \n";
       sumary.innerBulkTemp =
           "${AppLocalizations.of(context).summaryBulckTemp} ${(bulckTemp - 273.15).toStringAsFixed(1)} °C \n";
       sumary.innerLiquidDensity =

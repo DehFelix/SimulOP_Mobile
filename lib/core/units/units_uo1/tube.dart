@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:simulop_v1/core/units/units_uo1/units_1.dart';
 import 'package:simulop_v1/core/units/units_uo2/units_2.dart';
-import 'package:simulop_v1/core/components/materials/liquid/liquid_material.dart';
+import 'package:simulop_v1/core/interfaces/materials/i_liquid_material.dart';
 import 'package:simulop_v1/core/components/materials/tube/tube_material.dart';
 import 'package:simulop_v1/core/interfaces/i_local_resistances.dart';
 
@@ -128,10 +128,10 @@ class Tube extends UnitsI {
 
   /// The Rynolds number of a flow.
   ///
-  /// [material] = [LiquidMaterial] of the liquid flowing.
+  /// [material] = [ILiquidMaterial] of the liquid flowing.
   ///
   /// [volumeFlow] = Volumetric flow (m^3/s).
-  double reynolds(LiquidMaterial material, double volumeFlow) {
+  double reynolds(ILiquidMaterial material, double volumeFlow) {
     double re;
 
     re = (4 * material.density * volumeFlow) /
@@ -142,10 +142,10 @@ class Tube extends UnitsI {
 
   /// Computes the friction factor with the [frictionMethod].
   ///
-  /// [material] = [LiquidMaterial] of the liquid flowing.
+  /// [material] = [ILiquidMaterial] of the liquid flowing.
   ///
   /// [volumeFlow] = Volumetric flow (m^3/s).
-  double _computFrictionFactor(LiquidMaterial material, double volumeFlow) {
+  double _computFrictionFactor(ILiquidMaterial material, double volumeFlow) {
     double re;
     double a1;
     double a2;
@@ -188,10 +188,10 @@ class Tube extends UnitsI {
 
   /// Computes the tube pressure drop.
   ///
-  /// [material] = [LiquidMaterial] of the liquid flowing.
+  /// [material] = [OLiquidMaterial] of the liquid flowing.
   ///
   /// [volumeFlow] = Volumetric flow (m^3/s).
-  double computePressureDrop(LiquidMaterial material, double volumeFlow) {
+  double computePressureDrop(ILiquidMaterial material, double volumeFlow) {
     _computFrictionFactor(material, volumeFlow);
     double totalLengh = length + equivalentLengh;
 
@@ -254,7 +254,7 @@ class DoublePibeTube extends Tube {
   }
 
   @override
-  double reynolds(LiquidMaterial material, double volumeFlow) {
+  double reynolds(ILiquidMaterial material, double volumeFlow) {
     double re, a;
 
     if (tubeType == PipeType.outer) {
@@ -273,7 +273,7 @@ class DoublePibeTube extends Tube {
   }
 
   @override
-  double computePressureDrop(LiquidMaterial material, double volumeFlow) {
+  double computePressureDrop(ILiquidMaterial material, double volumeFlow) {
     _computFrictionFactor(material, volumeFlow);
     double totalLengh = length + equivalentLengh;
 

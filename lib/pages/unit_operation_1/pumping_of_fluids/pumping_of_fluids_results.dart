@@ -423,15 +423,35 @@ class _ChartCard extends StatelessWidget {
               style: _headerTextStyle,
             ),
           ),
-          Container(
-            height: 300.0,
-            child: Padding(
-              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-              child: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
-                builder: (context, _, model) => _chart(
-                    model.getPointsHead, model.getPointsNPSH, model, context),
+          Row(
+            children: <Widget>[
+              RotatedBox(
+                  quarterTurns: 3,
+                  child: Text(
+                    "Primary Axixs",
+                    style: TextStyle(color: Colors.black87),
+                  )),
+              Expanded(
+                child: Container(
+                  height: 300.0,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                    child:
+                        ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
+                      builder: (context, _, model) => _chart(
+                          model.getPointsHead,
+                          model.getPointsNPSH,
+                          model,
+                          context),
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
+          ),
+          Text(
+            "Domain Axis",
+            style: TextStyle(color: Colors.black87),
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),

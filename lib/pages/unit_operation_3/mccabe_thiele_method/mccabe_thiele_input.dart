@@ -210,9 +210,9 @@ class _SumaryCard extends StatelessWidget {
 
     if (model.input.validateInput()) {
       liquidLK =
-          "${AppLocalizations.of(context).liquidLK} ${model.input.liquidLK}\n";
+          "${AppLocalizations.of(context).liquidLK} ${model.input.liquidLK.name}\n";
       liquidHK =
-          "${AppLocalizations.of(context).liquidHK} ${model.input.liquidHK}\n";
+          "${AppLocalizations.of(context).liquidHK} ${model.input.liquidHK.name}\n";
       alpha =
           "${AppLocalizations.of(context).alphaValue} ${model.getAlpha.toStringAsFixed(2)}";
     }

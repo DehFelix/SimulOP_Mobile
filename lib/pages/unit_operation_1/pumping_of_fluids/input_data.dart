@@ -27,20 +27,17 @@ class PumpingOfFluidsInputModel extends Model {
 
   void setDefaultInputs(BuildContext context) {
     // Liquid:
-    fluidInput.liquid =
-        LiquidHelper(liquid: LiquidOptions.water, context: context);
+    fluidInput.liquid = fluidInputs.liquidOptions[0].value;
     fluidInput.temperature = "25";
     fluidInput.inletPressure = "1";
 
     // Inlet Tube:
-    inletTubeInput.material =
-        MaterialHelper(material: MaterialOptions.steel, context: context);
+    inletTubeInput.material = inletTubeInput.materialOptions[0].value;
     inletTubeInput.diametre = "50";
     inletTubeInput.equivalentDistance = "2";
 
     //Outlet Tube:
-    outletTubeInput.material =
-        MaterialHelper(material: MaterialOptions.steel, context: context);
+    outletTubeInput.material = outletTubeInput.materialOptions[0].value;
     outletTubeInput.diametre = "50";
     outletTubeInput.equivalentDistance = "20";
 

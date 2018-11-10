@@ -235,25 +235,6 @@ class DoublePipeHeatX extends Units2 {
     return lmtd;
   }
 
-/*
-  double _exitTemperature(ILiquidMaterial bulckMaterial,
-      ExchangeFluid exchangeFluid, double flow, double inTemp) {
-    double exitTemp;
-
-    if (exchangeFluid == ExchangeFluid.hot) {
-      exitTemp = inTemp -
-          (exchangeHeat /
-              (flow * bulckMaterial.density * bulckMaterial.specificHeat));
-    } else {
-      exitTemp = inTemp +
-          (exchangeHeat /
-              (flow * bulckMaterial.density * bulckMaterial.specificHeat));
-    }
-
-    return exitTemp;
-  }
-*/
-
   double _computepressureDrop(DoublePibeTube tube, double flow) {
     double drop;
 

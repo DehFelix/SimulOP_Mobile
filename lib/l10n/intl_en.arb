@@ -60,7 +60,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "pumpingOfLiquidsName": "Pumping if Liquids",
+  "pumpingOfLiquidsName": "Pumping of Liquids",
   "@pumpingOfLiquidsName": {
     "type": "text",
     "placeholders": {}

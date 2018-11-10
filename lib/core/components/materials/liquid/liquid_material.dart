@@ -188,8 +188,8 @@ class ApiOilMaterial extends MaterialType implements ILiquidMaterial {
   @override
   List<double> get antoineCoef => _antoineCoef;
 
-  ApiOilMaterial({@required double apiDegree, @required double temperature})
-      : super("Oil $apiDegree° API") {
+  ApiOilMaterial({@required double apiDegree, @required double temperature, String locName = ""})
+      : super("$locName $apiDegree° API") {
     this.apiDegree = apiDegree;
     this.temperature = temperature;
   }
