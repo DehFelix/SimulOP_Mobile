@@ -416,15 +416,18 @@ class _ChartCard extends StatelessWidget {
           ),
           Row(
             children: <Widget>[
-              RotatedBox(
-                quarterTurns: 3,
-                child: ScopedModelDescendant<DoublePipeBloc>(
-                    builder: (context, _, model) => Text(
-                          model.getChartView()
-                              ? "Primary Axis 1"
-                              : "Primary Axis 2",
-                          style: TextStyle(color: Colors.black87),
-                        )),
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: RotatedBox(
+                    quarterTurns: 3,
+                    child: ScopedModelDescendant<DoublePipeBloc>(
+                      builder: (context, _, model) => Text(
+                        model.getChartView()
+                            ? "Primary Axis 1"
+                            : "Primary Axis 2",
+                        style: TextStyle(color: Colors.black87),
+                      ),
+                    )),
               ),
               Expanded(
                 child: Container(

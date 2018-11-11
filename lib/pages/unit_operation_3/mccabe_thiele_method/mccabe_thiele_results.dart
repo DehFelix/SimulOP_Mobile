@@ -332,12 +332,18 @@ class _ChartCard extends StatelessWidget {
           ),
           Row(
             children: <Widget>[
-              RotatedBox(
-                  quarterTurns: 3,
-                  child: Text(
-                    "Primary Axixs",
-                    style: TextStyle(color: Colors.black87),
-                  )),
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: RotatedBox(
+                      quarterTurns: 3,
+                      child: Text(
+                        "Primary Axixs",
+                        style: TextStyle(color: Colors.black87),
+                      )),
+                ),
+              ),
               Expanded(
                 child: Container(
                   height: 300.0,
