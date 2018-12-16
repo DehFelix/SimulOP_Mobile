@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-11-03T17:46:00.710482",
+  "@@last_modified": "2018-12-09T22:28:26.581612",
   "steel": "Steel",
   "@steel": {
     "type": "text",
@@ -50,12 +50,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "lunchAppBtn": "Lunch App",
+  "lunchAppBtn": "Lunch Module",
   "@lunchAppBtn": {
     "type": "text",
     "placeholders": {}
   },
-  "ouIName": "OU I",
+  "ouIName": "UO I",
   "@ouIName": {
     "type": "text",
     "placeholders": {}
@@ -90,7 +90,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "ouIIName": "OU II",
+  "ouIIName": "UO II",
   "@ouIIName": {
     "type": "text",
     "placeholders": {}
@@ -145,7 +145,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "ouIIIName": "OU III",
+  "ouIIIName": "UO III",
   "@ouIIIName": {
     "type": "text",
     "placeholders": {}
@@ -550,7 +550,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "alphaValue": "Alpha Value:",
+  "alphaValue": "Relative Volatility:",
   "@alphaValue": {
     "type": "text",
     "placeholders": {}
@@ -560,7 +560,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "graphOperationCurves": "Operation Curves",
+  "graphOperationCurves": "Operation Lines",
   "@graphOperationCurves": {
     "type": "text",
     "placeholders": {}
@@ -602,6 +602,41 @@
   },
   "drawerTargetXB": "Target XB:",
   "@drawerTargetXB": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mcCabThieleDomainAxis": "LK Liquid Fraction",
+  "@mcCabThieleDomainAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mcCabThieleFunctionAxis": "LK Vapor Fraction",
+  "@mcCabThieleFunctionAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeDomainAxis": "Hot Liquid Exit Temp. (°C)",
+  "@doublePipeDomainAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeFunctionPressureAxis": "Pressure Drop (KPa)",
+  "@doublePipeFunctionPressureAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeFunctionLenghtAxis": "Lenght (m)",
+  "@doublePipeFunctionLenghtAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pumpingDomainAxis": "Volumetric Flow (m^3/h)",
+  "@pumpingDomainAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pumpingFunctionAxis": "Meters of Liquid column",
+  "@pumpingFunctionAxis": {
     "type": "text",
     "placeholders": {}
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:simulop_v1/locale/locales.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:math' as math;
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -267,8 +268,18 @@ class _ChartCard extends StatelessWidget {
       List<math.Point> dataEquilibrium,
       List<math.Point> dataOperationCurves,
       List<math.Point> dataStages,
+      List<math.Point> qLine,
       BuildContext context) {
+        List<math.Point> linha = [math.Point(0.0, 0.0), math.Point(1.0, 1.0)];
     return [
+      charts.Series<math.Point, double>(
+        id: "45° Line",
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        dashPatternFn: (_, __) => [10, 10],
+        domainFn: (math.Point point, _) => point.x,
+        measureFn: (math.Point point, _) => point.y,
+        data: linha,
+      ),
       charts.Series<math.Point, double>(
         id: AppLocalizations.of(context).graphEquilibrium,
         domainFn: (math.Point point, _) => point.x,
@@ -290,13 +301,20 @@ class _ChartCard extends StatelessWidget {
         measureFn: (math.Point point, _) => point.y,
         data: dataStages,
       ),
+        charts.Series<math.Point, double>(
+        id: AppLocalizations.of(context).graphStages,
+        colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
+        domainFn: (math.Point point, _) => point.x,
+        measureFn: (math.Point point, _) => point.y,
+        data: qLine,
+      ),
     ];
   }
 
   Widget _chart(McCabeThieleSimulationModel model, BuildContext context) {
     return charts.LineChart(
       _createSeries(model.getEquilibrium, model.getOperationCurves,
-          model.getStages, context),
+          model.getStages, model.getQLinhe, context),
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
@@ -309,12 +327,12 @@ class _ChartCard extends StatelessWidget {
         tickProviderSpec: charts.BasicNumericTickProviderSpec(
             dataIsInWholeNumbers: false, desiredTickCount: 5),
       ),
-      behaviors: [
-        charts.SeriesLegend(
-          position: charts.BehaviorPosition.top,
-          cellPadding: EdgeInsets.all(4.0),
-        ),
-      ],
+      // behaviors: [
+      //  charts.SeriesLegend(
+      //    position: charts.BehaviorPosition.top,
+      //   cellPadding: EdgeInsets.all(4.0),
+      //  ),
+      //],
     );
   }
 
@@ -339,7 +357,7 @@ class _ChartCard extends StatelessWidget {
                   child: RotatedBox(
                       quarterTurns: 3,
                       child: Text(
-                        "Primary Axixs",
+                        AppLocalizations.of(context).mcCabThieleFunctionAxis,
                         style: TextStyle(color: Colors.black87),
                       )),
                 ),
@@ -358,7 +376,7 @@ class _ChartCard extends StatelessWidget {
             ],
           ),
           Text(
-            "Domain Axis",
+            AppLocalizations.of(context).mcCabThieleDomainAxis,
             style: TextStyle(color: Colors.black87),
           ),
           Padding(

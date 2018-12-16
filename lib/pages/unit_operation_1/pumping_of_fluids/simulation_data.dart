@@ -18,10 +18,10 @@ class PumpingOfFluidsSimulationModel extends Model {
   List<math.Point> get getPointsNPSH => _simulation.plotAvailebleNPSH();
 
   String get getHead => _simulation.pump
-      .computeNecessaryHead(_simulation.volumeFlow)
+      .computeNecessaryHead(_simulation.volumeFlow / 3600.0)
       .toStringAsFixed(1);
   String get getNpsh =>
-      _simulation.pump.availebleNPSH(_simulation.volumeFlow).toStringAsFixed(1);
+      _simulation.pump.availebleNPSH(_simulation.volumeFlow / 3600.0).toStringAsFixed(1);
   String get getFlow => _simulation.volumeFlow.toStringAsFixed(1);
 
   double get getTemperature => _simulation.liquid.temperature - 273.15;
@@ -92,24 +92,24 @@ class PumpingOfFluidsSimulation {
   core.SimpleValve outletValve;
   core.CompletePump pump;
 
-  double volumeFlow = 1.0;
+  double volumeFlow = 3.0;
 
   PumpingOfFluidsSimulation();
 
   double getHead() {
-    return pump.computeNecessaryHead(volumeFlow);
+    return pump.computeNecessaryHead(volumeFlow / 3600.0);
   }
 
   double getHPSH() {
-    return pump.availebleNPSH(volumeFlow);
+    return pump.availebleNPSH(volumeFlow / 3600.0);
   }
 
   List<math.Point> plotNecessaryHead() {
-    return pump.plotRequeredHead(0.01, 2.0);
+    return pump.plotRequeredHead(0.01 / 3600, 10.0 / 3600);
   }
 
   List<math.Point> plotAvailebleNPSH() {
-    return pump.plotNPSH(0.01, 2.0);
+    return pump.plotNPSH(0.01 / 3600, 10.0 / 3600);
   }
 
   String string = "Inside the Simulation";

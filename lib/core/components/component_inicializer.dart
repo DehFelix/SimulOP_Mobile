@@ -52,26 +52,32 @@ class Inicializer {
   }
 
   static TubeMaterial tubeMaterial(MaterialHelper material) {
-    double roughness; // em cm
+    double roughness; // in cm
+    double thermalConductivity; // 
 
     switch (material.material) {
       case MaterialOptions.steel:
         roughness = 0.00547;
+        thermalConductivity = 45.0;
         break;
       case MaterialOptions.pvc:
         roughness = 0.006;
+        thermalConductivity = 10.0;
         break;
       case MaterialOptions.copper:
         roughness = 0.0002;
+        thermalConductivity = 386.0;
         break;
       case MaterialOptions.concrete:
         roughness = 0.2;
+        thermalConductivity = 2.0;
         break;
       default:
         roughness = 0.00547;
+        thermalConductivity = 45.0;
         break;
     }
 
-    return new TubeMaterial(material.name, roughness / 100.0);
+    return new TubeMaterial(material.name, roughness / 100.0, thermalConductivity);
   }
 }

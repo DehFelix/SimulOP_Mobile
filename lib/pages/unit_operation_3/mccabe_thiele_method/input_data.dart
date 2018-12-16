@@ -73,7 +73,7 @@ class McCabeThieleInputData extends Model {
 
   IconData get getFabIcon {
     if (canCreateSimulation()) {
-      return Icons.build;
+      return Icons.send;
     } else {
       return Icons.not_interested;
     }

@@ -145,7 +145,14 @@ class DoublePipeHeatX extends Units2 {
     double hTotal = 0.0;
     double invH;
 
-    invH = (1.0 / innerH) + (1.0 / outerH) + foulingFactor;
+    double wallH = 2 *
+        innerPipe.material.thermalConductivity /
+        (innerPipe.internalDiametre *
+            math.log(innerPipe.externalDiametre / innerPipe.internalDiametre));
+
+    invH = wallH.isNaN
+        ? (1.0 / innerH) + (1.0 / outerH) + foulingFactor
+        : (1.0 / innerH) + (1.0 / outerH) + (1 / wallH) + foulingFactor;
     hTotal = 1.0 / invH;
 
     globalHeatTransCoeff = hTotal;

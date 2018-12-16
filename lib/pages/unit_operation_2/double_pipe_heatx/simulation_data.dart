@@ -144,7 +144,7 @@ class DoublePipeHeatXSimulation {
   core.Liquid innerLiquid;
   core.DoublePipeHeatX heatX;
 
-  bool showPressureDrop = false;
+  bool showPressureDrop = true;
 
   double chartTemp;
 

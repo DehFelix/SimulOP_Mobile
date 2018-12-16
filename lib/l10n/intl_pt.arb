@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-10-06T18:33:52.101439",
+   "@@last_modified": "2018-10-06T18:33:52.101439",
   "steel": "Aço Carbono",
   "@steel": {
     "type": "text",
@@ -50,7 +50,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "lunchAppBtn": "Iniciar",
+  "lunchAppBtn": "Iniciar Módulo;",
   "@lunchAppBtn": {
     "type": "text",
     "placeholders": {}
@@ -60,7 +60,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "pumpingOfLiquidsName": "Bombeamento de Liquido",
+  "pumpingOfLiquidsName": "Bombeamento de Líquido",
   "@pumpingOfLiquidsName": {
     "type": "text",
     "placeholders": {}
@@ -210,7 +210,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "liquidInput": "Liquido:",
+  "liquidInput": "Líquido:",
   "@liquidInput": {
     "type": "text",
     "placeholders": {}
@@ -285,7 +285,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "summaryLiquid": "Liquido",
+  "summaryLiquid": "Líquido",
   "@summaryLiquid": {
     "type": "text",
     "placeholders": {}
@@ -375,12 +375,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "drawerLiquid": "Liquido:",
+  "drawerLiquid": "Líquido:",
   "@drawerLiquid": {
     "type": "text",
     "placeholders": {}
   },
-  "drawerLiquidTemp": "Temperatura do Liquido (°C)",
+  "drawerLiquidTemp": "Temperatura do Líquido (°C)",
   "@drawerLiquidTemp": {
     "type": "text",
     "placeholders": {}
@@ -460,7 +460,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "summaryOuterLiquid": "Liquido Anular",
+  "summaryOuterLiquid": "Líquido Anular",
   "@summaryOuterLiquid": {
     "type": "text",
     "placeholders": {}
@@ -475,7 +475,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "summaryInnerLiquid": "Liquido Interno",
+  "summaryInnerLiquid": "Líquido Interno",
   "@summaryInnerLiquid": {
     "type": "text",
     "placeholders": {}
@@ -490,7 +490,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "resultsHotExitTemp": "Temperatura de Saída do Liquido Quente:",
+  "resultsHotExitTemp": "Temperatura de Saída do Líquido Quente:",
   "@resultsHotExitTemp": {
     "type": "text",
     "placeholders": {}
@@ -515,7 +515,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "resultsColdFlow": "Vazão do Liquido Frio:",
+  "resultsColdFlow": "Vazão do Líquido Frio:",
   "@resultsColdFlow": {
     "type": "text",
     "placeholders": {}
@@ -525,7 +525,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "mixtureInput": "Mistua",
+  "mixtureInput": "Mistura",
   "@mixtureInput": {
     "type": "text",
     "placeholders": {}
@@ -550,7 +550,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "alphaValue": "Valor do Alpha:",
+  "alphaValue": "Volatividade Relativa:",
   "@alphaValue": {
     "type": "text",
     "placeholders": {}
@@ -560,7 +560,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "graphOperationCurves": "Curvas de Operação",
+  "graphOperationCurves": "Linhas de Operação",
   "@graphOperationCurves": {
     "type": "text",
     "placeholders": {}
@@ -602,6 +602,41 @@
   },
   "drawerTargetXB": "XB Desejado:",
   "@drawerTargetXB": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mcCabThieleDomainAxis": "Fração LK no Líquido",
+  "@mcCabThieleDomainAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mcCabThieleFunctionAxis": "Fração LK no Vapor",
+  "@mcCabThieleFunctionAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeDomainAxis": "Temp. de Saída do Líquido Quente (°C)",
+  "@doublePipeDomainAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeFunctionPressureAxis": "Perda de Carga (KPa)",
+  "@doublePipeFunctionPressureAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doublePipeFunctionLenghtAxis": "Comprimento (m)",
+  "@doublePipeFunctionLenghtAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pumpingDomainAxis": "Vazão Volumétrica (m^3/h)",
+  "@pumpingDomainAxis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pumpingFunctionAxis": "Metros de Coluna de Líquido",
+  "@pumpingFunctionAxis": {
     "type": "text",
     "placeholders": {}
   }

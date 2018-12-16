@@ -115,9 +115,29 @@ class McCabeThieleMethod {
       } else {
         x = xLK;
         y = opCurve(xLK);
-        if (y > 0.0 && y < 1.0) plot.add(math.Point(x, y));
+        if (y >= x) plot.add(math.Point(x, y));
       }
     }
+
+    return plot;
+  }
+
+  List<math.Point> plotQLine() {
+    double dx, dy;
+    List<math.Point> plot = List<math.Point>();
+
+    double delta = 0.4;
+
+    plot.add(math.Point(feedZf, feedZf));
+    plot.add(math.Point(_pointP.x, _pointP.y));
+
+    double d = math.sqrt(
+        math.pow(feedZf - _pointP.x, 2.0) + math.pow(feedZf - _pointP.y, 2.0));
+
+    dx = (delta - d) * (_pointP.x - feedZf) / d;
+    dy = (delta - d) * (_pointP.y - feedZf) / d;
+
+    plot.add(math.Point(_pointP.x + dx, _pointP.y + dy));
 
     return plot;
   }

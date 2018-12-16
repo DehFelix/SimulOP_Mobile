@@ -15,6 +15,7 @@ class McCabeThieleSimulationModel extends Model {
       simulation.mcCabeThiele.plotEquilibrium(40);
   List<math.Point> get getOperationCurves =>
       simulation.mcCabeThiele.plotOpCurve(40);
+  List<math.Point> get getQLinhe => simulation.mcCabeThiele.plotQLine();
   List<math.Point> get getStages {
     var plot = simulation.mcCabeThiele.plotStages();
     var results = Results(

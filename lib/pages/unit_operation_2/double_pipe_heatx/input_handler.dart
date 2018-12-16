@@ -118,7 +118,7 @@ class InputModel extends Model {
   }
 
   IconData getFabIcon() {
-    return (_simulation.validateInpus() ? Icons.build : Icons.not_interested);
+    return (_simulation.validateInpus() ? Icons.send : Icons.not_interested);
   }
 
   bool canCreateSimulation() {

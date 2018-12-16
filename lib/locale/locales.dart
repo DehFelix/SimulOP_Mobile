@@ -101,7 +101,7 @@ class AppLocalizations {
 
   String get ouIName {
     return Intl.message(
-      "OU I",
+      "UO I",
       name: "ouIName",
     );
   }
@@ -150,7 +150,7 @@ class AppLocalizations {
 
   String get ouIIName {
     return Intl.message(
-      "OU II",
+      "UO II",
       name: "ouIIName",
     );
   }
@@ -227,7 +227,7 @@ class AppLocalizations {
 
   String get ouIIIName {
     return Intl.message(
-      "OU III",
+      "UO III",
       name: "ouIIIName",
     );
   }
@@ -796,7 +796,7 @@ class AppLocalizations {
 
   String get alphaValue {
     return Intl.message(
-      "Alpha Value:",
+      "Relative Volatility:",
       name: "alphaValue",
     );
   }
@@ -811,7 +811,7 @@ class AppLocalizations {
 
   String get graphOperationCurves {
     return Intl.message(
-      "Operation Curves",
+      "Operation Lines",
       name: "graphOperationCurves",
     );
   }
@@ -871,6 +871,56 @@ class AppLocalizations {
       name: "drawerTargetXB",
     );
   }
+
+  String get mcCabThieleDomainAxis {
+    return Intl.message(
+      "LK Liquid Fraction",
+      name: "mcCabThieleDomainAxis",
+    );
+  }
+
+  String get mcCabThieleFunctionAxis {
+    return Intl.message(
+      "LK Vapor Fraction",
+      name: "mcCabThieleFunctionAxis",
+    );
+  }
+
+  String get doublePipeDomainAxis {
+    return Intl.message(
+      "Hot Liquid Exit Temp. (°C)",
+      name: "doublePipeDomainAxis",
+    );
+  }
+
+  String get doublePipeFunctionPressureAxis {
+    return Intl.message(
+      "Pressure Drop (KPa)",
+      name: "doublePipeFunctionPressureAxis",
+    );
+  }
+
+    String get doublePipeFunctionLenghtAxis {
+    return Intl.message(
+      "Lenght (m)",
+      name: "doublePipeFunctionLenghtAxis",
+    );
+  }
+
+    String get pumpingDomainAxis {
+    return Intl.message(
+      "Volumetric Flow (m^3/h)",
+      name: "pumpingDomainAxis",
+    );
+  }
+
+    String get pumpingFunctionAxis {
+    return Intl.message(
+      "Meters of Liquid column",
+      name: "pumpingFunctionAxis",
+    );
+  }
+
 }
 
 class AppLocalizationDelegade extends LocalizationsDelegate<AppLocalizations> {

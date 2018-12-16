@@ -326,29 +326,30 @@ class __DoublePipeAppBarState extends State<_DoublePipeAppBar> {
 
 class _ChartCard extends StatelessWidget {
   List<charts.Series<math.Point, double>> _createLenghtSeries(
-      List<math.Point> data) {
+      List<math.Point> data, BuildContext context) {
     return [
       charts.Series(
-        id: "Lenght",
+        id: "lenght",
         data: data,
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
+        colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault
       ),
     ];
   }
 
   List<charts.Series<math.Point, double>> _createPressureDropSeries(
-      List<math.Point> outerData, List<math.Point> innerData) {
+      List<math.Point> outerData, List<math.Point> innerData, BuildContext context) {
     return [
       charts.Series(
-        id: "Outer Tube",
+        id: AppLocalizations.of(context).outerPipe,
         data: outerData,
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
       ),
       charts.Series(
-        id: "Inner Tube",
+        id: AppLocalizations.of(context).innerPipe,
         data: innerData,
         colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
         domainFn: (math.Point point, _) => point.x,
@@ -364,8 +365,8 @@ class _ChartCard extends StatelessWidget {
         if (!snapshot.hasData) return Text("Loading...");
         var chartSeries = (snapshot.data.isChartPressure)
             ? _createPressureDropSeries(
-                snapshot.data.outerPlot, snapshot.data.innerPlot)
-            : _createLenghtSeries(snapshot.data.lenghtPlot);
+                snapshot.data.outerPlot, snapshot.data.innerPlot, context)
+            : _createLenghtSeries(snapshot.data.lenghtPlot, context);
         return charts.LineChart(
           chartSeries,
           animate: false,
@@ -379,6 +380,11 @@ class _ChartCard extends StatelessWidget {
                   dataIsInWholeNumbers: false,
                   desiredTickCount: 6)),
           behaviors: [
+            charts.SeriesLegend(
+              position: charts.BehaviorPosition.top,
+              cellPadding: EdgeInsets.all(4.0),
+              showMeasures: true
+            ),
             charts.Slider(
               initialDomainValue: model.getSliderDomain,
               onChangeCallback: model.onSliderCanged,
@@ -422,11 +428,13 @@ class _ChartCard extends StatelessWidget {
                     quarterTurns: 3,
                     child: ScopedModelDescendant<DoublePipeBloc>(
                       builder: (context, _, model) => Text(
-                        model.getChartView()
-                            ? "Primary Axis 1"
-                            : "Primary Axis 2",
-                        style: TextStyle(color: Colors.black87),
-                      ),
+                            model.getChartView()
+                                ? AppLocalizations.of(context)
+                                    .doublePipeFunctionPressureAxis
+                                : AppLocalizations.of(context)
+                                    .doublePipeFunctionLenghtAxis,
+                            style: TextStyle(color: Colors.black87),
+                          ),
                     )),
               ),
               Expanded(
@@ -442,7 +450,7 @@ class _ChartCard extends StatelessWidget {
             ],
           ),
           Text(
-            "Domain Axis",
+            AppLocalizations.of(context).doublePipeDomainAxis,
             style: TextStyle(color: Colors.black87),
           ),
           Padding(

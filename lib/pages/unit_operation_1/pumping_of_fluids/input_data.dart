@@ -33,17 +33,17 @@ class PumpingOfFluidsInputModel extends Model {
 
     // Inlet Tube:
     inletTubeInput.material = inletTubeInput.materialOptions[0].value;
-    inletTubeInput.diametre = "50";
+    inletTubeInput.diametre = "5";
     inletTubeInput.equivalentDistance = "2";
 
     //Outlet Tube:
     outletTubeInput.material = outletTubeInput.materialOptions[0].value;
-    outletTubeInput.diametre = "50";
+    outletTubeInput.diametre = "5";
     outletTubeInput.equivalentDistance = "20";
 
     // Distances
     distancesInput.dzInlet = "-5";
-    distancesInput.lInlet = "1";
+    distancesInput.lInlet = "10";
     distancesInput.dzOutlet = "10";
     distancesInput.lOutlet = "500";
 
@@ -140,7 +140,7 @@ class PumpingOfFluidsInputModel extends Model {
 
   IconData get getFabIcon {
     if (canCreateSimulation()) {
-      return Icons.build;
+      return Icons.send;
     } else {
       return Icons.not_interested;
     }

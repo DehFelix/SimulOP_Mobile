@@ -93,7 +93,7 @@ class HomePageState extends State<HomePage>
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(8.0),
         child: Text(
-          "POLI-USP. Engenharia Química. AndréAntonio, RafaelTerras, prof.MoisésTeles",
+          "",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 16.0, color: Colors.grey[600]),
         ),

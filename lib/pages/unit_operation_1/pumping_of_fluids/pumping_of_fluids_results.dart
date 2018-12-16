@@ -370,13 +370,13 @@ class _ChartCard extends StatelessWidget {
     return [
       charts.Series<math.Point, double>(
         id: AppLocalizations.of(context).chartHeadLeg,
-        domainFn: (math.Point point, _) => point.x,
+        domainFn: (math.Point point, _) => point.x * 3600.0,
         measureFn: (math.Point point, _) => point.y,
         data: dataHead,
       )..setAttribute(charts.measureAxisIdKey, primaryMeasureAxisId),
       charts.Series<math.Point, double>(
         id: AppLocalizations.of(context).chartNPSH,
-        domainFn: (math.Point point, _) => point.x,
+        domainFn: (math.Point point, _) => point.x * 3600.0,
         measureFn: (math.Point point, _) => point.y,
         data: dataNPSH,
       )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
@@ -425,12 +425,15 @@ class _ChartCard extends StatelessWidget {
           ),
           Row(
             children: <Widget>[
-              RotatedBox(
-                  quarterTurns: 3,
-                  child: Text(
-                    "Primary Axixs",
-                    style: TextStyle(color: Colors.black87),
-                  )),
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: RotatedBox(
+                    quarterTurns: 3,
+                    child: Text(
+                      AppLocalizations.of(context).pumpingFunctionAxis,
+                      style: TextStyle(color: Colors.black87),
+                    )),
+              ),
               Expanded(
                 child: Container(
                   height: 300.0,
@@ -450,7 +453,7 @@ class _ChartCard extends StatelessWidget {
             ],
           ),
           Text(
-            "Domain Axis",
+            AppLocalizations.of(context).pumpingDomainAxis,
             style: TextStyle(color: Colors.black87),
           ),
           Padding(
@@ -469,7 +472,7 @@ class _ResultsCard extends StatelessWidget {
   TextSpan _selectedFlow(
       PumpingOfFluidsSimulationModel model, BuildContext context) {
     String selectedFlow =
-        "${AppLocalizations.of(context).resultsFlow} ${model.getFlow} m^3/s \n";
+        "${AppLocalizations.of(context).resultsFlow} ${model.getFlow} m^3/h \n";
 
     return TextSpan(
         children: <TextSpan>[TextSpan(text: selectedFlow, style: _textStyle)]);
