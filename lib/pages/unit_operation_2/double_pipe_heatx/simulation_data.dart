@@ -93,7 +93,7 @@ class DoublePipeBloc extends Model {
 
   double get getSliderDomain => _simulation.chartTemp;
 
-  void onSliderCanged(math.Point<int> point, dynamic domain,
+  void onSliderCanged(math.Point<int> point, dynamic domain, String s,
       charts.SliderListenerDragState dragState) {
     if (dragState.index == 2) {
       _simulation.chartTemp = domain;

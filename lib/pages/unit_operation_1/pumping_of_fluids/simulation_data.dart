@@ -20,8 +20,9 @@ class PumpingOfFluidsSimulationModel extends Model {
   String get getHead => _simulation.pump
       .computeNecessaryHead(_simulation.volumeFlow / 3600.0)
       .toStringAsFixed(1);
-  String get getNpsh =>
-      _simulation.pump.availebleNPSH(_simulation.volumeFlow / 3600.0).toStringAsFixed(1);
+  String get getNpsh => _simulation.pump
+      .availebleNPSH(_simulation.volumeFlow / 3600.0)
+      .toStringAsFixed(1);
   String get getFlow => _simulation.volumeFlow.toStringAsFixed(1);
 
   double get getTemperature => _simulation.liquid.temperature - 273.15;
@@ -73,7 +74,7 @@ class PumpingOfFluidsSimulationModel extends Model {
     notifyListeners();
   }
 
-  void onSliderChanged(math.Point<int> point, dynamic domain,
+  void onSliderChanged(math.Point<int> point, dynamic domain, String s,
       charts.SliderListenerDragState dragState) {
     if (dragState.index == 2) {
       _simulation.volumeFlow = domain;

@@ -16,7 +16,7 @@ class SimulOPAPP extends StatelessWidget {
   final ThemeData simulopTheme = ThemeData(
     primarySwatch: Colors.blue,
   );
-  
+
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
