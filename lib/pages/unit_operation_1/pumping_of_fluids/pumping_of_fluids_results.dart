@@ -5,7 +5,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:simulop_v1/locale/locales.dart';
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
-import 'package:simulop_v1/pages/helper_classes/helper_dialog.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/simulation_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
