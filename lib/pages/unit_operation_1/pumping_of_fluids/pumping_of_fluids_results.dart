@@ -11,11 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
-final helpItems = [
-  HelpItem("More info", "/default", ActionType.route),
-  HelpItem("About", "/default", ActionType.route),
-];
-
 class PumpingOfFluidsResults extends StatelessWidget {
   final PumpingOfFluidsSimulation simulation;
 
@@ -56,12 +51,12 @@ class _FluidResultsDrawer extends StatelessWidget {
     final _temperatureSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 10.0,
-            max: 90.0,
-            divisions: _sliderDiv,
-            value: model.getTemperature,
-            onChanged: model.onTemperatureChanged,
-          ),
+        min: 10.0,
+        max: 90.0,
+        divisions: _sliderDiv,
+        value: model.getTemperature,
+        onChanged: model.onTemperatureChanged,
+      ),
     );
 
     return Column(
@@ -72,19 +67,14 @@ class _FluidResultsDrawer extends StatelessWidget {
             style: _headerTextStyle,
           ),
           leading: Icon(Icons.format_color_fill),
-          trailing: RawMaterialButton(
-              child: Icon(Icons.help),
-              onPressed: () => showDialog(
-                  context: context,
-                  builder: (context) => HelpDialog("Helllow :"))),
         ),
         ListTile(
           title: Text(AppLocalizations.of(context).drawerLiquidTemp),
           subtitle: _temperatureSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) => Text(
-                  model.getTemperature.toStringAsFixed(1),
-                ),
+              model.getTemperature.toStringAsFixed(1),
+            ),
           ),
         )
       ],
@@ -96,23 +86,23 @@ class _FluidResultsDrawer extends StatelessWidget {
     final _inletValveSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 1.0,
-            max: 10.0,
-            divisions: _sliderDiv,
-            value: model.getInletValve,
-            onChanged: model.onInletValveChange,
-          ),
+        min: 1.0,
+        max: 10.0,
+        divisions: _sliderDiv,
+        value: model.getInletValve,
+        onChanged: model.onInletValveChange,
+      ),
     );
 
     final _inletPressureSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 0.2,
-            max: 5.0,
-            divisions: _sliderDiv,
-            value: model.getInletTankPressure,
-            onChanged: model.onInletTankPressureChanged,
-          ),
+        min: 0.2,
+        max: 5.0,
+        divisions: _sliderDiv,
+        value: model.getInletTankPressure,
+        onChanged: model.onInletTankPressureChanged,
+      ),
     );
 
     return Column(
@@ -129,8 +119,8 @@ class _FluidResultsDrawer extends StatelessWidget {
           subtitle: _inletValveSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) => Text(
-                  (model.getInletValve / 10.0).toStringAsFixed(1),
-                ),
+              (model.getInletValve / 10.0).toStringAsFixed(1),
+            ),
           ),
         ),
         ListTile(
@@ -138,8 +128,8 @@ class _FluidResultsDrawer extends StatelessWidget {
           subtitle: _inletPressureSlider,
           trailing: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
             builder: (contex, _, model) => Text(
-                  model.getInletTankPressure.toStringAsFixed(1),
-                ),
+              model.getInletTankPressure.toStringAsFixed(1),
+            ),
           ),
         ),
       ],
@@ -151,12 +141,12 @@ class _FluidResultsDrawer extends StatelessWidget {
     final _outletValveSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 1.0,
-            max: 10.0,
-            divisions: _sliderDiv,
-            value: model.getOutletValve,
-            onChanged: model.onOutletValveChange,
-          ),
+        min: 1.0,
+        max: 10.0,
+        divisions: _sliderDiv,
+        value: model.getOutletValve,
+        onChanged: model.onOutletValveChange,
+      ),
     );
 
     return Column(
@@ -185,44 +175,44 @@ class _FluidResultsDrawer extends StatelessWidget {
     final _dzInletSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: -20.0,
-            max: 20.0,
-            divisions: _sliderDiv,
-            value: model.getDzInlet,
-            onChanged: model.onDzInletChange,
-          ),
+        min: -20.0,
+        max: 20.0,
+        divisions: _sliderDiv,
+        value: model.getDzInlet,
+        onChanged: model.onDzInletChange,
+      ),
     );
 
     final _lInletSlider = ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 1.0,
-            max: 100.0,
-            divisions: _sliderDiv,
-            value: model.getLInlet,
-            onChanged: model.onLInletChange,
-          ),
+        min: 1.0,
+        max: 100.0,
+        divisions: _sliderDiv,
+        value: model.getLInlet,
+        onChanged: model.onLInletChange,
+      ),
     );
 
     final _dzOutletSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: -20.0,
-            max: 20.0,
-            divisions: _sliderDiv,
-            value: model.getDzOutlet,
-            onChanged: model.onDzOutletChange,
-          ),
+        min: -20.0,
+        max: 20.0,
+        divisions: _sliderDiv,
+        value: model.getDzOutlet,
+        onChanged: model.onDzOutletChange,
+      ),
     );
 
     final _lOutletSlider =
         ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 1.0,
-            max: 1000.0,
-            divisions: _sliderDiv,
-            value: model.getLOutlet,
-            onChanged: model.onLOutletChange,
-          ),
+        min: 1.0,
+        max: 1000.0,
+        divisions: _sliderDiv,
+        value: model.getLOutlet,
+        onChanged: model.onLOutletChange,
+      ),
     );
 
     return Column(
@@ -319,14 +309,18 @@ class __FluidResultsAppBarState extends State<_FluidResultsAppBar> {
       title: Text(AppLocalizations.of(context).results),
       actions: <Widget>[
         PopupMenuButton(
-          itemBuilder: (BuildContext context) => _appBarMenu(),
+          itemBuilder: (BuildContext context) => _appBarMenu(context),
           onSelected: _selectMenu,
         )
       ],
     );
   }
 
-  List<Widget> _appBarMenu() {
+  List<Widget> _appBarMenu(BuildContext context) {
+    final helpItems = [
+      HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
+          ActionType.route),
+    ];
     return helpItems.map((HelpItem item) {
       return PopupMenuItem(
         value: item,
@@ -513,16 +507,16 @@ class _ResultsCard extends StatelessWidget {
             padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
             child: ScopedModelDescendant<PumpingOfFluidsSimulationModel>(
               builder: (context, _, model) => RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        _selectedFlow(model, context),
-                        TextSpan(text: "\n"),
-                        _bombResult(model, context),
-                        TextSpan(text: "\n"),
-                        _npshResults(model, context),
-                      ],
-                    ),
-                  ),
+                text: TextSpan(
+                  children: <TextSpan>[
+                    _selectedFlow(model, context),
+                    TextSpan(text: "\n"),
+                    _bombResult(model, context),
+                    TextSpan(text: "\n"),
+                    _npshResults(model, context),
+                  ],
+                ),
+              ),
             ),
           ),
         ],

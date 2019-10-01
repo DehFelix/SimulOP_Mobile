@@ -37,6 +37,7 @@ class OU3Selection extends StatelessWidget {
         description: AppLocalizations.of(context).distilationColumnDescription,
         isDisable: true,
         imagePath: "assets/icon/ic_distillation_column.png",
+        route: "/mcCabeThieleMethodAnimated",
       ),
     ];
 

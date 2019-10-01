@@ -31,8 +31,7 @@ class PumpingOfFluidsInput extends StatelessWidget {
       HelpItem(AppLocalizations.of(context).defaultInputs,
           "runWithDefaultInputs", ActionType.widgetAction),
       HelpItem(AppLocalizations.of(context).moreInfoBtn,
-          "showPumpingOfFluidsHelp", ActionType.widgetAction),
-      HelpItem("About", "/default", ActionType.route),
+          "/default", ActionType.route),
     ];
 
     return ScopedModel<PumpingOfFluidsInputModel>(

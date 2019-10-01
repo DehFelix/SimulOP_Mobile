@@ -115,7 +115,7 @@ class AppLocalizations {
 
   String get pumpingOfLiquidsDescription {
     return Intl.message(
-      "pumpingOfLiquidsDescription",
+      "Simple centrifugal pump specification example, after entering the piping information (diametre, length, etc.) a graph is shown where the effects of process variables can be visualized.",
       name: "pumpingOfLiquidsDescription",
     );
   }
@@ -129,7 +129,7 @@ class AppLocalizations {
 
   String get filterDescription {
     return Intl.message(
-      "filterDescription",
+      "Not yet available",
       name: "filterDescription",
     );
   }
@@ -143,7 +143,7 @@ class AppLocalizations {
 
   String get compressorDescription {
     return Intl.message(
-      "compressorDescription",
+      "Not yet available",
       name: "compressorDescription",
     );
   }
@@ -164,7 +164,7 @@ class AppLocalizations {
 
   String get doublePipeHeatXDescription {
     return Intl.message(
-      "doublePipeHeatXDescription",
+      "A double pipe heat exchanger, where the influences of variables such as mass flow, diameter and viscosity on the primary heat exchanger characteristics (heat exchanger and pressure drop) can be verified.",
       name: "doublePipeHeatXDescription",
     );
   }
@@ -178,7 +178,7 @@ class AppLocalizations {
 
   String get multiPipeHeatXDescription {
     return Intl.message(
-      "multiPipeHeatXDescription",
+      "Not yet available",
       name: "multiPipeHeatXDescription",
     );
   }
@@ -192,7 +192,7 @@ class AppLocalizations {
 
   String get evaporatorsDescription {
     return Intl.message(
-      "evaporatorsDescription",
+      "Not yet available",
       name: "evaporatorsDescription",
     );
   }
@@ -206,7 +206,7 @@ class AppLocalizations {
 
   String get dryerDescription {
     return Intl.message(
-      "dryerDescription",
+      "Not yet available",
       name: "dryerDescription",
     );
   }
@@ -220,7 +220,7 @@ class AppLocalizations {
 
   String get coolingTowerDescription {
     return Intl.message(
-      "coolingTowerDescription",
+      "Not yet available",
       name: "coolingTowerDescription",
     );
   }
@@ -241,7 +241,7 @@ class AppLocalizations {
 
   String get mcCabeTheileDescription {
     return Intl.message(
-      "mcCabeTheileDescription",
+      "A simple and intuitive introduction to binary distillation, where the effects of complex variables of a distillation tower (reflux rate, number of plates, etc.) is easy to verify and form an intuition of the possible effects on more complex distillation simulation and real columns.",
       name: "mcCabeTheileDescription",
     );
   }
@@ -255,7 +255,7 @@ class AppLocalizations {
 
   String get absorptionColumnDescription {
     return Intl.message(
-      "absorptionColumnDescription",
+      "Not yet available",
       name: "absorptionColumnDescription",
     );
   }
@@ -269,7 +269,7 @@ class AppLocalizations {
 
   String get membranesDescription {
     return Intl.message(
-      "membranesDescription",
+      "Not yet available",
       name: "membranesDescription",
     );
   }
@@ -283,7 +283,7 @@ class AppLocalizations {
 
   String get crystalizerDescription {
     return Intl.message(
-      "crystalizerDescription",
+      "Not yet available",
       name: "crystalizerDescription",
     );
   }
@@ -297,7 +297,7 @@ class AppLocalizations {
 
   String get distilationColumnDescription {
     return Intl.message(
-      "distilationColumnDescription",
+      "Not yet available",
       name: "distilationColumnDescription",
     );
   }

@@ -21,12 +21,14 @@ dependencies:
   charts_flutter: any
   scoped_model: any
   rxdart: any
+  flutter_speed_dial: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   intl_translation: any
   flutter_launcher_icons: "^0.6.1"
+  
 
 flutter_icons:
   android: true 

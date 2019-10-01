@@ -105,7 +105,6 @@ class HomePageState extends State<HomePage>
     final items = [
       HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
           ActionType.route),
-      HelpItem("About", "/about", ActionType.route),
     ];
 
     return items.map((HelpItem item) {

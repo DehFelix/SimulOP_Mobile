@@ -29,12 +29,13 @@ class Liquid {
 
   double pVap(double t) {
     double pVap;
+    double pow;
 
     if (_material.antoineCoef != null && _material.antoineCoef.isNotEmpty) {
-      pVap = math.pow(
-          10.0,
-          _material.antoineCoef[0] -
-              (_material.antoineCoef[1] / (_material.antoineCoef[2] + t)));
+      pow = _material.antoineCoef[0] -
+          (_material.antoineCoef[1] / (_material.antoineCoef[2] + t));
+
+      pVap = math.pow(10, pow);
     } else {
       pVap = 0.0;
     }
@@ -51,10 +52,7 @@ class Liquid {
   }
 
   Liquid clone() {
-    return new Liquid(
-      material: _material.clone(),
-      temperature: _temperature
-    );
+    return new Liquid(material: _material.clone(), temperature: _temperature);
   }
 }
 

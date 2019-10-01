@@ -65,7 +65,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "pumpingOfLiquidsDescription": "pumpingOfLiquidsDescription",
+  "pumpingOfLiquidsDescription": "Exemplo de uma especificação de uma bomba, depois de entrar com as informações da tubulação (diâmetro, comprimento, etc.) um gráfico é mostrado onde é possível visualizar os efeitos das variáveis de processo.",
   "@pumpingOfLiquidsDescription": {
     "type": "text",
     "placeholders": {}
@@ -75,7 +75,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "filterDescription": "filterDescription",
+  "filterDescription": "Not yet available.",
   "@filterDescription": {
     "type": "text",
     "placeholders": {}
@@ -85,7 +85,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "compressorDescription": "compressorDescription",
+  "compressorDescription": "Not yet available.",
   "@compressorDescription": {
     "type": "text",
     "placeholders": {}
@@ -100,7 +100,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "doublePipeHeatXDescription": "doublePipeHeatXDescription",
+  "doublePipeHeatXDescription": "A double pipe heat exchanger, where the influences of variables such as mass flow, diameter and viscosity on the primary heat exchanger characteristics (heat exchanger and pressure drop) can be verified.",
   "@doublePipeHeatXDescription": {
     "type": "text",
     "placeholders": {}
@@ -110,7 +110,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "multiPipeHeatXDescription": "multiPipeHeatXDescription",
+  "multiPipeHeatXDescription": "Not yet available.",
   "@multiPipeHeatXDescription": {
     "type": "text",
     "placeholders": {}
@@ -120,7 +120,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "evaporatorsDescription": "evaporatorsDescription",
+  "evaporatorsDescription": "Not yet available.",
   "@evaporatorsDescription": {
     "type": "text",
     "placeholders": {}
@@ -130,7 +130,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "dryerDescription": "dryerDescription",
+  "dryerDescription": "Not yet available.",
   "@dryerDescription": {
     "type": "text",
     "placeholders": {}
@@ -140,7 +140,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "coolingTowerDescription": "coolingTowerDescription",
+  "coolingTowerDescription": "Not yet available.",
   "@coolingTowerDescription": {
     "type": "text",
     "placeholders": {}
@@ -155,7 +155,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "mcCabeTheileDescription": "mcCabeTheileDescription",
+  "mcCabeTheileDescription": "A simple and intuitive introduction to binary distillation, where the effects of complex variables of a distillation tower (reflux rate, number of plates, etc.) is easy to verify and form an intuition of the possible effects on more complex distillation simulation and real columns.",
   "@mcCabeTheileDescription": {
     "type": "text",
     "placeholders": {}
@@ -165,7 +165,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "absorptionColumnDescription": "absorptionColumnDescription",
+  "absorptionColumnDescription": "Not yet available.",
   "@absorptionColumnDescription": {
     "type": "text",
     "placeholders": {}
@@ -175,7 +175,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "membranesDescription": "membranesDescription",
+  "membranesDescription": "Not yet available.",
   "@membranesDescription": {
     "type": "text",
     "placeholders": {}
@@ -185,7 +185,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "crystalizerDescription": "crystalizerDescription",
+  "crystalizerDescription": "Not yet available.",
   "@crystalizerDescription": {
     "type": "text",
     "placeholders": {}
@@ -195,7 +195,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "distilationColumnDescription": "distilationColumnDescription",
+  "distilationColumnDescription": "Not yet available.",
   "@distilationColumnDescription": {
     "type": "text",
     "placeholders": {}
