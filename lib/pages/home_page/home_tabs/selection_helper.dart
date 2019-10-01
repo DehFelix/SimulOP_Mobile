@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 import 'package:simulop_v1/locale/locales.dart';
 
@@ -76,14 +76,14 @@ Widget tileSelectionBuilder(BuildContext context, SelectionTile tile) {
   );
 }
 
-void _lunchURL() async {
-  const url = "https://github.com/rafaelterras/SimulOp";
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw "Could not lunch $url";
-  }
-}
+// void _lunchURL() async {
+//   const url = "https://github.com/rafaelterras/SimulOp";
+//   if (await canLaunch(url)) {
+//     await launch(url);
+//   } else {
+//     throw "Could not lunch $url";
+//   }
+// }
 
 class TheGridViwer {
   Card makeGridCell(String name, IconData icon) {
