@@ -3,45 +3,46 @@
 // messages from the main program should be duplicated here with the same
 // function name.
 
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names
+
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-// ignore: unnecessary_new
 final messages = new MessageLookup();
 
-// ignore: unused_element
-final _keepAnalysisHappy = Intl.defaultLocale;
-
-// ignore: non_constant_identifier_names
-typedef MessageIfAbsent(String message_str, List args);
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  get localeName => 'en';
+  String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "absorptionColumnDescription" : MessageLookupByLibrary.simpleMessage("absorptionColumnDescription"),
+    "absorptionColumnDescription" : MessageLookupByLibrary.simpleMessage("Not yet available."),
     "absorptionColumnName" : MessageLookupByLibrary.simpleMessage("Absorption Column"),
     "alphaValue" : MessageLookupByLibrary.simpleMessage("Relative Volatility:"),
     "benzene" : MessageLookupByLibrary.simpleMessage("Benzene"),
     "chartHeadLeg" : MessageLookupByLibrary.simpleMessage("Pump Head"),
     "chartNPSH" : MessageLookupByLibrary.simpleMessage("Avaliable NPSH"),
-    "compressorDescription" : MessageLookupByLibrary.simpleMessage("compressorDescription"),
+    "compressorDescription" : MessageLookupByLibrary.simpleMessage("Not yet available."),
     "compressorName" : MessageLookupByLibrary.simpleMessage("Compressor"),
     "concrete" : MessageLookupByLibrary.simpleMessage("Concrete"),
-    "coolingTowerDescription" : MessageLookupByLibrary.simpleMessage("coolingTowerDescription"),
+    "coolingTowerDescription" : MessageLookupByLibrary.simpleMessage("Not yet available."),
     "coolingTowerName" : MessageLookupByLibrary.simpleMessage("Cooling Tower"),
     "copper" : MessageLookupByLibrary.simpleMessage("Copper"),
-    "crystalizerDescription" : MessageLookupByLibrary.simpleMessage("crystalizerDescription"),
+    "crystalizerDescription" : MessageLookupByLibrary.simpleMessage("Not yet available"),
     "crystalizerName" : MessageLookupByLibrary.simpleMessage("Crystalizer"),
     "defaultInputs" : MessageLookupByLibrary.simpleMessage("Default inputs"),
     "distancesInput" : MessageLookupByLibrary.simpleMessage("Distances Input:"),
-    "distilationColumnDescription" : MessageLookupByLibrary.simpleMessage("distilationColumnDescription"),
+    "distilationColumnDescription" : MessageLookupByLibrary.simpleMessage("Not yet available"),
     "distilationColumnName" : MessageLookupByLibrary.simpleMessage("Distillation Column"),
     "doublePipeDomainAxis" : MessageLookupByLibrary.simpleMessage("Hot Liquid Exit Temp. (°C)"),
     "doublePipeFunctionLenghtAxis" : MessageLookupByLibrary.simpleMessage("Lenght (m)"),
     "doublePipeFunctionPressureAxis" : MessageLookupByLibrary.simpleMessage("Pressure Drop (KPa)"),
-    "doublePipeHeatXDescription" : MessageLookupByLibrary.simpleMessage("doublePipeHeatXDescription"),
+    "doublePipeHeatXDescription" : MessageLookupByLibrary.simpleMessage("A double pipe heat exchanger, where the influences of variables such as mass flow, diameter and viscosity on the primary heat exchanger characteristics (heat exchanger and pressure drop) can be verified."),
     "doublePipeHeatXName" : MessageLookupByLibrary.simpleMessage("Double Pipe Heat Exchanger"),
     "drawerDistances" : MessageLookupByLibrary.simpleMessage("Distances:"),
     "drawerFeedCond" : MessageLookupByLibrary.simpleMessage("Feed Condition:"),
@@ -57,11 +58,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawerTargetXB" : MessageLookupByLibrary.simpleMessage("Target XB:"),
     "drawerTargetXD" : MessageLookupByLibrary.simpleMessage("Target XD:"),
     "drawerVariables" : MessageLookupByLibrary.simpleMessage("Variables:"),
-    "dryerDescription" : MessageLookupByLibrary.simpleMessage("dryerDescription"),
+    "dryerDescription" : MessageLookupByLibrary.simpleMessage("Not yet available."),
     "dryerName" : MessageLookupByLibrary.simpleMessage("Dryer"),
-    "evaporatorsDescription" : MessageLookupByLibrary.simpleMessage("evaporatorsDescription"),
+    "evaporatorsDescription" : MessageLookupByLibrary.simpleMessage("Not yet available."),
     "evaporatorsName" : MessageLookupByLibrary.simpleMessage("Evaporator"),
-    "filterDescription" : MessageLookupByLibrary.simpleMessage("filterDescription"),
+    "filterDescription" : MessageLookupByLibrary.simpleMessage("Not yet available."),
     "filterName" : MessageLookupByLibrary.simpleMessage("Filter"),
     "graph" : MessageLookupByLibrary.simpleMessage("Graph"),
     "graphEquilibrium" : MessageLookupByLibrary.simpleMessage("Equilibrium"),
@@ -96,13 +97,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "lunchAppBtn" : MessageLookupByLibrary.simpleMessage("Lunch Module"),
     "mcCabThieleDomainAxis" : MessageLookupByLibrary.simpleMessage("LK Liquid Fraction"),
     "mcCabThieleFunctionAxis" : MessageLookupByLibrary.simpleMessage("LK Vapor Fraction"),
-    "mcCabeTheileDescription" : MessageLookupByLibrary.simpleMessage("mcCabeTheileDescription"),
+    "mcCabeTheileDescription" : MessageLookupByLibrary.simpleMessage("A simple and intuitive introduction to binary distillation, where the effects of complex variables of a distillation tower (reflux rate, number of plates, etc.) is easy to verify and form an intuition of the possible effects on more complex distillation simulation and real columns."),
     "mcCabeTheileName" : MessageLookupByLibrary.simpleMessage("McCabe-Thile Method"),
-    "membranesDescription" : MessageLookupByLibrary.simpleMessage("membranesDescription"),
+    "membranesDescription" : MessageLookupByLibrary.simpleMessage("Not yet available"),
     "membranesName" : MessageLookupByLibrary.simpleMessage("Separation Membranes"),
     "mixtureInput" : MessageLookupByLibrary.simpleMessage("Mixture Input"),
     "moreInfoBtn" : MessageLookupByLibrary.simpleMessage("More info"),
-    "multiPipeHeatXDescription" : MessageLookupByLibrary.simpleMessage("multiPipeHeatXDescription"),
+    "multiPipeHeatXDescription" : MessageLookupByLibrary.simpleMessage("Not yet available."),
     "multiPipeHeatXName" : MessageLookupByLibrary.simpleMessage("Multi Pipe Heat Exchanger"),
     "oil" : MessageLookupByLibrary.simpleMessage("Oil"),
     "ouIIIName" : MessageLookupByLibrary.simpleMessage("UO III"),
@@ -113,7 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "picture" : MessageLookupByLibrary.simpleMessage("Picture"),
     "pumpingDomainAxis" : MessageLookupByLibrary.simpleMessage("Volumetric Flow (m^3/h)"),
     "pumpingFunctionAxis" : MessageLookupByLibrary.simpleMessage("Meters of Liquid column"),
-    "pumpingOfLiquidsDescription" : MessageLookupByLibrary.simpleMessage("pumpingOfLiquidsDescription"),
+    "pumpingOfLiquidsDescription" : MessageLookupByLibrary.simpleMessage("Simple centrifugal pump specification example, after entering the piping information (diametre, length, etc.) a graph is shown where the effects of process variables can be visualized."),
     "pumpingOfLiquidsName" : MessageLookupByLibrary.simpleMessage("Pumping of Liquids"),
     "pvc" : MessageLookupByLibrary.simpleMessage("PVC"),
     "results" : MessageLookupByLibrary.simpleMessage("Results"),

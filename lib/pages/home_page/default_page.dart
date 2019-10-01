@@ -4,10 +4,42 @@ class DefaultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Default"),
-      ),
-      body: Center(child: Text("404: Page not Found",style: TextStyle(fontSize: 30.0),)),
-    );
+        appBar: AppBar(
+          title: Text("Sobre"),
+        ),
+        body: Padding(
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(top: 50),
+                    child: Text(
+                      "Deselvolvido por:",
+                      style: TextStyle(fontSize: 30.0),
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: Text(
+                      "André Antonio e Rafael Terras",
+                      style: TextStyle(fontSize: 20.0),
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(top: 30),
+                    child: Text(
+                      "Projeto de TCC - PQI - 2018",
+                      style: TextStyle(fontSize: 25.0),
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: Text(
+                      "Professor orientador: Moises Teles",
+                      style: TextStyle(fontSize: 20.0),
+                    )),
+              ],
+              mainAxisAlignment: MainAxisAlignment.start,
+            ),
+          ),
+        ));
   }
 }

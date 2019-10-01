@@ -23,7 +23,6 @@ class DoublePiPeResults extends StatelessWidget {
     helpItems = [
       HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
           ActionType.route),
-      HelpItem("About", "/default", ActionType.route),
     ];
     return Theme(
       data: ThemeData(primarySwatch: Colors.teal),

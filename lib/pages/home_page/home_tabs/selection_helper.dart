@@ -46,15 +46,15 @@ Widget tileSelectionBuilder(BuildContext context, SelectionTile tile) {
       Padding(
         padding: EdgeInsets.only(right: 16.0),
         child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-          FlatButton(
-            child: Text(AppLocalizations.of(context).moreInfoBtn,
-                style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                )),
-            onPressed: () {
-              _lunchURL();
-            },
-          ),
+          // FlatButton(
+          //   child: Text(AppLocalizations.of(context).moreInfoBtn,
+          //       style: TextStyle(
+          //         color: Theme.of(context).accentColor,
+          //       )),
+          //   onPressed: () {
+          //     _lunchURL();
+          //   },
+          // ),
           RaisedButton(
             onPressed: (tile.isDisable)
                 ? null

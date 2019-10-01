@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:simulop_v1/locale/locales.dart';
-import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/mccabe_thiele_results.dart';
+//import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/mccabe_thiele_results.dart';
+import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/mccabe_thiele_results_animated.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
@@ -21,7 +22,6 @@ class McCabeThieleMethodInput extends StatelessWidget {
     helpItems = [
       HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
           ActionType.route),
-      HelpItem("About", "/default", ActionType.route),
     ];
     return ScopedModel<McCabeThieleInputData>(
       model: McCabeThieleInputData(
@@ -54,7 +54,7 @@ class McCabeThieleMethodInput extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => McCabeThieleMethodResults(
+                          builder: (context) => McCabeThieleMethodResultsAnimated(
                                 simulation: model.createSimulation(),
                               ),
                         ),

@@ -25,7 +25,6 @@ class DoublePiPeInput extends StatelessWidget {
           "runWithDefaultInputs", ActionType.widgetAction),
       HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
           ActionType.route),
-      HelpItem("About", "/default", ActionType.route),
     ];
     return Theme(
       data:

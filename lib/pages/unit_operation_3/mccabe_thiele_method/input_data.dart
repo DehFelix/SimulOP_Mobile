@@ -3,7 +3,8 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:simulop_v1/core/core.dart' as core;
 import 'package:simulop_v1/pages/helper_classes/options_input_helper.dart';
-import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/simulation_data.dart';
+//import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/simulation_data.dart';
+import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
 
 class McCabeThieleInputData extends Model {
   final MixtureInput input;
@@ -50,8 +51,6 @@ class McCabeThieleInputData extends Model {
   }
 
   McCabeThieleSimulation createSimulation() {
-    final McCabeThieleSimulation simulation = McCabeThieleSimulation();
-
     final liquidLK = core.Liquid(
         material: core.Inicializer.liquidMaterial(input.liquidLK),
         temperature: 298.0);
@@ -63,10 +62,12 @@ class McCabeThieleInputData extends Model {
     final mcCabeThiele =
         core.McCabeThieleMethod(mixture, 0.9, 0.1, 0.5, 1.0, 3.0);
 
-    simulation.liquidLK = liquidLK;
-    simulation.liquidHK = liquidHK;
-    simulation.mixture = mixture;
-    simulation.mcCabeThiele = mcCabeThiele;
+    final McCabeThieleSimulation simulation = McCabeThieleSimulation(
+      liquidLK: liquidLK,
+      liquidHK: liquidHK,
+      mixture: mixture,
+      mcCabeThiele: mcCabeThiele,
+    );
 
     return simulation;
   }
@@ -118,7 +119,6 @@ class MixtureInput {
 
 class SimulationCreator {
   McCabeThieleSimulation createSimulation(MixtureInput input) {
-    final McCabeThieleSimulation simulation = McCabeThieleSimulation();
 
     final liquidLK = core.Liquid(
         material: core.Inicializer.liquidMaterial(input.liquidLK),
@@ -131,10 +131,12 @@ class SimulationCreator {
     final mcCabeThiele =
         core.McCabeThieleMethod(mixture, 0.9, 0.1, 0.5, 1.0, 3.0);
 
-    simulation.liquidLK = liquidLK;
-    simulation.liquidHK = liquidHK;
-    simulation.mixture = mixture;
-    simulation.mcCabeThiele = mcCabeThiele;
+    final McCabeThieleSimulation simulation = McCabeThieleSimulation(
+      liquidLK: liquidLK,
+      liquidHK: liquidHK,
+      mixture: mixture,
+      mcCabeThiele: mcCabeThiele,
+    );
 
     return simulation;
   }
