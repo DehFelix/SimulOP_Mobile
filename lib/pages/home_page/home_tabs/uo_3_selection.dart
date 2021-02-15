@@ -17,8 +17,9 @@ class OU3Selection extends StatelessWidget {
       SelectionTile(
         title: AppLocalizations.of(context).absorptionColumnName,
         description: AppLocalizations.of(context).absorptionColumnDescription,
-        isDisable: true,
-        imagePath: "assets/icon/ic_absorbtion_columns.png", 
+        isDisable: false,
+        imagePath: "assets/icon/ic_absorbtion_columns.png",
+        route: "/absorption_columns",
       ),
       SelectionTile(
         title: AppLocalizations.of(context).membranesName,
