@@ -70,10 +70,24 @@ class AppLocalizations {
     );
   }
 
-    String get oil {
+  String get oil {
     return Intl.message(
       "Oil",
       name: "oil",
+    );
+  }
+
+  String get acetone {
+    return Intl.message(
+      "Acetone",
+      name: "acetone",
+    );
+  }
+
+  String get air {
+    return Intl.message(
+      "Air",
+      name: "air",
     );
   }
 
@@ -255,8 +269,36 @@ class AppLocalizations {
 
   String get absorptionColumnDescription {
     return Intl.message(
-      "Not yet available",
+      "Coluna de absorção em construção",
       name: "absorptionColumnDescription",
+    );
+  }
+
+  String get absorption {
+    return Intl.message(
+      "Absorption",
+      name: "absorption",
+    );
+  }
+
+  String get absorptionInput {
+    return Intl.message(
+      "absorption",
+      name: "absorptionInput",
+    );
+  }
+
+  String get stripping {
+    return Intl.message(
+      "Stripping",
+      name: "stripping",
+    );
+  }
+
+  String get strippingInput {
+    return Intl.message(
+      "stripping",
+      name: "strippingInput",
     );
   }
 
@@ -900,24 +942,45 @@ class AppLocalizations {
     );
   }
 
-    String get doublePipeFunctionLenghtAxis {
+  String get doublePipeFunctionLenghtAxis {
     return Intl.message(
       "Lenght (m)",
       name: "doublePipeFunctionLenghtAxis",
     );
   }
 
-    String get pumpingDomainAxis {
+  String get pumpingDomainAxis {
     return Intl.message(
       "Volumetric Flow (m^3/h)",
       name: "pumpingDomainAxis",
     );
   }
 
-    String get pumpingFunctionAxis {
+  String get pumpingFunctionAxis {
     return Intl.message(
       "Meters of Liquid column",
       name: "pumpingFunctionAxis",
+    );
+  }
+
+  String get columnType {
+    return Intl.message(
+      "Column Type",
+      name: "columnType",
+    );
+  }
+
+  String get purity {
+    return Intl.message(
+      "Purity (%)",
+      name: "purity",
+    );
+  }
+
+  String get desiredPurity {
+    return Intl.message(
+      "Desired Purity:",
+      name: "desiredPurity",
     );
   }
 

@@ -40,6 +40,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "acetone": "Acetone",
+  "@acetone": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "air": "Air",
+  "@air": {
+    "type": "text",
+    "placeholders": {}
+  },
   "simulop": "SimulOP",
   "@simulop": {
     "type": "text",
@@ -165,7 +175,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "absorptionColumnDescription": "Not yet available.",
+  "absorptionColumnDescription": "Coluna de absorção em construção",
   "@absorptionColumnDescription": {
     "type": "text",
     "placeholders": {}
@@ -639,5 +649,40 @@
   "@pumpingFunctionAxis": {
     "type": "text",
     "placeholders": {}
-  }
+  },
+  "columnType": "Column Type",
+  "@columnType": {
+    "type": "text",
+    "placeholders": {}
+  },
+    "absorption": "Absorption",
+  "@absorption": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "absorptionInput": "absorption",
+  "@absorptionInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "stripping": "Stripping",
+  "@absorption": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "strippingInput": "stripping",
+  "@strippingInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "desiredPurity": "Desired Purity:",
+  "@desiredPurity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "purity": "Purity (%)",
+  "@purity": {
+    "type": "text",
+    "placeholders": {}
+  },
 }
