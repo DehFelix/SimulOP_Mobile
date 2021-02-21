@@ -67,64 +67,64 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
     final _feedFractionSlider =
         ScopedModelDescendant<McCabeThieleSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 0.20,
-            max: 0.80,
-            divisions: _sliderDiv,
-            value: model.getfeedFraction,
-            onChanged: model.onFeedFractionChanged,
-          ),
+        min: 0.20,
+        max: 0.80,
+        divisions: _sliderDiv,
+        value: model.getfeedFraction,
+        onChanged: model.onFeedFractionChanged,
+      ),
     );
 
     final _feedConditionSlider =
         ScopedModelDescendant<McCabeThieleSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: -2.0,
-            max: 2.0,
-            divisions: _sliderDiv,
-            value: model.getfeedCondition,
-            onChanged: model.onFeedFractionConditionChanged,
-          ),
+        min: -2.0,
+        max: 2.0,
+        divisions: _sliderDiv,
+        value: model.getfeedCondition,
+        onChanged: model.onFeedFractionConditionChanged,
+      ),
     );
 
     final _refluxRationSlider =
         ScopedModelDescendant<McCabeThieleSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 1.20,
-            max: 10.0,
-            divisions: _sliderDiv,
-            value: model.getRefluxRatio,
-            onChanged: model.onRefluxRationChanged,
-          ),
+        min: 1.20,
+        max: 10.0,
+        divisions: _sliderDiv,
+        value: model.getRefluxRatio,
+        onChanged: model.onRefluxRationChanged,
+      ),
     );
 
     final _targetXDSlider = ScopedModelDescendant<McCabeThieleSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 0.500,
-            max: 0.999,
-            divisions: _sliderDiv,
-            value: model.getTargetXD,
-            onChanged: model.onTargetXDChanged,
-          ),
+        min: 0.500,
+        max: 0.999,
+        divisions: _sliderDiv,
+        value: model.getTargetXD,
+        onChanged: model.onTargetXDChanged,
+      ),
     );
 
     final _targetXBSlider = ScopedModelDescendant<McCabeThieleSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 0.001,
-            max: 0.490,
-            divisions: _sliderDiv,
-            value: model.getTargetXB,
-            onChanged: model.onTargetXBChanged,
-          ),
+        min: 0.001,
+        max: 0.490,
+        divisions: _sliderDiv,
+        value: model.getTargetXB,
+        onChanged: model.onTargetXBChanged,
+      ),
     );
 
     final _pressureSlider = ScopedModelDescendant<McCabeThieleSimulationModel>(
       builder: (contex, _, model) => Slider(
-            min: 1.0,
-            max: 5.0,
-            divisions: _sliderDiv,
-            value: model.getPressure,
-            onChanged: model.onPressureChanged,
-          ),
+        min: 1.0,
+        max: 5.0,
+        divisions: _sliderDiv,
+        value: model.getPressure,
+        onChanged: model.onPressureChanged,
+      ),
     );
 
     return Column(
@@ -270,7 +270,7 @@ class _ChartCard extends StatelessWidget {
       List<math.Point> dataStages,
       List<math.Point> qLine,
       BuildContext context) {
-        List<math.Point> linha = [math.Point(0.0, 0.0), math.Point(1.0, 1.0)];
+    List<math.Point> linha = [math.Point(0.0, 0.0), math.Point(1.0, 1.0)];
     return [
       charts.Series<math.Point, double>(
         id: "45° Line",
@@ -301,7 +301,7 @@ class _ChartCard extends StatelessWidget {
         measureFn: (math.Point point, _) => point.y,
         data: dataStages,
       ),
-        charts.Series<math.Point, double>(
+      charts.Series<math.Point, double>(
         id: AppLocalizations.of(context).graphStages,
         colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
         domainFn: (math.Point point, _) => point.x,
@@ -408,27 +408,27 @@ class _ResultsCard extends StatelessWidget {
             padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
             child: ScopedModelDescendant<McCabeThieleSimulationModel>(
               builder: (context, _, model) => StreamBuilder<Results>(
-                    stream: model.getResults,
-                    initialData: Results(idialStage: "0", numberOfStages: "0"),
-                    builder: (context, snapshot) => RichText(
-                          text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text:
-                                      "${AppLocalizations.of(context).alphaValue} ${model.getAlpha}\n",
-                                  style: _textStyle),
-                              TextSpan(
-                                  text:
-                                      "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
-                                  style: _textStyle),
-                              TextSpan(
-                                  text:
-                                      "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
-                                  style: _textStyle),
-                            ],
-                          ),
-                        ),
+                stream: model.getResults,
+                initialData: Results(idialStage: "0", numberOfStages: "0"),
+                builder: (context, snapshot) => RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                          text:
+                              "${AppLocalizations.of(context).alphaValue} ${model.getAlpha}\n",
+                          style: _textStyle),
+                      TextSpan(
+                          text:
+                              "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
+                          style: _textStyle),
+                      TextSpan(
+                          text:
+                              "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
+                          style: _textStyle),
+                    ],
                   ),
+                ),
+              ),
             ),
           ),
         ],

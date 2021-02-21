@@ -7,7 +7,7 @@ import 'package:simulop_v1/pages/home_page/default_page.dart';
 import 'package:simulop_v1/pages/unit_operation_1/example.dart';
 import 'package:simulop_v1/pages/unit_operation_1/pumping_of_fluids/pumping_of_fluids_input.dart';
 import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/mccabe_thiele_input.dart';
-import 'package:simulop_v1/pages/unit_operation_3/absorption_column/mccabe_thiele_input.dart';
+import 'package:simulop_v1/pages/unit_operation_3/absorption_column/absorption_column_input.dart';
 import 'package:simulop_v1/pages/unit_operation_2/double_pipe_heatx/double_pipe_input.dart';
 
 void main() => runApp(SimulOPAPP());

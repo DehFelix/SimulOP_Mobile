@@ -473,23 +473,23 @@ class _ResultsCard extends StatelessWidget {
               initialData:
                   Results(idialStage: "0", numberOfStages: "0", alpha: "0"),
               builder: (context, snapshot) => RichText(
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                        text:
-                            "${AppLocalizations.of(context).alphaValue} ${snapshot.data.alpha}\n",
-                        style: _textStyle),
-                    TextSpan(
-                        text:
-                            "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
-                        style: _textStyle),
-                    TextSpan(
-                        text:
-                            "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
-                        style: _textStyle),
-                  ],
-                ),
-              ),
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                            text:
+                                "${AppLocalizations.of(context).alphaValue} ${snapshot.data.alpha}\n",
+                            style: _textStyle),
+                        TextSpan(
+                            text:
+                                "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
+                            style: _textStyle),
+                        TextSpan(
+                            text:
+                                "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
+                            style: _textStyle),
+                      ],
+                    ),
+                  ),
             ),
           ),
         ],

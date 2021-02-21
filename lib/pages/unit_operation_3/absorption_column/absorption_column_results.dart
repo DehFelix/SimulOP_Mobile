@@ -1,50 +1,50 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
-
-import 'package:url_launcher/url_launcher.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
+import 'package:scoped_model/scoped_model.dart';
 import 'package:simulop_v1/locale/locales.dart';
 
-import 'package:simulop_v1/bloc/base_provider.dart';
-import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
-import 'package:simulop_v1/pages/helper_classes/animated_toast.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:math' as math;
+import 'package:charts_flutter/flutter.dart' as charts;
+
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
+import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/simulation_data.dart'; // FIX PATH
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
 List<HelpItem> helpItems = List<HelpItem>();
 
-class McCabeThieleMethodResultsAnimated extends StatelessWidget {
+final McCabeThieleSimulationModel simulationModel =
+    McCabeThieleSimulationModel();
+
+class McCabeThieleMethodResults extends StatelessWidget {
   final McCabeThieleSimulation simulation;
 
-  McCabeThieleMethodResultsAnimated({Key key, @required this.simulation})
-      : super(key: key);
+  McCabeThieleMethodResults({Key key, @required this.simulation})
+      : super(key: key) {
+    if (simulationModel.simulation == null ||
+        (simulationModel.simulation.liquidLK.material.name !=
+                simulation.liquidLK.material.name ||
+            simulationModel.simulation.liquidHK.material.name !=
+                simulation.liquidHK.material.name)) {
+      simulationModel.simulation = simulation;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     helpItems = [
       HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
           ActionType.route),
+      HelpItem("About", "/default", ActionType.route),
     ];
-    return BlocProvider<McCabeResultsBloc>(
-      builder: (_, bloc) =>
-          bloc ??
-          McCabeResultsBloc(
-            simulation: simulation,
-          ),
-      onDispose: (_, bloc) => bloc.dispose(),
+    return ScopedModel<McCabeThieleSimulationModel>(
+      model: simulationModel,
       child: Theme(
-        data:
-            //Theme.of(context).copyWith(primaryColor: Colors.blueGrey),
-            ThemeData(primarySwatch: Colors.blueGrey),
+        data: ThemeData(primarySwatch: Colors.blueGrey),
         child: Scaffold(
           appBar: _McCabeThieleResultsAppBar(),
           drawer: _McCabeThieleResultsDrawer(),
           body: _mainBody(),
-          floatingActionButton: _FloatingButton(),
         ),
       ),
     );
@@ -60,133 +60,71 @@ class McCabeThieleMethodResultsAnimated extends StatelessWidget {
   }
 }
 
-class _FloatingButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
-
-    final List<SpeedDialChild> fabChildern = [
-      SpeedDialChild(
-        label: AppLocalizations.of(context).drawerReflxRatio.split(":")[0],
-        child: Center(child: Text("Rr")),
-        onTap: () {
-          AnimetedToast.createToast(
-            context,
-            title: AppLocalizations.of(context).drawerReflxRatio,
-            description: "Value:",
-            variableRange: Tween<double>(begin: 1.2, end: 10),
-            color: Theme.of(context).primaryColor,
-            duration: ToastDuration.medium,
-            pos: ToastPos.bottom,
-            updateVariable: (val) => bloc.inputSink
-                .add(InputVar(variable: Variable.refluxRatio, value: val)),
-            initialValue: bloc.simpleValue[Variable.refluxRatio],
-          );
-        },
-      ),
-      SpeedDialChild(
-        label: AppLocalizations.of(context).drawerLKFeed.split(":")[0],
-        child: Center(child: Text("Fz")),
-        onTap: () {
-          AnimetedToast.createToast(
-            context,
-            title: AppLocalizations.of(context).drawerLKFeed,
-            description: "Value:",
-            variableRange: Tween<double>(begin: 0.3, end: 0.7),
-            color: Theme.of(context).primaryColor,
-            duration: ToastDuration.medium,
-            updateVariable: (val) => bloc.inputSink
-                .add(InputVar(variable: Variable.feedFraction, value: val)),
-            initialValue: bloc.simpleValue[Variable.feedFraction],
-          );
-        },
-      ),
-      SpeedDialChild(
-        label: AppLocalizations.of(context).drawerFeedCond.split(":")[0],
-        child: Center(child: Text("Fc")),
-        onTap: () {
-          AnimetedToast.createToast(
-            context,
-            title: AppLocalizations.of(context).drawerFeedCond,
-            description: "Value:",
-            variableRange: Tween<double>(begin: -0.5, end: 1.5),
-            color: Theme.of(context).primaryColor,
-            duration: ToastDuration.long,
-            updateVariable: (val) => bloc.inputSink
-                .add(InputVar(variable: Variable.feedCondition, value: val)),
-            initialValue: bloc.simpleValue[Variable.feedCondition],
-          );
-        },
-      ),
-    ];
-
-    return SpeedDial(
-      overlayColor: Colors.black,
-      overlayOpacity: 0.2,
-      animatedIcon: AnimatedIcons.menu_close,
-      children: fabChildern,
-    );
-  }
-}
-
 class _McCabeThieleResultsDrawer extends StatelessWidget {
   final int _sliderDiv = 40;
 
-  Widget _variables(BuildContext context, Map<Variable, double> currentValue) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
-
-    final _feedFractionSlider = Slider(
-      min: 0.20,
-      max: 0.80,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.feedFraction],
-      onChanged: (val) => bloc.inputSink
-          .add(InputVar(variable: Variable.feedFraction, value: val)),
+  Widget _variables(BuildContext context) {
+    final _feedFractionSlider =
+        ScopedModelDescendant<McCabeThieleSimulationModel>(
+      builder: (contex, _, model) => Slider(
+        min: 0.20,
+        max: 0.80,
+        divisions: _sliderDiv,
+        value: model.getfeedFraction,
+        onChanged: model.onFeedFractionChanged,
+      ),
     );
 
-    final _feedConditionSlider = Slider(
-      min: -2.0,
-      max: 2.0,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.feedCondition],
-      onChanged: (val) => bloc.inputSink
-          .add(InputVar(variable: Variable.feedCondition, value: val)),
+    final _feedConditionSlider =
+        ScopedModelDescendant<McCabeThieleSimulationModel>(
+      builder: (contex, _, model) => Slider(
+        min: -2.0,
+        max: 2.0,
+        divisions: _sliderDiv,
+        value: model.getfeedCondition,
+        onChanged: model.onFeedFractionConditionChanged,
+      ),
     );
 
-    final _refluxRationSlider = Slider(
-      min: 1.20,
-      max: 10.0,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.refluxRatio],
-      onChanged: (val) => bloc.inputSink
-          .add(InputVar(variable: Variable.refluxRatio, value: val)),
+    final _refluxRationSlider =
+        ScopedModelDescendant<McCabeThieleSimulationModel>(
+      builder: (contex, _, model) => Slider(
+        min: 1.20,
+        max: 10.0,
+        divisions: _sliderDiv,
+        value: model.getRefluxRatio,
+        onChanged: model.onRefluxRationChanged,
+      ),
     );
 
-    final _targetXDSlider = Slider(
-      min: 0.500,
-      max: 0.999,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.targetXD],
-      onChanged: (val) =>
-          bloc.inputSink.add(InputVar(variable: Variable.targetXD, value: val)),
+    final _targetXDSlider = ScopedModelDescendant<McCabeThieleSimulationModel>(
+      builder: (contex, _, model) => Slider(
+        min: 0.500,
+        max: 0.999,
+        divisions: _sliderDiv,
+        value: model.getTargetXD,
+        onChanged: model.onTargetXDChanged,
+      ),
     );
 
-    final _targetXBSlider = Slider(
-      min: 0.001,
-      max: 0.490,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.targetXB],
-      onChanged: (val) =>
-          bloc.inputSink.add(InputVar(variable: Variable.targetXB, value: val)),
+    final _targetXBSlider = ScopedModelDescendant<McCabeThieleSimulationModel>(
+      builder: (contex, _, model) => Slider(
+        min: 0.001,
+        max: 0.490,
+        divisions: _sliderDiv,
+        value: model.getTargetXB,
+        onChanged: model.onTargetXBChanged,
+      ),
     );
 
-    final _pressureSlider = Slider(
-      min: 1.0,
-      max: 5.0,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.pressure],
-      onChanged: (val) =>
-          bloc.inputSink.add(InputVar(variable: Variable.pressure, value: val)),
+    final _pressureSlider = ScopedModelDescendant<McCabeThieleSimulationModel>(
+      builder: (contex, _, model) => Slider(
+        min: 1.0,
+        max: 5.0,
+        divisions: _sliderDiv,
+        value: model.getPressure,
+        onChanged: model.onPressureChanged,
+      ),
     );
 
     return Column(
@@ -194,34 +132,50 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
         ListTile(
           title: Text(AppLocalizations.of(context).drawerLKFeed),
           subtitle: _feedFractionSlider,
-          trailing:
-              Text(currentValue[Variable.feedFraction].toStringAsFixed(2)),
+          trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getfeedFraction).toStringAsFixed(2)),
+          ),
         ),
         ListTile(
           title: Text(AppLocalizations.of(context).drawerFeedCond),
           subtitle: _feedConditionSlider,
-          trailing:
-              Text(currentValue[Variable.feedCondition].toStringAsFixed(1)),
+          trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getfeedCondition).toStringAsFixed(1)),
+          ),
         ),
         ListTile(
           title: Text(AppLocalizations.of(context).drawerReflxRatio),
           subtitle: _refluxRationSlider,
-          trailing: Text(currentValue[Variable.refluxRatio].toStringAsFixed(1)),
+          trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getRefluxRatio).toStringAsFixed(1)),
+          ),
         ),
         ListTile(
           title: Text(AppLocalizations.of(context).drawerTargetXD),
           subtitle: _targetXDSlider,
-          trailing: Text(currentValue[Variable.targetXD].toStringAsFixed(3)),
+          trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getTargetXD).toStringAsFixed(3)),
+          ),
         ),
         ListTile(
           title: Text(AppLocalizations.of(context).drawerTargetXB),
           subtitle: _targetXBSlider,
-          trailing: Text(currentValue[Variable.targetXB].toStringAsFixed(3)),
+          trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getTargetXB).toStringAsFixed(3)),
+          ),
         ),
         ListTile(
           title: Text(AppLocalizations.of(context).hintPressure),
           subtitle: _pressureSlider,
-          trailing: Text(currentValue[Variable.pressure].toStringAsFixed(1)),
+          trailing: ScopedModelDescendant<McCabeThieleSimulationModel>(
+            builder: (contex, _, model) =>
+                Text((model.getPressure).toStringAsFixed(1)),
+          ),
         ),
       ],
     );
@@ -229,8 +183,6 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
-
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -246,13 +198,7 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
           ),
-          StreamBuilder<Map<Variable, double>>(
-              stream: bloc.currentValue,
-              builder: (context, snapshot) {
-                return (snapshot.hasError || !snapshot.hasData)
-                    ? CircularProgressIndicator()
-                    : _variables(context, snapshot.data);
-              }),
+          _variables(context),
         ],
       ),
     );
@@ -365,10 +311,10 @@ class _ChartCard extends StatelessWidget {
     ];
   }
 
-  Widget _chart(PlotPoints plotPoints, BuildContext context) {
+  Widget _chart(McCabeThieleSimulationModel model, BuildContext context) {
     return charts.LineChart(
-      _createSeries(plotPoints.equilibrium, plotPoints.operationCurve,
-          plotPoints.stages, plotPoints.qline, context),
+      _createSeries(model.getEquilibrium, model.getOperationCurves,
+          model.getStages, model.getQLinhe, context),
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
@@ -382,18 +328,16 @@ class _ChartCard extends StatelessWidget {
             dataIsInWholeNumbers: false, desiredTickCount: 5),
       ),
       // behaviors: [
-      //   charts.SeriesLegend(
-      //     position: charts.BehaviorPosition.top,
-      //     cellPadding: EdgeInsets.all(4.0),
-      //   ),
-      // ],
+      //  charts.SeriesLegend(
+      //    position: charts.BehaviorPosition.top,
+      //   cellPadding: EdgeInsets.all(4.0),
+      //  ),
+      //],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
-
     return Card(
       child: Column(
         children: <Widget>[
@@ -423,13 +367,9 @@ class _ChartCard extends StatelessWidget {
                   height: 300.0,
                   child: Padding(
                     padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: StreamBuilder<PlotPoints>(
-                        stream: bloc.plotPoints,
-                        builder: (context, snapshot) {
-                          return (snapshot.hasError || !snapshot.hasData)
-                              ? CircularProgressIndicator()
-                              : _chart(snapshot.data, context);
-                        }),
+                    child: ScopedModelDescendant<McCabeThieleSimulationModel>(
+                      builder: (context, _, model) => _chart(model, context),
+                    ),
                   ),
                 ),
               ),
@@ -453,8 +393,6 @@ class _ResultsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
-
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -468,26 +406,27 @@ class _ResultsCard extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-            child: StreamBuilder<Results>(
-              stream: bloc.results,
-              initialData:
-                  Results(idialStage: "0", numberOfStages: "0", alpha: "0"),
-              builder: (context, snapshot) => RichText(
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                        text:
-                            "${AppLocalizations.of(context).alphaValue} ${snapshot.data.alpha}\n",
-                        style: _textStyle),
-                    TextSpan(
-                        text:
-                            "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
-                        style: _textStyle),
-                    TextSpan(
-                        text:
-                            "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
-                        style: _textStyle),
-                  ],
+            child: ScopedModelDescendant<McCabeThieleSimulationModel>(
+              builder: (context, _, model) => StreamBuilder<Results>(
+                stream: model.getResults,
+                initialData: Results(idialStage: "0", numberOfStages: "0"),
+                builder: (context, snapshot) => RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                          text:
+                              "${AppLocalizations.of(context).alphaValue} ${model.getAlpha}\n",
+                          style: _textStyle),
+                      TextSpan(
+                          text:
+                              "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
+                          style: _textStyle),
+                      TextSpan(
+                          text:
+                              "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
+                          style: _textStyle),
+                    ],
+                  ),
                 ),
               ),
             ),
