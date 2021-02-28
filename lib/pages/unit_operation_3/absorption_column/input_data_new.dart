@@ -6,14 +6,15 @@ import 'package:simulop_v1/pages/helper_classes/options_input_helper.dart';
 //import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/simulation_data.dart';
 import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
 
+import 'package:simulop_v1/pages/unit_operation_3/absorption_column/algorithmHandler.dart';
+
+final teste = Calculos();
+
 class McCabeThieleInputData extends Model {
   final MixtureInput input;
   final ColumnInput columnInput;
 
-  McCabeThieleInputData({
-    this.input,
-    this.columnInput
-  });
+  McCabeThieleInputData({this.input, this.columnInput});
 
   static McCabeThieleInputData of(BuildContext context) =>
       ScopedModel.of<McCabeThieleInputData>(context);
@@ -28,8 +29,25 @@ class McCabeThieleInputData extends Model {
     notifyListeners();
   }
 
-  void setColumnType(String type) {
+  void setColumnType(String type, BuildContext context) {
     columnInput.columnType = type;
+    columnInput.contaminant = ContaminantsHelper(
+            contaminant: ContaminantsHelper
+                .contaminantsAbsorptionColumn[type == 'absorption' ? 0 : 1],
+            context: context)
+        .name;
+
+    teste.setInValues(15.0 as double);
+    teste.setOutValues(99.1254 as double);
+    teste.setY();
+
+    print("contaminante: ${teste.contaminantIn}");
+    print('\n');
+    print("entrada ar: ${teste.airIn}");
+    print('\n');
+    print("contaminante na saída: ${teste.contaminantOut}");
+    print('\n');
+    print("ponto fixo: ${teste.fixedPoint}");
     notifyListeners();
   }
 
@@ -37,6 +55,7 @@ class McCabeThieleInputData extends Model {
     if (prt != null) {
       columnInput.purity = prt;
     }
+
     notifyListeners();
   }
 
@@ -100,6 +119,9 @@ class McCabeThieleInputData extends Model {
 class ColumnInput {
   String purity;
   String columnType;
+  String liquid = 'Water';
+  String gas = 'Air';
+  String contaminant;
 
   String purityValidator(String value) {
     if (value.isEmpty) return null;
@@ -120,10 +142,12 @@ class ColumnInput {
   }
 
   bool validateInput() {
-    if (purity == null || columnType == null || purity.isEmpty || columnType.isEmpty) return false;
+    if (purity == null ||
+        columnType == null ||
+        purity.isEmpty ||
+        columnType.isEmpty) return false;
     return true;
   }
-
 }
 
 class MixtureInput {
@@ -132,7 +156,6 @@ class MixtureInput {
 
   List<DropdownMenuItem<LiquidHelper>> liquidOptions;
 
-  
   // Create the dropDown for the possibles fluids
   List<DropdownMenuItem<LiquidHelper>> fluidInputDropDownItems(
       BuildContext context) {
@@ -164,8 +187,8 @@ class MixtureInput {
 }
 
 class SimulationCreator {
-  McCabeThieleSimulation createSimulation(MixtureInput input, ColumnInput columnInput) {
-
+  McCabeThieleSimulation createSimulation(
+      MixtureInput input, ColumnInput columnInput) {
     final liquidLK = core.Liquid(
         material: core.Inicializer.liquidMaterial(input.liquidLK),
         temperature: 298.0);

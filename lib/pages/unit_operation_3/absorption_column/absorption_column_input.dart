@@ -28,9 +28,7 @@ class McCabeThieleMethodInput2 extends StatelessWidget {
 
     return ScopedModel<McCabeThieleInputData>(
       model: McCabeThieleInputData(
-        input: mixtureInputModel,
-        columnInput: columnInputModel
-      ),
+          input: mixtureInputModel, columnInput: columnInputModel),
       child: Theme(
         data: ThemeData(primarySwatch: Colors.blueGrey),
         child: Scaffold(
@@ -74,16 +72,14 @@ class McCabeThieleMethodInput2 extends StatelessWidget {
   Widget _mainBody() {
     return ListView(
       children: <Widget>[
-        Container(
-          //height: 200.0,
-          child: SizedBox(width: 250.0, child: _MixtureInputCard()),
-        ),
+        // Container(
+        //   //height: 200.0,
+        //   child: SizedBox(width: 250.0, child: _MixtureInputCard()),
+        // ),
         Container(
           child: SizedBox(width: 250.0, child: _ColumnTypeRadio()),
         ),
-        Container(
-          child: SizedBox(width: 250.0, child: _ColumnInputCard())
-        ),
+        Container(child: SizedBox(width: 250.0, child: _ColumnInputCard())),
         _SumaryCard()
       ],
     );
@@ -97,7 +93,8 @@ class _McCabeThieleInputAppBar extends StatefulWidget
   Size get preferredSize => AppBar().preferredSize;
 
   @override
-  _McCabeThieleInputAppBarState createState() => _McCabeThieleInputAppBarState();
+  _McCabeThieleInputAppBarState createState() =>
+      _McCabeThieleInputAppBarState();
 }
 
 /// State for the AppBar
@@ -222,30 +219,27 @@ class _ColumnInputCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ListTile(
-              leading: Icon(Icons.invert_colors_on),
-              title: Text(
-                AppLocalizations.of(context).desiredPurity,
-                style: _headerTextStyle
-              )
-            ),
+                leading: Icon(Icons.invert_colors_on),
+                title: Text(AppLocalizations.of(context).desiredPurity,
+                    style: _headerTextStyle)),
             SizedBox(
-              width: 166,
-              child: Padding(
-                padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-                child: Column(children: <Widget>[
-                  ScopedModelDescendant<McCabeThieleInputData>(
-                    builder: (context, _, model) => TextFormField(
-                      autocorrect: false,
-                      keyboardType: TextInputType.number,
-                      initialValue: model.columnInput.purity,
-                      decoration: InputDecoration(labelText: AppLocalizations.of(context).purity),
-                      validator: model.columnInput.purityValidator,
-                      onSaved: model.setPurity,
-                    ),
-                  )
-                ])
-              )
-            )
+                width: 166,
+                child: Padding(
+                    padding:
+                        EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+                    child: Column(children: <Widget>[
+                      ScopedModelDescendant<McCabeThieleInputData>(
+                        builder: (context, _, model) => TextFormField(
+                          autocorrect: false,
+                          keyboardType: TextInputType.number,
+                          initialValue: model.columnInput.purity,
+                          decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context).purity),
+                          validator: model.columnInput.purityValidator,
+                          onSaved: model.setPurity,
+                        ),
+                      )
+                    ])))
           ],
         ),
       ),
@@ -282,35 +276,32 @@ class _ColumnTypeCard extends State<_ColumnTypeRadio> {
           Row(
             children: <Widget>[
               ScopedModelDescendant<McCabeThieleInputData>(
-                builder: (context, _, model) => ButtonBar(children: <Widget>[
-                  Radio(
-                    value: AppLocalizations.of(context).absorptionInput,
-                    groupValue: selectedRadio,
-                    activeColor: Colors.green,
-                    onChanged: (String val) {
-                      setSelectedRadio(val);
-                      model.setColumnType(val);
-                    }
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 0, right: 24.0),
-                    child: Text(AppLocalizations.of(context).absorption),
-                  ),
-                  Radio(
-                    value: AppLocalizations.of(context).strippingInput,
-                    groupValue: selectedRadio,
-                    activeColor: Colors.green,
-                    onChanged: (val) {
-                      setSelectedRadio(val);
-                      model.setColumnType(val);
-                    }
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 0, right: 24.0),
-                    child: Text(AppLocalizations.of(context).stripping),
-                  ),
-                ])
-              )
+                  builder: (context, _, model) => ButtonBar(children: <Widget>[
+                        Radio(
+                            value: AppLocalizations.of(context).absorptionInput,
+                            groupValue: selectedRadio,
+                            activeColor: Colors.green,
+                            onChanged: (String val) {
+                              setSelectedRadio(val);
+                              model.setColumnType(val, context);
+                            }),
+                        Padding(
+                          padding: EdgeInsets.only(left: 0, right: 24.0),
+                          child: Text(AppLocalizations.of(context).absorption),
+                        ),
+                        Radio(
+                            value: AppLocalizations.of(context).strippingInput,
+                            groupValue: selectedRadio,
+                            activeColor: Colors.green,
+                            onChanged: (val) {
+                              setSelectedRadio(val);
+                              model.setColumnType(val, context);
+                            }),
+                        Padding(
+                          padding: EdgeInsets.only(left: 0, right: 24.0),
+                          child: Text(AppLocalizations.of(context).stripping),
+                        ),
+                      ]))
             ],
           ),
         ],
@@ -331,6 +322,9 @@ class _SumaryCard extends StatelessWidget {
     String alpha;
     String columnType;
     String purity;
+    String liquid;
+    String gas;
+    String contaminant;
 
     if (model.input.validateInput()) {
       liquidLK =
@@ -342,13 +336,21 @@ class _SumaryCard extends StatelessWidget {
     }
 
     if (model.columnInput.validateInput()) {
-      purity = "${AppLocalizations.of(context).desiredPurity} ${model.columnInput.purity}%\n";
-      columnType = "${AppLocalizations.of(context).columnType}: ${model.columnInput.columnType}\n";
+      purity =
+          "${AppLocalizations.of(context).desiredPurity} ${model.columnInput.purity}%\n";
+      columnType =
+          "${AppLocalizations.of(context).columnType}: ${model.columnInput.columnType}\n";
+      liquid = "Liquid Flow: ${model.columnInput.liquid}\n";
+      gas = "Gas Flow: ${model.columnInput.gas}\n";
+      contaminant = "Contaminant: ${model.columnInput.contaminant}\n";
     }
 
     return TextSpan(children: <TextSpan>[
       TextSpan(text: columnType, style: _textStyle),
       TextSpan(text: purity, style: _textStyle),
+      TextSpan(text: liquid, style: _textStyle),
+      TextSpan(text: gas, style: _textStyle),
+      TextSpan(text: contaminant, style: _textStyle),
       TextSpan(text: liquidLK, style: _textStyle),
       TextSpan(text: liquidHK, style: _textStyle),
       TextSpan(text: alpha, style: _textStyle),
