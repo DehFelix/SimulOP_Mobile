@@ -26,15 +26,16 @@ class McCabeThieleMethodInput2 extends StatelessWidget {
           ActionType.route),
     ];
 
-    return ScopedModel<McCabeThieleInputData>(
-      model: McCabeThieleInputData(
+    return ScopedModel<AbsorptionColumnInputData>(
+      model: AbsorptionColumnInputData(
           input: mixtureInputModel, columnInput: columnInputModel),
       child: Theme(
         data: ThemeData(primarySwatch: Colors.blueGrey),
         child: Scaffold(
             appBar: _McCabeThieleInputAppBar(),
             body: Container(child: _mainBody()),
-            floatingActionButton: ScopedModelDescendant<McCabeThieleInputData>(
+            floatingActionButton:
+                ScopedModelDescendant<AbsorptionColumnInputData>(
               builder: (context, _, model) => FloatingActionButton(
                 child: Icon(model.getFabIcon),
                 onPressed: () {
@@ -57,8 +58,8 @@ class McCabeThieleMethodInput2 extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => McCabeThieleMethodResultsAnimated(
-                        simulation: model.createSimulation(),
-                      ),
+                          //simulation: model.createSimulation(), ########### TODO #############
+                          ),
                     ),
                   );
                 },
@@ -166,7 +167,7 @@ class _MixtureInputCard extends StatelessWidget {
                 padding: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Text(AppLocalizations.of(context).liquidLK),
               ),
-              ScopedModelDescendant<McCabeThieleInputData>(
+              ScopedModelDescendant<AbsorptionColumnInputData>(
                 builder: (context, _, model) => DropdownButton(
                     hint: Text(
                       AppLocalizations.of(context).hintLiquidLK,
@@ -183,7 +184,7 @@ class _MixtureInputCard extends StatelessWidget {
                 padding: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Text(AppLocalizations.of(context).liquidHK),
               ),
-              ScopedModelDescendant<McCabeThieleInputData>(
+              ScopedModelDescendant<AbsorptionColumnInputData>(
                 builder: (context, _, model) => DropdownButton(
                     hint: Text(
                       AppLocalizations.of(context).hintLiquidHK,
@@ -228,7 +229,7 @@ class _ColumnInputCard extends StatelessWidget {
                     padding:
                         EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
                     child: Column(children: <Widget>[
-                      ScopedModelDescendant<McCabeThieleInputData>(
+                      ScopedModelDescendant<AbsorptionColumnInputData>(
                         builder: (context, _, model) => TextFormField(
                           autocorrect: false,
                           keyboardType: TextInputType.number,
@@ -275,7 +276,7 @@ class _ColumnTypeCard extends State<_ColumnTypeRadio> {
           ),
           Row(
             children: <Widget>[
-              ScopedModelDescendant<McCabeThieleInputData>(
+              ScopedModelDescendant<AbsorptionColumnInputData>(
                   builder: (context, _, model) => ButtonBar(children: <Widget>[
                         Radio(
                             value: AppLocalizations.of(context).absorptionInput,
@@ -316,7 +317,8 @@ class _SumaryCard extends StatelessWidget {
 
   final _textStyle = TextStyle(fontSize: 14.0, color: Colors.black);
 
-  TextSpan _mixtureSumary(McCabeThieleInputData model, BuildContext context) {
+  TextSpan _mixtureSumary(
+      AbsorptionColumnInputData model, BuildContext context) {
     String liquidLK;
     String liquidHK;
     String alpha;
@@ -372,7 +374,7 @@ class _SumaryCard extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-            child: ScopedModelDescendant<McCabeThieleInputData>(
+            child: ScopedModelDescendant<AbsorptionColumnInputData>(
               builder: (context, _, model) => RichText(
                 text: TextSpan(
                   children: <TextSpan>[

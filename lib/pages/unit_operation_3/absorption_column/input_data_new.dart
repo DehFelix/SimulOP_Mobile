@@ -5,19 +5,20 @@ import 'package:simulop_v1/core/core.dart' as core;
 import 'package:simulop_v1/pages/helper_classes/options_input_helper.dart';
 //import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/simulation_data.dart';
 import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
+import 'package:simulop_v1/bloc/absorptionColumnBloc.dart';
 
 import 'package:simulop_v1/pages/unit_operation_3/absorption_column/algorithmHandler.dart';
 
 final teste = Calculos();
 
-class McCabeThieleInputData extends Model {
+class AbsorptionColumnInputData extends Model {
   final MixtureInput input;
   final ColumnInput columnInput;
 
-  McCabeThieleInputData({this.input, this.columnInput});
+  AbsorptionColumnInputData({this.input, this.columnInput});
 
-  static McCabeThieleInputData of(BuildContext context) =>
-      ScopedModel.of<McCabeThieleInputData>(context);
+  static AbsorptionColumnInputData of(BuildContext context) =>
+      ScopedModel.of<AbsorptionColumnInputData>(context);
 
   void setLiquidLKName(LiquidHelper liquid) {
     input.liquidLK = liquid;
@@ -37,23 +38,16 @@ class McCabeThieleInputData extends Model {
             context: context)
         .name;
 
-    teste.setInValues(15.0 as double);
-    teste.setOutValues(99.1254 as double);
-    teste.setY();
+    teste.setInValues(15.0, 100);
 
-    print("contaminante: ${teste.contaminantIn}");
-    print('\n');
-    print("entrada ar: ${teste.airIn}");
-    print('\n');
-    print("contaminante na saída: ${teste.contaminantOut}");
-    print('\n');
-    print("ponto fixo: ${teste.fixedPoint}");
     notifyListeners();
   }
 
   void setPurity(String prt) {
     if (prt != null) {
       columnInput.purity = prt;
+      teste.setOutValues(double.parse(prt));
+      teste.setFixedPoint();
     }
 
     notifyListeners();
@@ -85,24 +79,34 @@ class McCabeThieleInputData extends Model {
     }
   }
 
-  McCabeThieleSimulation createSimulation() {
-    final liquidLK = core.Liquid(
-        material: core.Inicializer.liquidMaterial(input.liquidLK),
-        temperature: 298.0);
-    final liquidHK = core.Liquid(
-        material: core.Inicializer.liquidMaterial(input.liquidHK),
-        temperature: 298.0);
-    final mixture = core.BinaryMixture(liquidLK, liquidHK, 0.5, 298.0, 1e5);
+  // McCabeThieleSimulation createSimulation() {
+  //   final liquidLK = core.Liquid(
+  //       material: core.Inicializer.liquidMaterial(input.liquidLK),
+  //       temperature: 298.0);
+  //   final liquidHK = core.Liquid(
+  //       material: core.Inicializer.liquidMaterial(input.liquidHK),
+  //       temperature: 298.0);
+  //   final mixture = core.BinaryMixture(liquidLK, liquidHK, 0.5, 298.0, 1e5);
 
-    final mcCabeThiele =
-        core.McCabeThieleMethod(mixture, 0.9, 0.1, 0.5, 1.0, 3.0);
+  //   final mcCabeThiele =
+  //       core.McCabeThieleMethod(mixture, 0.9, 0.1, 0.5, 1.0, 3.0);
 
-    final McCabeThieleSimulation simulation = McCabeThieleSimulation(
-      liquidLK: liquidLK,
-      liquidHK: liquidHK,
-      mixture: mixture,
-      mcCabeThiele: mcCabeThiele,
-    );
+  //   final McCabeThieleSimulation simulation = McCabeThieleSimulation(
+  //     liquidLK: liquidLK,
+  //     liquidHK: liquidHK,
+  //     mixture: mixture,
+  //     mcCabeThiele: mcCabeThiele,
+  //   );
+
+  //   return simulation;
+  // }
+
+  AbsorptionColumnSimulation createSimulation() {
+    final absorptionColumn = core.AbsorptionColumnMethod();
+    final AbsorptionColumnSimulation simulation = AbsorptionColumnSimulation(
+        purity: double.parse(columnInput.purity),
+        columnType: columnInput.columnType,
+        absorptionColumn: absorptionColumn);
 
     return simulation;
   }
@@ -186,27 +190,27 @@ class MixtureInput {
   }
 }
 
-class SimulationCreator {
-  McCabeThieleSimulation createSimulation(
-      MixtureInput input, ColumnInput columnInput) {
-    final liquidLK = core.Liquid(
-        material: core.Inicializer.liquidMaterial(input.liquidLK),
-        temperature: 298.0);
-    final liquidHK = core.Liquid(
-        material: core.Inicializer.liquidMaterial(input.liquidHK),
-        temperature: 298.0);
-    final mixture = core.BinaryMixture(liquidLK, liquidHK, 0.5, 298.0, 1e5);
+// class SimulationCreator {
+//   AbsorptionColumnSimulation createSimulation(
+//       ColumnInput purity, ColumnInput columnType) {
+//     final liquidLK = core.Liquid(
+//         material: core.Inicializer.liquidMaterial(input.liquidLK),
+//         temperature: 298.0);
+//     final liquidHK = core.Liquid(
+//         material: core.Inicializer.liquidMaterial(input.liquidHK),
+//         temperature: 298.0);
+//     final mixture = core.BinaryMixture(liquidLK, liquidHK, 0.5, 298.0, 1e5);
 
-    final mcCabeThiele =
-        core.McCabeThieleMethod(mixture, 0.9, 0.1, 0.5, 1.0, 3.0);
+//     final mcCabeThiele =
+//         core.McCabeThieleMethod(mixture, 0.9, 0.1, 0.5, 1.0, 3.0);
 
-    final McCabeThieleSimulation simulation = McCabeThieleSimulation(
-      liquidLK: liquidLK,
-      liquidHK: liquidHK,
-      mixture: mixture,
-      mcCabeThiele: mcCabeThiele,
-    );
+//     final McCabeThieleSimulation simulation = McCabeThieleSimulation(
+//       liquidLK: liquidLK,
+//       liquidHK: liquidHK,
+//       mixture: mixture,
+//       mcCabeThiele: mcCabeThiele,
+//     );
 
-    return simulation;
-  }
-}
+//     return simulation;
+//   }
+// }

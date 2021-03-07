@@ -52,10 +52,7 @@ class McCabeThieleMethodResults extends StatelessWidget {
 
   Widget _mainBody() {
     return ListView(
-      children: <Widget>[
-        _ChartCard(),
-        _ResultsCard(),
-      ],
+      children: <Widget>[],
     );
   }
 }
@@ -221,10 +218,10 @@ class __McCabeThieleResultsAppBarState
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2.0,
-      title: Text(AppLocalizations.of(context).results),
+      title: Text('FALAE'),
       actions: <Widget>[
         PopupMenuButton(
-          itemBuilder: (BuildContext context) => _appBarMenu(),
+          itemBuilder: (BuildContext context) => null,
           onSelected: _selectMenu,
         )
       ],
@@ -232,6 +229,7 @@ class __McCabeThieleResultsAppBarState
   }
 
   List<Widget> _appBarMenu() {
+    print('pora');
     return helpItems.map((HelpItem item) {
       return PopupMenuItem(
         value: item,
@@ -344,7 +342,7 @@ class _ChartCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.insert_chart),
             title: Text(
-              AppLocalizations.of(context).graph,
+              'AppLocalizations.of(context).graph',
               style: _headerTextStyle,
             ),
           ),

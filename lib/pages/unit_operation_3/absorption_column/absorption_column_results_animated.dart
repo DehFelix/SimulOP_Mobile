@@ -10,6 +10,7 @@ import 'package:simulop_v1/locale/locales.dart';
 
 import 'package:simulop_v1/bloc/base_provider.dart';
 import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
+// import 'package:simulop_v1/bloc/absorptionColumnBloc.dart';
 import 'package:simulop_v1/pages/helper_classes/animated_toast.dart';
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
 
@@ -52,10 +53,7 @@ class McCabeThieleMethodResultsAnimated extends StatelessWidget {
 
   Widget _mainBody() {
     return ListView(
-      children: <Widget>[
-        _ChartCard(),
-        _ResultsCard(),
-      ],
+      children: <Widget>[],
     );
   }
 }
@@ -134,6 +132,15 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
 
   Widget _variables(BuildContext context, Map<Variable, double> currentValue) {
     final bloc = Provider.of<McCabeResultsBloc>(context);
+
+    final _gasFeedSlider = Slider(
+      min: 50,
+      max: 200,
+      divisions: _sliderDiv,
+      value: currentValue[Variable.feedFraction],
+      onChanged: (val) => bloc.inputSink
+          .add(InputVar(variable: Variable.feedFraction, value: val)),
+    );
 
     final _feedFractionSlider = Slider(
       min: 0.20,
@@ -473,23 +480,23 @@ class _ResultsCard extends StatelessWidget {
               initialData:
                   Results(idialStage: "0", numberOfStages: "0", alpha: "0"),
               builder: (context, snapshot) => RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                            text:
-                                "${AppLocalizations.of(context).alphaValue} ${snapshot.data.alpha}\n",
-                            style: _textStyle),
-                        TextSpan(
-                            text:
-                                "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
-                            style: _textStyle),
-                        TextSpan(
-                            text:
-                                "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
-                            style: _textStyle),
-                      ],
-                    ),
-                  ),
+                text: TextSpan(
+                  children: <TextSpan>[
+                    TextSpan(
+                        text:
+                            "${AppLocalizations.of(context).alphaValue} ${snapshot.data.alpha}\n",
+                        style: _textStyle),
+                    TextSpan(
+                        text:
+                            "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
+                        style: _textStyle),
+                    TextSpan(
+                        text:
+                            "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
+                        style: _textStyle),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
