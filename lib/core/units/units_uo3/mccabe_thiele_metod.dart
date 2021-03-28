@@ -10,6 +10,7 @@ class McCabeThieleMethod {
   double feedZf;
   double feedConditionQ;
   double refluxRatio;
+  double gasFeed;
 
   int numberStages;
   int idialStage;

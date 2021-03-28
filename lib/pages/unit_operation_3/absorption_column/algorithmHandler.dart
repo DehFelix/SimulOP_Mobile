@@ -9,25 +9,23 @@ import 'package:scoped_model/scoped_model.dart';
 /// gasIn = corrente gasoza (kmol/h)
 class Calculos extends Model {
   double contaminantIn; // kmol/h;
-  double airIn; // kmol/h;
+  double airFeed; // kmol/h;
   final double baseDeCalculo = 100; // kmol/h;
   double airOut; // kmol/h
   Map<String, double> fixedPoint; // (x, y)
   double contaminantOut; // kmol/h
+  double gasFeed = 100;
+  double purity;
 
-  void setInValues(double percentOfContaminant, double gasIn) {
-    contaminantIn = gasIn * percentOfContaminant / 100;
-    airIn = gasIn - contaminantIn;
-    print("contaminante: $contaminantIn");
-    print('\n');
-    print("entrada ar: $airIn");
+  void setInValues(double percentOfContaminant) {
+    contaminantIn = gasFeed * percentOfContaminant / 100;
+    airFeed = gasFeed - contaminantIn;
   }
 
   void setOutValues(double purity) {
-    airOut = airIn;
+    this.purity = purity;
+    airOut = airFeed;
     contaminantOut = (airOut / (purity / 100)) * (1 - purity / 100);
-    print("contaminante na saída: $contaminantOut");
-    print('\n');
   }
 
   void setFixedPoint() {

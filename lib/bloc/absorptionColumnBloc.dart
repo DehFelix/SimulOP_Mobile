@@ -82,12 +82,12 @@ class InputVar {
   });
 }
 
-class McCabeResultsBloc {
-  McCabeThieleSimulation _simulation;
+class AbsorptionColumnResultsBloc {
+  AbsorptionColumnSimulation _simulation;
 
   Map<Variable, double> _simpleValue;
 
-  McCabeResultsBloc({McCabeThieleSimulation simulation}) {
+  AbsorptionColumnResultsBloc({AbsorptionColumnSimulation simulation}) {
     this._simulation = simulation;
     _inputControler.stream.listen(_updateVariable);
     _currentValue.stream.listen((data) {
@@ -117,58 +117,58 @@ class McCabeResultsBloc {
   void updateAll() {
     _currentValue.add(
       {
-        // Variable.gasFeed: _simulation.mcCabeThiele.contaminantIn,
-        Variable.feedCondition: _simulation.mcCabeThiele.feedConditionQ,
-        Variable.feedFraction: _simulation.mcCabeThiele.feedZf,
-        Variable.pressure: _simulation.mixture.pressure / 1e5,
-        Variable.refluxRatio: _simulation.mcCabeThiele.refluxRatio,
-        Variable.targetXD: _simulation.mcCabeThiele.targetXD,
-        Variable.targetXB: _simulation.mcCabeThiele.targetXB,
+        Variable.gasFeed: _simulation.absorptionColumn.gasFeed,
+        Variable.feedCondition: 1,
+        // Variable.feedFraction: _simulation.mcCabeThiele.feedZf,
+        // Variable.pressure: _simulation.mixture.pressure / 1e5,
+        // Variable.refluxRatio: _simulation.mcCabeThiele.refluxRatio,
+        // Variable.targetXD: _simulation.mcCabeThiele.targetXD,
+        // Variable.targetXB: _simulation.mcCabeThiele.targetXB,
       },
     );
 
-    _plotPoints.add(
-      PlotPoints(
-        equilibrium: _simulation.mcCabeThiele.plotEquilibrium(40),
-        operationCurve: _simulation.mcCabeThiele.plotOpCurve(40),
-        qline: _simulation.mcCabeThiele.plotQLine(),
-        stages: _simulation.mcCabeThiele.plotStages(),
-      ),
-    );
+    // _plotPoints.add(
+    //   PlotPoints(
+    //       // equilibrium: _simulation.mcCabeThiele.plotEquilibrium(40),
+    //       // operationCurve: _simulation.mcCabeThiele.plotOpCurve(40),
+    //       // qline: _simulation.mcCabeThiele.plotQLine(),
+    //       // stages: _simulation.mcCabeThiele.plotStages(),
+    //       ),
+    // );
 
-    _results.add(
-      Results(
-        numberOfStages: _simulation.mcCabeThiele.numberStages.toString(),
-        idialStage: _simulation.mcCabeThiele.idialStage.toString(),
-        alpha: _simulation.mcCabeThiele.binaryMixture.alpha.toStringAsFixed(1),
-      ),
-    );
+    // _results.add(
+    //   Results(
+    //       // numberOfStages: _simulation.mcCabeThiele.numberStages.toString(),
+    //       // idialStage: _simulation.mcCabeThiele.idialStage.toString(),
+    //       // alpha: _simulation.mcCabeThiele.binaryMixture.alpha.toStringAsFixed(1),
+    //       ),
+    // );
 
-    print(_simulation.mcCabeThiele.binaryMixture.alpha.toString());
+    // print(_simulation.mcCabeThiele.binaryMixture.alpha.toString());
   }
 
   void _updateVariable(InputVar input, {bool update = true}) {
     switch (input.variable) {
       case Variable.gasFeed:
-        _simulation.mcCabeThiele.gasFeed = input.value;
+        _simulation.absorptionColumn.gasFeed = input.value;
         break;
       case Variable.feedFraction:
-        _simulation.mcCabeThiele.feedZf = input.value;
+        // _simulation.mcCabeThiele.feedZf = input.value;
         break;
       case Variable.feedCondition:
-        _simulation.mcCabeThiele.feedConditionQ = input.value;
+        // _simulation.mcCabeThiele.feedConditionQ = input.value;
         break;
       case Variable.refluxRatio:
-        _simulation.mcCabeThiele.refluxRatio = input.value;
+        // _simulation.mcCabeThiele.refluxRatio = input.value;
         break;
       case Variable.targetXD:
-        _simulation.mcCabeThiele.targetXD = input.value;
+        // _simulation.mcCabeThiele.targetXD = input.value;
         break;
       case Variable.targetXB:
-        _simulation.mcCabeThiele.targetXB = input.value;
+        // _simulation.mcCabeThiele.targetXB = input.value;
         break;
       case Variable.pressure:
-        _simulation.mixture.pressure = input.value * 1e5;
+        // _simulation.mixture.pressure = input.value * 1e5;
         break;
       default:
     }
@@ -185,3 +185,107 @@ class McCabeResultsBloc {
     _inputControler.close();
   }
 }
+
+// class McCabeResultsBloc {
+//   McCabeThieleSimulation _simulation;
+
+//   Map<Variable, double> _simpleValue;
+
+//   McCabeResultsBloc({McCabeThieleSimulation simulation}) {
+//     this._simulation = simulation;
+//     _inputControler.stream.listen(_updateVariable);
+//     _currentValue.stream.listen((data) {
+//       _simpleValue = data;
+//     });
+//     updateAll();
+//   }
+
+//   final _results = BehaviorSubject<Results>();
+
+//   final _plotPoints = BehaviorSubject<PlotPoints>();
+
+//   final _currentValue = BehaviorSubject<Map<Variable, double>>();
+
+//   final _inputControler = StreamController<InputVar>();
+
+//   Stream<Results> get results => _results.stream;
+
+//   Stream<PlotPoints> get plotPoints => _plotPoints.stream;
+
+//   Stream<Map<Variable, double>> get currentValue => _currentValue.stream;
+
+//   Sink<InputVar> get inputSink => _inputControler.sink;
+
+//   Map<Variable, double> get simpleValue => _simpleValue;
+
+//   void updateAll() {
+//     _currentValue.add(
+//       {
+//         // Variable.gasFeed: _simulation.mcCabeThiele.contaminantIn,
+//         Variable.feedCondition: _simulation.mcCabeThiele.feedConditionQ,
+//         Variable.feedFraction: _simulation.mcCabeThiele.feedZf,
+//         Variable.pressure: _simulation.mixture.pressure / 1e5,
+//         Variable.refluxRatio: _simulation.mcCabeThiele.refluxRatio,
+//         Variable.targetXD: _simulation.mcCabeThiele.targetXD,
+//         Variable.targetXB: _simulation.mcCabeThiele.targetXB,
+//       },
+//     );
+
+//     _plotPoints.add(
+//       PlotPoints(
+//         equilibrium: _simulation.mcCabeThiele.plotEquilibrium(40),
+//         operationCurve: _simulation.mcCabeThiele.plotOpCurve(40),
+//         qline: _simulation.mcCabeThiele.plotQLine(),
+//         stages: _simulation.mcCabeThiele.plotStages(),
+//       ),
+//     );
+
+//     _results.add(
+//       Results(
+//         numberOfStages: _simulation.mcCabeThiele.numberStages.toString(),
+//         idialStage: _simulation.mcCabeThiele.idialStage.toString(),
+//         alpha: _simulation.mcCabeThiele.binaryMixture.alpha.toStringAsFixed(1),
+//       ),
+//     );
+
+//     print(_simulation.mcCabeThiele.binaryMixture.alpha.toString());
+//   }
+
+//   void _updateVariable(InputVar input, {bool update = true}) {
+//     switch (input.variable) {
+//       case Variable.gasFeed:
+//         _simulation.mcCabeThiele.gasFeed = input.value;
+//         break;
+//       case Variable.feedFraction:
+//         _simulation.mcCabeThiele.feedZf = input.value;
+//         break;
+//       case Variable.feedCondition:
+//         _simulation.mcCabeThiele.feedConditionQ = input.value;
+//         break;
+//       case Variable.refluxRatio:
+//         _simulation.mcCabeThiele.refluxRatio = input.value;
+//         break;
+//       case Variable.targetXD:
+//         _simulation.mcCabeThiele.targetXD = input.value;
+//         break;
+//       case Variable.targetXB:
+//         _simulation.mcCabeThiele.targetXB = input.value;
+//         break;
+//       case Variable.pressure:
+//         _simulation.mixture.pressure = input.value * 1e5;
+//         break;
+//       default:
+//     }
+//     if (update) {
+//       updateAll();
+//     }
+//   }
+
+//   void dispose() {
+//     _results.close();
+//     _plotPoints.close();
+//     _results.close();
+//     _currentValue.close();
+//     _inputControler.close();
+//   }
+// }

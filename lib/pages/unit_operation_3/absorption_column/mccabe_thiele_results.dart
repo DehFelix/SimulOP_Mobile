@@ -229,7 +229,6 @@ class __McCabeThieleResultsAppBarState
   }
 
   List<Widget> _appBarMenu() {
-    print('pora');
     return helpItems.map((HelpItem item) {
       return PopupMenuItem(
         value: item,

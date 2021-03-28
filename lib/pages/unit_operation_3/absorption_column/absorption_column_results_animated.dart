@@ -9,8 +9,8 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:simulop_v1/locale/locales.dart';
 
 import 'package:simulop_v1/bloc/base_provider.dart';
-import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
-// import 'package:simulop_v1/bloc/absorptionColumnBloc.dart';
+// import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
+import 'package:simulop_v1/bloc/absorptionColumnBloc.dart';
 import 'package:simulop_v1/pages/helper_classes/animated_toast.dart';
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
 
@@ -18,10 +18,10 @@ final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
 List<HelpItem> helpItems = List<HelpItem>();
 
-class McCabeThieleMethodResultsAnimated extends StatelessWidget {
-  final McCabeThieleSimulation simulation;
+class AbsorptionColumnResultsAnimated extends StatelessWidget {
+  final AbsorptionColumnSimulation simulation;
 
-  McCabeThieleMethodResultsAnimated({Key key, @required this.simulation})
+  AbsorptionColumnResultsAnimated({Key key, @required this.simulation})
       : super(key: key);
 
   @override
@@ -30,10 +30,10 @@ class McCabeThieleMethodResultsAnimated extends StatelessWidget {
       HelpItem(AppLocalizations.of(context).moreInfoBtn, "/default",
           ActionType.route),
     ];
-    return BlocProvider<McCabeResultsBloc>(
+    return BlocProvider<AbsorptionColumnResultsBloc>(
       builder: (_, bloc) =>
           bloc ??
-          McCabeResultsBloc(
+          AbsorptionColumnResultsBloc(
             simulation: simulation,
           ),
       onDispose: (_, bloc) => bloc.dispose(),
@@ -61,7 +61,7 @@ class McCabeThieleMethodResultsAnimated extends StatelessWidget {
 class _FloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
+    final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
 
     final List<SpeedDialChild> fabChildern = [
       SpeedDialChild(
@@ -131,112 +131,118 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
   final int _sliderDiv = 40;
 
   Widget _variables(BuildContext context, Map<Variable, double> currentValue) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
+    final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
 
     final _gasFeedSlider = Slider(
       min: 50,
       max: 200,
       divisions: _sliderDiv,
-      value: currentValue[Variable.feedFraction],
-      onChanged: (val) => bloc.inputSink
-          .add(InputVar(variable: Variable.feedFraction, value: val)),
-    );
-
-    final _feedFractionSlider = Slider(
-      min: 0.20,
-      max: 0.80,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.feedFraction],
-      onChanged: (val) => bloc.inputSink
-          .add(InputVar(variable: Variable.feedFraction, value: val)),
-    );
-
-    final _feedConditionSlider = Slider(
-      min: -2.0,
-      max: 2.0,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.feedCondition],
-      onChanged: (val) => bloc.inputSink
-          .add(InputVar(variable: Variable.feedCondition, value: val)),
-    );
-
-    final _refluxRationSlider = Slider(
-      min: 1.20,
-      max: 10.0,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.refluxRatio],
-      onChanged: (val) => bloc.inputSink
-          .add(InputVar(variable: Variable.refluxRatio, value: val)),
-    );
-
-    final _targetXDSlider = Slider(
-      min: 0.500,
-      max: 0.999,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.targetXD],
+      value: currentValue[Variable.gasFeed],
       onChanged: (val) =>
-          bloc.inputSink.add(InputVar(variable: Variable.targetXD, value: val)),
+          bloc.inputSink.add(InputVar(variable: Variable.gasFeed, value: val)),
     );
 
-    final _targetXBSlider = Slider(
-      min: 0.001,
-      max: 0.490,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.targetXB],
-      onChanged: (val) =>
-          bloc.inputSink.add(InputVar(variable: Variable.targetXB, value: val)),
-    );
+    // final _feedFractionSlider = Slider(
+    //   min: 0.20,
+    //   max: 0.80,
+    //   divisions: _sliderDiv,
+    //   value: currentValue[Variable.feedFraction],
+    //   onChanged: (val) => bloc.inputSink
+    //       .add(InputVar(variable: Variable.feedFraction, value: val)),
+    // );
 
-    final _pressureSlider = Slider(
-      min: 1.0,
-      max: 5.0,
-      divisions: _sliderDiv,
-      value: currentValue[Variable.pressure],
-      onChanged: (val) =>
-          bloc.inputSink.add(InputVar(variable: Variable.pressure, value: val)),
-    );
+    // final _feedConditionSlider = Slider(
+    //   min: -2.0,
+    //   max: 2.0,
+    //   divisions: _sliderDiv,
+    //   value: currentValue[Variable.feedCondition],
+    //   onChanged: (val) => bloc.inputSink
+    //       .add(InputVar(variable: Variable.feedCondition, value: val)),
+    // );
+
+    // final _refluxRationSlider = Slider(
+    //   min: 1.20,
+    //   max: 10.0,
+    //   divisions: _sliderDiv,
+    //   value: currentValue[Variable.refluxRatio],
+    //   onChanged: (val) => bloc.inputSink
+    //       .add(InputVar(variable: Variable.refluxRatio, value: val)),
+    // );
+
+    // final _targetXDSlider = Slider(
+    //   min: 0.500,
+    //   max: 0.999,
+    //   divisions: _sliderDiv,
+    //   value: currentValue[Variable.targetXD],
+    //   onChanged: (val) =>
+    //       bloc.inputSink.add(InputVar(variable: Variable.targetXD, value: val)),
+    // );
+
+    // final _targetXBSlider = Slider(
+    //   min: 0.001,
+    //   max: 0.490,
+    //   divisions: _sliderDiv,
+    //   value: currentValue[Variable.targetXB],
+    //   onChanged: (val) =>
+    //       bloc.inputSink.add(InputVar(variable: Variable.targetXB, value: val)),
+    // );
+
+    // final _pressureSlider = Slider(
+    //   min: 1.0,
+    //   max: 5.0,
+    //   divisions: _sliderDiv,
+    //   value: currentValue[Variable.pressure],
+    //   onChanged: (val) =>
+    //       bloc.inputSink.add(InputVar(variable: Variable.pressure, value: val)),
+    // );
 
     return Column(
       children: <Widget>[
         ListTile(
-          title: Text(AppLocalizations.of(context).drawerLKFeed),
-          subtitle: _feedFractionSlider,
-          trailing:
-              Text(currentValue[Variable.feedFraction].toStringAsFixed(2)),
+          title: Text(
+              'Vazão de Gás na Entrada' /*AppLocalizations.of(context).drawerLKFeed*/),
+          subtitle: _gasFeedSlider,
+          trailing: Text(currentValue[Variable.gasFeed].toStringAsFixed(2)),
         ),
-        ListTile(
-          title: Text(AppLocalizations.of(context).drawerFeedCond),
-          subtitle: _feedConditionSlider,
-          trailing:
-              Text(currentValue[Variable.feedCondition].toStringAsFixed(1)),
-        ),
-        ListTile(
-          title: Text(AppLocalizations.of(context).drawerReflxRatio),
-          subtitle: _refluxRationSlider,
-          trailing: Text(currentValue[Variable.refluxRatio].toStringAsFixed(1)),
-        ),
-        ListTile(
-          title: Text(AppLocalizations.of(context).drawerTargetXD),
-          subtitle: _targetXDSlider,
-          trailing: Text(currentValue[Variable.targetXD].toStringAsFixed(3)),
-        ),
-        ListTile(
-          title: Text(AppLocalizations.of(context).drawerTargetXB),
-          subtitle: _targetXBSlider,
-          trailing: Text(currentValue[Variable.targetXB].toStringAsFixed(3)),
-        ),
-        ListTile(
-          title: Text(AppLocalizations.of(context).hintPressure),
-          subtitle: _pressureSlider,
-          trailing: Text(currentValue[Variable.pressure].toStringAsFixed(1)),
-        ),
+        // ListTile(
+        //   title: Text(AppLocalizations.of(context).drawerLKFeed),
+        //   subtitle: _feedFractionSlider,
+        //   trailing:
+        //       Text(currentValue[Variable.feedFraction].toStringAsFixed(2)),
+        // ),
+        // ListTile(
+        //   title: Text(AppLocalizations.of(context).drawerFeedCond),
+        //   subtitle: _feedConditionSlider,
+        //   trailing:
+        //       Text(currentValue[Variable.feedCondition].toStringAsFixed(1)),
+        // ),
+        // ListTile(
+        //   title: Text(AppLocalizations.of(context).drawerReflxRatio),
+        //   subtitle: _refluxRationSlider,
+        //   trailing: Text(currentValue[Variable.refluxRatio].toStringAsFixed(1)),
+        // ),
+        // ListTile(
+        //   title: Text(AppLocalizations.of(context).drawerTargetXD),
+        //   subtitle: _targetXDSlider,
+        //   trailing: Text(currentValue[Variable.targetXD].toStringAsFixed(3)),
+        // ),
+        // ListTile(
+        //   title: Text(AppLocalizations.of(context).drawerTargetXB),
+        //   subtitle: _targetXBSlider,
+        //   trailing: Text(currentValue[Variable.targetXB].toStringAsFixed(3)),
+        // ),
+        // ListTile(
+        //   title: Text(AppLocalizations.of(context).hintPressure),
+        //   subtitle: _pressureSlider,
+        //   trailing: Text(currentValue[Variable.pressure].toStringAsFixed(1)),
+        // ),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
+    final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
 
     return Drawer(
       child: ListView(
@@ -399,7 +405,7 @@ class _ChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
+    final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
 
     return Card(
       child: Column(
@@ -460,7 +466,7 @@ class _ResultsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<McCabeResultsBloc>(context);
+    final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
 
     return Card(
       child: Column(

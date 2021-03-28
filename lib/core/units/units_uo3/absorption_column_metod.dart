@@ -4,10 +4,12 @@ import 'dart:math' as math;
 import 'package:simulop_v1/core/components/liquid/liquid.dart';
 // ignore: unused_import
 import 'package:simulop_v1/core/units/units.dart';
+import 'package:simulop_v1/pages/unit_operation_3/absorption_column/algorithmHandler.dart';
 
 class AbsorptionColumnMethod {
   // double contaminantIn; // kmol/h;
-  // double gasIn; // kmol/h;
+  double gasFeed; // kmol/h;
+  double purity;
   // double airIn; // kmol/h;
   // double airOut; // kmol/h
   // Map<String, double> fixedPoint; // (x, y)
@@ -17,16 +19,16 @@ class AbsorptionColumnMethod {
   math.Point get pointP => _pointP;
 
   AbsorptionColumnMethod(
-      // double contaminantIn,
-      // double gasIn,
-      // double airIn,
-      // double baseDeCalculo,
-      // double airOut,
-      // Map<String, double> fixedPoint,
-      // double contaminantOut,
-      ) {
+    // double contaminantIn,
+    Calculos absorptionColumnData,
+    // double airIn,
+    // double baseDeCalculo,
+    // double airOut,
+    // Map<String, double> fixedPoint,
+    // double contaminantOut,
+  ) {
     // this.contaminantIn = contaminantIn;
-    // this.gasIn = gasIn;
+    // this.gasFeed = gasFeed;
     // this.airIn = airIn;
     // this.baseDeCalculo = baseDeCalculo;
     // this.airOut = airOut;
@@ -34,8 +36,9 @@ class AbsorptionColumnMethod {
     // this.contaminantOut = contaminantOut;
 
     _pointP = math.Point(0.0, 0.0);
-
-    // computPointP();
+    this.gasFeed = absorptionColumnData.gasFeed;
+    this.purity = absorptionColumnData.purity;
+    computPointP();
   }
 
   void computPointP() {

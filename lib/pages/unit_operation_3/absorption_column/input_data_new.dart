@@ -38,7 +38,7 @@ class AbsorptionColumnInputData extends Model {
             context: context)
         .name;
 
-    teste.setInValues(15.0, 100);
+    teste.setInValues(15.0);
 
     notifyListeners();
   }
@@ -72,6 +72,7 @@ class AbsorptionColumnInputData extends Model {
   }
 
   bool canCreateSimulation() {
+    return true;
     if (input.validateInput() && getAlpha > 1.0) {
       return true;
     } else {
@@ -102,7 +103,7 @@ class AbsorptionColumnInputData extends Model {
   // }
 
   AbsorptionColumnSimulation createSimulation() {
-    final absorptionColumn = core.AbsorptionColumnMethod();
+    final absorptionColumn = core.AbsorptionColumnMethod(teste);
     final AbsorptionColumnSimulation simulation = AbsorptionColumnSimulation(
         purity: double.parse(columnInput.purity),
         columnType: columnInput.columnType,

@@ -57,9 +57,9 @@ class McCabeThieleMethodInput2 extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => McCabeThieleMethodResultsAnimated(
-                          //simulation: model.createSimulation(), ########### TODO #############
-                          ),
+                      builder: (context) => AbsorptionColumnResultsAnimated(
+                        simulation: model.createSimulation(),
+                      ),
                     ),
                   );
                 },
