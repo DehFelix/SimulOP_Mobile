@@ -4,41 +4,39 @@ import 'dart:math' as math;
 import 'package:simulop_v1/core/components/liquid/liquid.dart';
 // ignore: unused_import
 import 'package:simulop_v1/core/units/units.dart';
-import 'package:simulop_v1/pages/unit_operation_3/absorption_column/algorithmHandler.dart';
+import 'package:simulop_v1/pages/unit_operation_3/absorption_column/setupColumn.dart';
 
 class AbsorptionColumnMethod {
-  // double contaminantIn; // kmol/h;
-  double gasFeed; // kmol/h;
-  double purity;
-  // double airIn; // kmol/h;
-  // double airOut; // kmol/h
-  // Map<String, double> fixedPoint; // (x, y)
-  // double contaminantOut; // kmol/h
+  double gasFeed; // (kmol/h)
+  double airFeed; // (kmol/h)
+  double airOut; // (kmol/h)
+  double liquidFeed; // (kmol/h)
+  double liquidPerGas; // (adimensional)
+  double purity; // (%)
+  double percentOfContaminant; // (%)
+  double gasContaminantIn; // (kmol/h)
+  double gasContaminantOut; // (kmol/h)
+  double liquidContaminantIn; // (kmol/h)
+  double liquidContaminantOut; // (kmol/h)
+  int stageNumbers;
+  Map<String, double> fixedPoint; // (x, y)
 
-  math.Point _pointP;
-  math.Point get pointP => _pointP;
+  math.Point _fixedPoint;
+  math.Point get pointP => _fixedPoint;
 
-  AbsorptionColumnMethod(
-    // double contaminantIn,
-    Calculos absorptionColumnData,
-    // double airIn,
-    // double baseDeCalculo,
-    // double airOut,
-    // Map<String, double> fixedPoint,
-    // double contaminantOut,
-  ) {
-    // this.contaminantIn = contaminantIn;
-    // this.gasFeed = gasFeed;
-    // this.airIn = airIn;
-    // this.baseDeCalculo = baseDeCalculo;
-    // this.airOut = airOut;
-    // this.fixedPoint = fixedPoint;
-    // this.contaminantOut = contaminantOut;
+  AbsorptionColumnMethod(AbsorptionVariables absorptionColumnData) {
+    gasFeed = absorptionColumnData.gasFeed;
+    airFeed = absorptionColumnData.airFeed;
+    airOut = absorptionColumnData.airOut;
+    liquidFeed = absorptionColumnData.liquidFeed;
+    liquidPerGas = absorptionColumnData.liquidPerGas;
+    purity = absorptionColumnData.purity;
+    percentOfContaminant = absorptionColumnData.percentOfContaminantIn;
+    gasContaminantIn = absorptionColumnData.gasContaminantIn;
+    gasContaminantOut = absorptionColumnData.gasContaminantOut;
 
-    _pointP = math.Point(0.0, 0.0);
-    this.gasFeed = absorptionColumnData.gasFeed;
-    this.purity = absorptionColumnData.purity;
     computPointP();
+    prints();
   }
 
   void computPointP() {
@@ -46,8 +44,48 @@ class AbsorptionColumnMethod {
     double y;
 
     x = 0.0;
-    y = 0.0; // TODO -> (contaminantOut / airOut);
+    y = (gasContaminantOut / airOut);
 
-    _pointP = math.Point(x, y);
+    _fixedPoint = math.Point(x, y);
+  }
+
+  void updateFeedDependencies(who) {
+    if (who == 'gasFeed' || who == 'contaminant') {
+      gasContaminantIn = gasFeed * percentOfContaminant / 100;
+      airFeed = gasFeed - gasContaminantIn;
+      airOut = airFeed;
+      liquidContaminantOut = gasContaminantIn - gasContaminantOut;
+    }
+
+    if (who == 'liquidFeed' || who == 'gasFeed') {
+      liquidPerGas = liquidFeed / airFeed;
+    }
+
+    computPointP();
+    prints();
+  }
+
+  void updatePurityDependencies() {
+    gasContaminantOut = (airOut / (purity / 100)) * (1 - purity / 100);
+    liquidContaminantOut = gasContaminantIn - gasContaminantOut;
+    computPointP();
+    prints();
+  }
+
+  void prints() {
+    print('');
+    print('');
+    print('gasFeed: $gasFeed');
+    print('airFeed: $airFeed');
+    print('airOut: $airOut');
+    print('liquidFeed: $liquidFeed');
+    print('liquidPerGas: $liquidPerGas');
+    print('purity: $purity');
+    print('percentOfContaminant: $percentOfContaminant');
+    print('gasContaminantIn: $gasContaminantIn');
+    print('gasContaminantOut: $gasContaminantOut');
+    print('liquidContaminantIn: $liquidContaminantIn');
+    print('liquidContaminantOut: $liquidContaminantOut');
+    print('fixedPoint: $_fixedPoint');
   }
 }

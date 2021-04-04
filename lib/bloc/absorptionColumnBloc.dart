@@ -8,12 +8,10 @@ import 'package:rxdart/rxdart.dart';
 import 'package:simulop_v1/core/core.dart' as core;
 
 class AbsorptionColumnSimulation {
-  final double purity;
   final String columnType;
   final core.AbsorptionColumnMethod absorptionColumn;
 
   AbsorptionColumnSimulation({
-    @required this.purity,
     @required this.columnType,
     @required this.absorptionColumn,
   });
@@ -64,6 +62,9 @@ class PlotPoints {
 
 enum Variable {
   gasFeed,
+  liquidFeed,
+  purity,
+  percentOfContaminant,
   feedFraction,
   feedCondition,
   refluxRatio,
@@ -118,7 +119,11 @@ class AbsorptionColumnResultsBloc {
     _currentValue.add(
       {
         Variable.gasFeed: _simulation.absorptionColumn.gasFeed,
-        Variable.feedCondition: 1,
+        Variable.liquidFeed: _simulation.absorptionColumn.liquidFeed,
+        Variable.percentOfContaminant:
+            _simulation.absorptionColumn.percentOfContaminant,
+        Variable.purity: _simulation.absorptionColumn.purity,
+        // Variable.feedCondition: 1,
         // Variable.feedFraction: _simulation.mcCabeThiele.feedZf,
         // Variable.pressure: _simulation.mixture.pressure / 1e5,
         // Variable.refluxRatio: _simulation.mcCabeThiele.refluxRatio,
@@ -151,7 +156,21 @@ class AbsorptionColumnResultsBloc {
     switch (input.variable) {
       case Variable.gasFeed:
         _simulation.absorptionColumn.gasFeed = input.value;
+        _simulation.absorptionColumn.updateFeedDependencies('gasFeed');
         break;
+      case Variable.liquidFeed:
+        _simulation.absorptionColumn.liquidFeed = input.value;
+        _simulation.absorptionColumn.updateFeedDependencies('liquidFeed');
+        break;
+      case Variable.percentOfContaminant:
+        _simulation.absorptionColumn.percentOfContaminant = input.value;
+        _simulation.absorptionColumn.updateFeedDependencies('contaminant');
+        break;
+      case Variable.purity:
+        _simulation.absorptionColumn.purity = input.value;
+        _simulation.absorptionColumn.updatePurityDependencies();
+        break;
+
       case Variable.feedFraction:
         // _simulation.mcCabeThiele.feedZf = input.value;
         break;
@@ -221,7 +240,7 @@ class AbsorptionColumnResultsBloc {
 //   void updateAll() {
 //     _currentValue.add(
 //       {
-//         // Variable.gasFeed: _simulation.mcCabeThiele.contaminantIn,
+//         // Variable.gasFeed: _simulation.mcCabeThiele.gasContaminantIn,
 //         Variable.feedCondition: _simulation.mcCabeThiele.feedConditionQ,
 //         Variable.feedFraction: _simulation.mcCabeThiele.feedZf,
 //         Variable.pressure: _simulation.mixture.pressure / 1e5,

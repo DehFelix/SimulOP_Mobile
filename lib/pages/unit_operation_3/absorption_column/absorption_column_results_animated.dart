@@ -43,7 +43,7 @@ class AbsorptionColumnResultsAnimated extends StatelessWidget {
             ThemeData(primarySwatch: Colors.blueGrey),
         child: Scaffold(
           appBar: _McCabeThieleResultsAppBar(),
-          drawer: _McCabeThieleResultsDrawer(),
+          drawer: _AbsorptionColumnDrawer(),
           body: _mainBody(),
           floatingActionButton: _FloatingButton(),
         ),
@@ -53,7 +53,7 @@ class AbsorptionColumnResultsAnimated extends StatelessWidget {
 
   Widget _mainBody() {
     return ListView(
-      children: <Widget>[],
+      children: <Widget>[_ChartCard(), _ResultsCard()],
     );
   }
 }
@@ -127,7 +127,65 @@ class _FloatingButton extends StatelessWidget {
   }
 }
 
-class _McCabeThieleResultsDrawer extends StatelessWidget {
+// class _ChartSlider extends StatelessWidget {
+//   final int _sliderDiv = 40;
+
+//   Widget _sliders(BuildContext context, Map<Variable, double> currentValue) {
+//     final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
+
+//     final _gasFeedSlider = Slider(
+//       min: 50,
+//       max: 200,
+//       divisions: _sliderDiv,
+//       value: currentValue[Variable.gasFeed],
+//       onChanged: (val) =>
+//           bloc.inputSink.add(InputVar(variable: Variable.gasFeed, value: val)),
+//     );
+
+//     final _liquidFeedSlider = Slider(
+//       min: 50,
+//       max: 200,
+//       divisions: _sliderDiv,
+//       value: currentValue[Variable.liquidFeed],
+//       onChanged: (val) => bloc.inputSink
+//           .add(InputVar(variable: Variable.liquidFeed, value: val)),
+//     );
+
+//     return Column(
+//       children: <Widget>[
+//         ListTile(
+//           title: Text(
+//               'Vazão de Entrada de Gás (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
+//           subtitle: _gasFeedSlider,
+//           trailing: Text(currentValue[Variable.gasFeed].toStringAsFixed(2)),
+//         ),
+//         ListTile(
+//           title: Text(
+//               'Vazão de Entrada de Líquido (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
+//           subtitle: _liquidFeedSlider,
+//           trailing: Text(currentValue[Variable.liquidFeed].toStringAsFixed(2)),
+//         ),
+//       ],
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
+//     return Card(
+//       child: SizedBox(
+//           child: StreamBuilder<Map<Variable, double>>(
+//               stream: bloc.currentValue,
+//               builder: (context, snapshot) {
+//                 return (snapshot.hasError || !snapshot.hasData)
+//                     ? CircularProgressIndicator()
+//                     : _sliders(context, snapshot.data);
+//               })),
+//     );
+//   }
+// }
+
+class _AbsorptionColumnDrawer extends StatelessWidget {
   final int _sliderDiv = 40;
 
   Widget _variables(BuildContext context, Map<Variable, double> currentValue) {
@@ -136,106 +194,66 @@ class _McCabeThieleResultsDrawer extends StatelessWidget {
     final _gasFeedSlider = Slider(
       min: 50,
       max: 200,
-      divisions: _sliderDiv,
+      divisions: 30,
       value: currentValue[Variable.gasFeed],
       onChanged: (val) =>
           bloc.inputSink.add(InputVar(variable: Variable.gasFeed, value: val)),
     );
 
-    // final _feedFractionSlider = Slider(
-    //   min: 0.20,
-    //   max: 0.80,
-    //   divisions: _sliderDiv,
-    //   value: currentValue[Variable.feedFraction],
-    //   onChanged: (val) => bloc.inputSink
-    //       .add(InputVar(variable: Variable.feedFraction, value: val)),
-    // );
+    final _liquidFeedSlider = Slider(
+      min: 50,
+      max: 200,
+      divisions: 30,
+      value: currentValue[Variable.liquidFeed],
+      onChanged: (val) => bloc.inputSink
+          .add(InputVar(variable: Variable.liquidFeed, value: val)),
+    );
 
-    // final _feedConditionSlider = Slider(
-    //   min: -2.0,
-    //   max: 2.0,
-    //   divisions: _sliderDiv,
-    //   value: currentValue[Variable.feedCondition],
-    //   onChanged: (val) => bloc.inputSink
-    //       .add(InputVar(variable: Variable.feedCondition, value: val)),
-    // );
+    final _percentOfContaminantSlider = Slider(
+      min: 0.5,
+      max: 20,
+      divisions: 30,
+      value: currentValue[Variable.percentOfContaminant],
+      onChanged: (val) => bloc.inputSink
+          .add(InputVar(variable: Variable.percentOfContaminant, value: val)),
+    );
 
-    // final _refluxRationSlider = Slider(
-    //   min: 1.20,
-    //   max: 10.0,
-    //   divisions: _sliderDiv,
-    //   value: currentValue[Variable.refluxRatio],
-    //   onChanged: (val) => bloc.inputSink
-    //       .add(InputVar(variable: Variable.refluxRatio, value: val)),
-    // );
-
-    // final _targetXDSlider = Slider(
-    //   min: 0.500,
-    //   max: 0.999,
-    //   divisions: _sliderDiv,
-    //   value: currentValue[Variable.targetXD],
-    //   onChanged: (val) =>
-    //       bloc.inputSink.add(InputVar(variable: Variable.targetXD, value: val)),
-    // );
-
-    // final _targetXBSlider = Slider(
-    //   min: 0.001,
-    //   max: 0.490,
-    //   divisions: _sliderDiv,
-    //   value: currentValue[Variable.targetXB],
-    //   onChanged: (val) =>
-    //       bloc.inputSink.add(InputVar(variable: Variable.targetXB, value: val)),
-    // );
-
-    // final _pressureSlider = Slider(
-    //   min: 1.0,
-    //   max: 5.0,
-    //   divisions: _sliderDiv,
-    //   value: currentValue[Variable.pressure],
-    //   onChanged: (val) =>
-    //       bloc.inputSink.add(InputVar(variable: Variable.pressure, value: val)),
-    // );
+    final _puritySlider = Slider(
+      min: 85,
+      max: 99.99,
+      divisions: 30,
+      value: currentValue[Variable.purity],
+      onChanged: (val) =>
+          bloc.inputSink.add(InputVar(variable: Variable.purity, value: val)),
+    );
 
     return Column(
       children: <Widget>[
         ListTile(
           title: Text(
-              'Vazão de Gás na Entrada' /*AppLocalizations.of(context).drawerLKFeed*/),
+              'Vazão de Entrada de Gás (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
           subtitle: _gasFeedSlider,
           trailing: Text(currentValue[Variable.gasFeed].toStringAsFixed(2)),
         ),
-        // ListTile(
-        //   title: Text(AppLocalizations.of(context).drawerLKFeed),
-        //   subtitle: _feedFractionSlider,
-        //   trailing:
-        //       Text(currentValue[Variable.feedFraction].toStringAsFixed(2)),
-        // ),
-        // ListTile(
-        //   title: Text(AppLocalizations.of(context).drawerFeedCond),
-        //   subtitle: _feedConditionSlider,
-        //   trailing:
-        //       Text(currentValue[Variable.feedCondition].toStringAsFixed(1)),
-        // ),
-        // ListTile(
-        //   title: Text(AppLocalizations.of(context).drawerReflxRatio),
-        //   subtitle: _refluxRationSlider,
-        //   trailing: Text(currentValue[Variable.refluxRatio].toStringAsFixed(1)),
-        // ),
-        // ListTile(
-        //   title: Text(AppLocalizations.of(context).drawerTargetXD),
-        //   subtitle: _targetXDSlider,
-        //   trailing: Text(currentValue[Variable.targetXD].toStringAsFixed(3)),
-        // ),
-        // ListTile(
-        //   title: Text(AppLocalizations.of(context).drawerTargetXB),
-        //   subtitle: _targetXBSlider,
-        //   trailing: Text(currentValue[Variable.targetXB].toStringAsFixed(3)),
-        // ),
-        // ListTile(
-        //   title: Text(AppLocalizations.of(context).hintPressure),
-        //   subtitle: _pressureSlider,
-        //   trailing: Text(currentValue[Variable.pressure].toStringAsFixed(1)),
-        // ),
+        ListTile(
+          title: Text(
+              'Vazão de Entrada de Líquido (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
+          subtitle: _liquidFeedSlider,
+          trailing: Text(currentValue[Variable.liquidFeed].toStringAsFixed(2)),
+        ),
+        ListTile(
+          title: Text(
+              'Concentração de Contaminante na Entrada (%)' /*AppLocalizations.of(context).drawerLKFeed*/),
+          subtitle: _percentOfContaminantSlider,
+          trailing: Text(
+              currentValue[Variable.percentOfContaminant].toStringAsFixed(2)),
+        ),
+        ListTile(
+          title: Text(
+              'Pureza na Saída (%)' /*AppLocalizations.of(context).drawerLKFeed*/),
+          subtitle: _puritySlider,
+          trailing: Text(currentValue[Variable.purity].toStringAsFixed(2)),
+        )
       ],
     );
   }
@@ -403,6 +421,46 @@ class _ChartCard extends StatelessWidget {
     );
   }
 
+  Widget _sliders(BuildContext context, Map<Variable, double> currentValue) {
+    final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
+    final int _sliderDiv = 30;
+
+    final _gasFeedSlider = Slider(
+      min: 50,
+      max: 200,
+      divisions: _sliderDiv,
+      value: currentValue[Variable.gasFeed],
+      onChanged: (val) =>
+          bloc.inputSink.add(InputVar(variable: Variable.gasFeed, value: val)),
+    );
+
+    final _liquidFeedSlider = Slider(
+      min: 50,
+      max: 200,
+      divisions: _sliderDiv,
+      value: currentValue[Variable.liquidFeed],
+      onChanged: (val) => bloc.inputSink
+          .add(InputVar(variable: Variable.liquidFeed, value: val)),
+    );
+
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: Text(
+              'Vazão de Entrada de Gás (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
+          subtitle: _gasFeedSlider,
+          trailing: Text(currentValue[Variable.gasFeed].toStringAsFixed(2)),
+        ),
+        ListTile(
+          title: Text(
+              'Vazão de Entrada de Líquido (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
+          subtitle: _liquidFeedSlider,
+          trailing: Text(currentValue[Variable.liquidFeed].toStringAsFixed(2)),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
@@ -426,7 +484,7 @@ class _ChartCard extends StatelessWidget {
                   child: RotatedBox(
                       quarterTurns: 3,
                       child: Text(
-                        AppLocalizations.of(context).mcCabThieleFunctionAxis,
+                        /*AppLocalizations.of(context).mcCabThieleFunctionAxis*/ 'Vapor Fraction',
                         style: TextStyle(color: Colors.black87),
                       )),
                 ),
@@ -440,7 +498,7 @@ class _ChartCard extends StatelessWidget {
                         stream: bloc.plotPoints,
                         builder: (context, snapshot) {
                           return (snapshot.hasError || !snapshot.hasData)
-                              ? CircularProgressIndicator()
+                              ? SizedBox()
                               : _chart(snapshot.data, context);
                         }),
                   ),
@@ -449,9 +507,19 @@ class _ChartCard extends StatelessWidget {
             ],
           ),
           Text(
-            AppLocalizations.of(context).mcCabThieleDomainAxis,
+            /*AppLocalizations.of(context).mcCabThieleDomainAxis*/ 'Liquid Fraction',
             style: TextStyle(color: Colors.black87),
           ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
+          ),
+          StreamBuilder<Map<Variable, double>>(
+              stream: bloc.currentValue,
+              builder: (context, snapshot) {
+                return (snapshot.hasError || !snapshot.hasData)
+                    ? CircularProgressIndicator()
+                    : _sliders(context, snapshot.data);
+              }),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0),
           ),

@@ -146,64 +146,6 @@ class _McCabeThieleInputAppBarState extends State<_McCabeThieleInputAppBar> {
   }
 }
 
-/// The input card for the mixture
-class _MixtureInputCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.invert_colors_off),
-            title: Text(
-              AppLocalizations.of(context).mixtureInput,
-              style: _headerTextStyle,
-            ),
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Text(AppLocalizations.of(context).liquidLK),
-              ),
-              ScopedModelDescendant<AbsorptionColumnInputData>(
-                builder: (context, _, model) => DropdownButton(
-                    hint: Text(
-                      AppLocalizations.of(context).hintLiquidLK,
-                    ),
-                    value: model.input.liquidLK,
-                    items: model.input.fluidInputDropDownItems(context),
-                    onChanged: (dynamic value) => model.setLiquidLKName(value)),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Text(AppLocalizations.of(context).liquidHK),
-              ),
-              ScopedModelDescendant<AbsorptionColumnInputData>(
-                builder: (context, _, model) => DropdownButton(
-                    hint: Text(
-                      AppLocalizations.of(context).hintLiquidHK,
-                    ),
-                    value: model.input.liquidHK,
-                    items: model.input.fluidInputDropDownItems(context),
-                    onChanged: (dynamic value) => model.setLiquidHKName(value)),
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 16.0),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _ColumnInputCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -238,6 +180,7 @@ class _ColumnInputCard extends StatelessWidget {
                               labelText: AppLocalizations.of(context).purity),
                           validator: model.columnInput.purityValidator,
                           onSaved: model.setPurity,
+                          // onSaved: model.setContaminantOut
                         ),
                       )
                     ])))

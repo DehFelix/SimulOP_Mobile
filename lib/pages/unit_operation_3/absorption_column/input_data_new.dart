@@ -4,12 +4,12 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:simulop_v1/core/core.dart' as core;
 import 'package:simulop_v1/pages/helper_classes/options_input_helper.dart';
 //import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/simulation_data.dart';
-import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
+// import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
 import 'package:simulop_v1/bloc/absorptionColumnBloc.dart';
 
-import 'package:simulop_v1/pages/unit_operation_3/absorption_column/algorithmHandler.dart';
+import 'package:simulop_v1/pages/unit_operation_3/absorption_column/setupColumn.dart';
 
-final teste = Calculos();
+final variables = AbsorptionVariables();
 
 class AbsorptionColumnInputData extends Model {
   final MixtureInput input;
@@ -38,7 +38,7 @@ class AbsorptionColumnInputData extends Model {
             context: context)
         .name;
 
-    teste.setInValues(15.0);
+    variables.setInValues(15.0);
 
     notifyListeners();
   }
@@ -46,12 +46,22 @@ class AbsorptionColumnInputData extends Model {
   void setPurity(String prt) {
     if (prt != null) {
       columnInput.purity = prt;
-      teste.setOutValues(double.parse(prt));
-      teste.setFixedPoint();
+      variables.setOutValues(double.parse(prt));
+      variables.setFixedPoint();
     }
 
     notifyListeners();
   }
+
+  // void setContaminantOut(String cont) {
+  //   if (cont != null) {
+  //     columnInput.contaminantOut = cont;
+  //     variables.setOutValues(double.parse(cont));
+  //     variables.setFixedPoint();
+  //   }
+
+  //   notifyListeners();
+  // }
 
   double get getAlpha {
     if (input.validateInput()) {
@@ -103,11 +113,9 @@ class AbsorptionColumnInputData extends Model {
   // }
 
   AbsorptionColumnSimulation createSimulation() {
-    final absorptionColumn = core.AbsorptionColumnMethod(teste);
+    final absorptionColumn = core.AbsorptionColumnMethod(variables);
     final AbsorptionColumnSimulation simulation = AbsorptionColumnSimulation(
-        purity: double.parse(columnInput.purity),
-        columnType: columnInput.columnType,
-        absorptionColumn: absorptionColumn);
+        columnType: columnInput.columnType, absorptionColumn: absorptionColumn);
 
     return simulation;
   }
@@ -127,6 +135,7 @@ class ColumnInput {
   String liquid = 'Water';
   String gas = 'Air';
   String contaminant;
+  // String contaminantOut;
 
   String purityValidator(String value) {
     if (value.isEmpty) return null;
