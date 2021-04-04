@@ -13,11 +13,11 @@ class AbsorptionVariables extends Model {
   double airOut; // kmol/h
   Map<String, double> fixedPoint; // (x, y)
   double gasFeed = 100; // kmol/h
-  double purity;
+  double purity; // (%)
   double percentOfContaminantIn; // (%)
   double contaminantOut; // (%)
-  double liquidFeed = 100;
-  double liquidPerGas;
+  double liquidFeed = 100; // (kmol/h)
+  double liquidPerGas; // (undimensional)
   double liquidContaminantIn = 0.0; // (kmol/h)
   double liquidContaminantOut; // (kmol/h)
 
@@ -28,8 +28,9 @@ class AbsorptionVariables extends Model {
     liquidPerGas = liquidFeed / airFeed;
   }
 
-  void setOutValues(double purity) {
-    this.purity = purity;
+  void setOutValues(double prt) {
+    purity = prt;
+    contaminantOut = 1 - (purity / 100);
     airOut = airFeed;
     gasContaminantOut = (airOut / (purity / 100)) * (1 - purity / 100);
     liquidContaminantOut = gasContaminantIn - gasContaminantOut;

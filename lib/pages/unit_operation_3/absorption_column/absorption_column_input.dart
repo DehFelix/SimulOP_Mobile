@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:simulop_v1/locale/locales.dart';
-//import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/mccabe_thiele_results.dart';
 import 'package:simulop_v1/pages/unit_operation_3/absorption_column/absorption_column_results_animated.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,6 +13,8 @@ List<HelpItem> helpItems = List<HelpItem>();
 
 final mixtureFormKey = GlobalKey<FormState>();
 final purityFormKey = GlobalKey<FormState>();
+final contaminantFormKey = GlobalKey<FormState>();
+final fluidInputsFormKey = GlobalKey<FormState>();
 
 final mixtureInputModel = MixtureInput();
 final columnInputModel = ColumnInput();
@@ -73,14 +74,12 @@ class McCabeThieleMethodInput2 extends StatelessWidget {
   Widget _mainBody() {
     return ListView(
       children: <Widget>[
-        // Container(
-        //   //height: 200.0,
-        //   child: SizedBox(width: 250.0, child: _MixtureInputCard()),
-        // ),
         Container(
           child: SizedBox(width: 250.0, child: _ColumnTypeRadio()),
         ),
         Container(child: SizedBox(width: 250.0, child: _ColumnInputCard())),
+        Container(child: SizedBox(width: 250.0, child: _ColumnInputCard2())),
+        Container(child: SizedBox(width: 250.0, child: _ColumnInputCard3())),
         _SumaryCard()
       ],
     );
@@ -180,8 +179,133 @@ class _ColumnInputCard extends StatelessWidget {
                               labelText: AppLocalizations.of(context).purity),
                           validator: model.columnInput.purityValidator,
                           onSaved: model.setPurity,
-                          // onSaved: model.setContaminantOut
                         ),
+                      ),
+                    ]))),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ColumnInputCard3 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Form(
+        key: fluidInputsFormKey,
+        autovalidate: true,
+        onChanged: () {
+          if (fluidInputsFormKey.currentState.validate()) {
+            fluidInputsFormKey.currentState.save();
+          }
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ListTile(
+                leading: Icon(Icons.invert_colors_on),
+                title: Text(
+                    /*AppLocalizations.of(context).desiredPurity*/ 'Selecione os Dados de Corrente',
+                    style: _headerTextStyle)),
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Text(
+                      /*AppLocalizations.of(context).liquidLK*/ 'Líquido: '),
+                ),
+                ScopedModelDescendant<AbsorptionColumnInputData>(
+                  builder: (context, _, model) => DropdownButton(
+                      // hint: Text(
+                      //     /*AppLocalizations.of(context).hintLiquidLK,*/
+                      //     'líquido'),
+                      value: model.columnInput.liquid,
+                      items: model.columnInput.fluidInputDropDownItems(context),
+                      onChanged: (dynamic value) => model.setLiquidName(value)),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Text(
+                      /*AppLocalizations.of(context).liquidLK*/ 'Gás: '),
+                ),
+                ScopedModelDescendant<AbsorptionColumnInputData>(
+                  builder: (context, _, model) => DropdownButton(
+                      // hint: Text(
+                      //     /*AppLocalizations.of(context).hintLiquidLK,*/
+                      //     'gás'),
+                      value: model.columnInput.gas,
+                      items: model.columnInput.gasInputDropDownItems(context),
+                      onChanged: (dynamic value) => model.setGasName(value)),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Text(
+                      /*AppLocalizations.of(context).liquidLK*/ 'Contaminante: '),
+                ),
+                ScopedModelDescendant<AbsorptionColumnInputData>(
+                  builder: (context, _, model) => DropdownButton(
+                      // hint: Text(
+                      //     /*AppLocalizations.of(context).hintLiquidLK,*/
+                      //     ''),
+                      value: model.columnInput.contaminant,
+                      items: model.columnInput.dropdownList,
+                      onChanged: (dynamic value) =>
+                          model.setContaminantName(value)),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ColumnInputCard2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Form(
+        key: contaminantFormKey,
+        autovalidate: true,
+        onChanged: () {
+          if (contaminantFormKey.currentState.validate()) {
+            contaminantFormKey.currentState.save();
+          }
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ListTile(
+                leading: Icon(Icons.invert_colors_on),
+                title: Text(
+                    /*AppLocalizations.of(context).desiredPurity*/ 'Concentração Máxima de Contaminante na Saída',
+                    style: _headerTextStyle)),
+            SizedBox(
+                width: 166,
+                child: Padding(
+                    padding:
+                        EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+                    child: Column(children: <Widget>[
+                      ScopedModelDescendant<AbsorptionColumnInputData>(
+                        builder: (context, _, model) => TextFormField(
+                            autocorrect: false,
+                            keyboardType: TextInputType.number,
+                            initialValue: model.columnInput.contaminantOut,
+                            decoration: InputDecoration(
+                                labelText: /*AppLocalizations.of(context).purity*/ 'Contaminante (%)'),
+                            validator: model.columnInput.purityValidator,
+                            onSaved: model.setContaminantOut),
                       )
                     ])))
           ],
@@ -197,13 +321,6 @@ class _ColumnTypeRadio extends StatefulWidget {
 }
 
 class _ColumnTypeCard extends State<_ColumnTypeRadio> {
-  String selectedRadio;
-  setSelectedRadio(String val) {
-    setState(() {
-      selectedRadio = val;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -223,10 +340,9 @@ class _ColumnTypeCard extends State<_ColumnTypeRadio> {
                   builder: (context, _, model) => ButtonBar(children: <Widget>[
                         Radio(
                             value: AppLocalizations.of(context).absorptionInput,
-                            groupValue: selectedRadio,
+                            groupValue: columnInputModel.columnType,
                             activeColor: Colors.green,
                             onChanged: (String val) {
-                              setSelectedRadio(val);
                               model.setColumnType(val, context);
                             }),
                         Padding(
@@ -235,10 +351,9 @@ class _ColumnTypeCard extends State<_ColumnTypeRadio> {
                         ),
                         Radio(
                             value: AppLocalizations.of(context).strippingInput,
-                            groupValue: selectedRadio,
+                            groupValue: columnInputModel.columnType,
                             activeColor: Colors.green,
                             onChanged: (val) {
-                              setSelectedRadio(val);
                               model.setColumnType(val, context);
                             }),
                         Padding(

@@ -1,35 +1,25 @@
 import 'dart:math' as math;
 import 'dart:async';
-
 import 'package:meta/meta.dart';
-
 import 'package:rxdart/rxdart.dart';
-
 import 'package:simulop_v1/core/core.dart' as core;
+import 'package:simulop_v1/pages/helper_classes/options_input_helper.dart';
 
 class AbsorptionColumnSimulation {
   final String columnType;
+  final LiquidHelper liquid;
+  final GasesHelper gas;
+  final ContaminantsHelper contaminant;
   final core.AbsorptionColumnMethod absorptionColumn;
 
   AbsorptionColumnSimulation({
     @required this.columnType,
+    @required this.liquid,
+    @required this.gas,
+    @required this.contaminant,
     @required this.absorptionColumn,
   });
 }
-
-// class McCabeThieleSimulation {
-//   final core.Liquid liquidLK;
-//   final core.Liquid liquidHK;
-//   final core.BinaryMixture mixture;
-//   final core.McCabeThieleMethod mcCabeThiele;
-
-//   McCabeThieleSimulation({
-//     @required this.liquidLK,
-//     @required this.liquidHK,
-//     @required this.mixture,
-//     @required this.mcCabeThiele,
-//   });
-// }
 
 class Results {
   final String numberOfStages;

@@ -14,6 +14,7 @@ class AbsorptionColumnMethod {
   double liquidPerGas; // (adimensional)
   double purity; // (%)
   double percentOfContaminant; // (%)
+  double contaminantOut; // (%)
   double gasContaminantIn; // (kmol/h)
   double gasContaminantOut; // (kmol/h)
   double liquidContaminantIn; // (kmol/h)
@@ -32,6 +33,7 @@ class AbsorptionColumnMethod {
     liquidPerGas = absorptionColumnData.liquidPerGas;
     purity = absorptionColumnData.purity;
     percentOfContaminant = absorptionColumnData.percentOfContaminantIn;
+    contaminantOut = absorptionColumnData.contaminantOut;
     gasContaminantIn = absorptionColumnData.gasContaminantIn;
     gasContaminantOut = absorptionColumnData.gasContaminantOut;
 
@@ -72,6 +74,14 @@ class AbsorptionColumnMethod {
     prints();
   }
 
+  // void updateContaminantDependencies() {
+  //   gasContaminantOut =
+  //       (airOut / (1 - (contaminantOut / 100))) * (contaminantOut / 100);
+  //   liquidContaminantOut = gasContaminantIn - gasContaminantOut;
+  //   computPointP();
+  //   prints();
+  // }
+
   void prints() {
     print('');
     print('');
@@ -82,6 +92,7 @@ class AbsorptionColumnMethod {
     print('liquidPerGas: $liquidPerGas');
     print('purity: $purity');
     print('percentOfContaminant: $percentOfContaminant');
+    print('contaminantOut: $contaminantOut');
     print('gasContaminantIn: $gasContaminantIn');
     print('gasContaminantOut: $gasContaminantOut');
     print('liquidContaminantIn: $liquidContaminantIn');

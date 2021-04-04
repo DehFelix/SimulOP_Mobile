@@ -20,7 +20,7 @@ enum MaterialOptions {
   pvc,
 }
 
-enum ContaminantsOptions { 
+enum ContaminantsOptions {
   benzene,
   acetone,
 }
@@ -109,6 +109,14 @@ class GasesHelper {
 }
 
 class ContaminantsHelper {
+  static final List<ContaminantsOptions> contaminantsAbsorption = [
+    ContaminantsOptions.acetone,
+  ];
+
+  static final List<ContaminantsOptions> contaminantsStripping = [
+    ContaminantsOptions.benzene,
+  ];
+
   static final List<ContaminantsOptions> contaminantsAbsorptionColumn = [
     ContaminantsOptions.acetone,
     ContaminantsOptions.benzene

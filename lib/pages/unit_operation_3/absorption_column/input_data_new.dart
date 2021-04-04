@@ -3,8 +3,6 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:simulop_v1/core/core.dart' as core;
 import 'package:simulop_v1/pages/helper_classes/options_input_helper.dart';
-//import 'package:simulop_v1/pages/unit_operation_3/mccabe_thiele_method/simulation_data.dart';
-// import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
 import 'package:simulop_v1/bloc/absorptionColumnBloc.dart';
 
 import 'package:simulop_v1/pages/unit_operation_3/absorption_column/setupColumn.dart';
@@ -20,26 +18,53 @@ class AbsorptionColumnInputData extends Model {
   static AbsorptionColumnInputData of(BuildContext context) =>
       ScopedModel.of<AbsorptionColumnInputData>(context);
 
-  void setLiquidLKName(LiquidHelper liquid) {
-    input.liquidLK = liquid;
+  void setLiquidName(LiquidHelper liquid) {
+    columnInput.liquid = liquid;
     notifyListeners();
   }
 
-  void setLiquidHKName(LiquidHelper liquid) {
-    input.liquidHK = liquid;
+  void setGasName(GasesHelper gas) {
+    columnInput.gas = gas;
+    notifyListeners();
+  }
+
+  void setContaminantName(ContaminantsHelper contaminant) {
+    columnInput.contaminant = contaminant;
     notifyListeners();
   }
 
   void setColumnType(String type, BuildContext context) {
     columnInput.columnType = type;
-    columnInput.contaminant = ContaminantsHelper(
-            contaminant: ContaminantsHelper
-                .contaminantsAbsorptionColumn[type == 'absorption' ? 0 : 1],
-            context: context)
-        .name;
+    columnInput.contaminant = null;
+    switch (type) {
+      case 'absorption':
+        columnInput.contaminantsList =
+            ContaminantsHelper.contaminantsAbsorption;
+        break;
+      case 'stripping':
+        columnInput.contaminantsList = ContaminantsHelper.contaminantsStripping;
+        break;
+    }
 
     variables.setInValues(15.0);
 
+    contaminantsInputDropDownItems(context);
+
+    notifyListeners();
+  }
+
+  void contaminantsInputDropDownItems(context) {
+    List<DropdownMenuItem<ContaminantsHelper>> teste =
+        columnInput.contaminantsList.map((ContaminantsOptions contaminantName) {
+      var contaminant =
+          ContaminantsHelper(contaminant: contaminantName, context: context);
+      return DropdownMenuItem<ContaminantsHelper>(
+          value: contaminant,
+          child: Text(
+            contaminant.name,
+          ));
+    }).toList();
+    columnInput.dropdownList = teste;
     notifyListeners();
   }
 
@@ -53,15 +78,15 @@ class AbsorptionColumnInputData extends Model {
     notifyListeners();
   }
 
-  // void setContaminantOut(String cont) {
-  //   if (cont != null) {
-  //     columnInput.contaminantOut = cont;
-  //     variables.setOutValues(double.parse(cont));
-  //     variables.setFixedPoint();
-  //   }
+  void setContaminantOut(String cont) {
+    if (cont != null) {
+      columnInput.contaminantOut = cont;
+      variables.setOutValues(double.parse(cont));
+      variables.setFixedPoint();
+    }
 
-  //   notifyListeners();
-  // }
+    notifyListeners();
+  }
 
   double get getAlpha {
     if (input.validateInput()) {
@@ -83,11 +108,11 @@ class AbsorptionColumnInputData extends Model {
 
   bool canCreateSimulation() {
     return true;
-    if (input.validateInput() && getAlpha > 1.0) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (input.validateInput() && getAlpha > 1.0) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 
   // McCabeThieleSimulation createSimulation() {
@@ -115,7 +140,11 @@ class AbsorptionColumnInputData extends Model {
   AbsorptionColumnSimulation createSimulation() {
     final absorptionColumn = core.AbsorptionColumnMethod(variables);
     final AbsorptionColumnSimulation simulation = AbsorptionColumnSimulation(
-        columnType: columnInput.columnType, absorptionColumn: absorptionColumn);
+        columnType: columnInput.columnType,
+        liquid: columnInput.liquid,
+        gas: columnInput.gas,
+        contaminant: columnInput.contaminant,
+        absorptionColumn: absorptionColumn);
 
     return simulation;
   }
@@ -131,11 +160,23 @@ class AbsorptionColumnInputData extends Model {
 
 class ColumnInput {
   String purity;
-  String columnType;
-  String liquid = 'Water';
-  String gas = 'Air';
-  String contaminant;
-  // String contaminantOut;
+  String columnType = 'absorption';
+  LiquidHelper liquid;
+  GasesHelper gas;
+  ContaminantsHelper contaminant;
+  String contaminantOut;
+  List<ContaminantsOptions> contaminantsList =
+      ContaminantsHelper.contaminantsAbsorption;
+  List<DropdownMenuItem<ContaminantsHelper>> contaminantOptions;
+  List<DropdownMenuItem<ContaminantsHelper>> dropdownList = [
+    DropdownMenuItem<ContaminantsHelper>(
+        value: ContaminantsHelper(contaminant: ContaminantsOptions.acetone),
+        child: Text(
+          'Acetone',
+        ))
+  ];
+  List<DropdownMenuItem<LiquidHelper>> liquidOptions;
+  List<DropdownMenuItem<GasesHelper>> gasOptions;
 
   String purityValidator(String value) {
     if (value.isEmpty) return null;
@@ -161,6 +202,42 @@ class ColumnInput {
         purity.isEmpty ||
         columnType.isEmpty) return false;
     return true;
+  }
+
+  // Create the dropDown for the possibles fluids
+  List<DropdownMenuItem<LiquidHelper>> fluidInputDropDownItems(
+      BuildContext context) {
+    if (liquidOptions == null) {
+      liquidOptions =
+          LiquidHelper.liquidsAbsorptionColumn.map((LiquidOptions liquidName) {
+        var liquid = LiquidHelper(liquid: liquidName, context: context);
+        return DropdownMenuItem<LiquidHelper>(
+          value: liquid,
+          child: Text(
+            liquid.name,
+          ),
+        );
+      }).toList();
+    }
+    return liquidOptions;
+  }
+
+  // Create the dropDown for the possibles fluids
+  List<DropdownMenuItem<GasesHelper>> gasInputDropDownItems(
+      BuildContext context) {
+    if (gasOptions == null) {
+      gasOptions =
+          GasesHelper.gasesAbsorptionColumn.map((GasesOptions gasName) {
+        var gas = GasesHelper(gas: gasName, context: context);
+        return DropdownMenuItem<GasesHelper>(
+          value: gas,
+          child: Text(
+            gas.name,
+          ),
+        );
+      }).toList();
+    }
+    return gasOptions;
   }
 }
 
