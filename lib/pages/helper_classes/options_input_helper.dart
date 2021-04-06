@@ -117,10 +117,10 @@ class ContaminantsHelper {
     ContaminantsOptions.benzene,
   ];
 
-  static final List<ContaminantsOptions> contaminantsAbsorptionColumn = [
-    ContaminantsOptions.acetone,
-    ContaminantsOptions.benzene
-  ];
+  // static final List<ContaminantsOptions> contaminantsAbsorptionColumn = [
+  //   ContaminantsOptions.acetone,
+  //   ContaminantsOptions.benzene
+  // ];
 
   final ContaminantsOptions contaminant;
   String name;
@@ -136,7 +136,7 @@ class ContaminantsHelper {
           break;
       }
     } else {
-      name = "";
+      name = "Acetone";
     }
   }
 }

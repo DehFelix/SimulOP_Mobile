@@ -28,21 +28,21 @@ class AbsorptionVariables extends Model {
     liquidPerGas = liquidFeed / airFeed;
   }
 
-  void setOutValues(double prt) {
-    purity = prt;
-    contaminantOut = 1 - (purity / 100);
-    airOut = airFeed;
-    gasContaminantOut = (airOut / (purity / 100)) * (1 - purity / 100);
-    liquidContaminantOut = gasContaminantIn - gasContaminantOut;
-  }
-
-  // void setOutValues(double cntOut) {
-  //   contaminantOut = cntOut;
+  // void setOutValues(double prt) {
+  //   purity = prt;
+  //   contaminantOut = 1 - (purity / 100);
   //   airOut = airFeed;
-  //   gasContaminantOut =
-  //       (airOut / (1 - (contaminantOut / 100))) * (contaminantOut / 100);
+  //   gasContaminantOut = (airOut / (purity / 100)) * (1 - purity / 100);
   //   liquidContaminantOut = gasContaminantIn - gasContaminantOut;
   // }
+
+  void setOutValues(double cntOut) {
+    contaminantOut = cntOut / 100;
+    purity = 1 - contaminantOut;
+    airOut = airFeed;
+    gasContaminantOut = (airOut / (1 - contaminantOut) * contaminantOut);
+    liquidContaminantOut = gasContaminantIn - gasContaminantOut;
+  }
 
   void setFixedPoint() {
     fixedPoint = {'X': 0.0, 'Y': (gasContaminantOut / airOut)};

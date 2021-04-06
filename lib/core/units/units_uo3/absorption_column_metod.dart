@@ -36,6 +36,7 @@ class AbsorptionColumnMethod {
     contaminantOut = absorptionColumnData.contaminantOut;
     gasContaminantIn = absorptionColumnData.gasContaminantIn;
     gasContaminantOut = absorptionColumnData.gasContaminantOut;
+    liquidContaminantOut = absorptionColumnData.liquidContaminantOut;
 
     computPointP();
     prints();

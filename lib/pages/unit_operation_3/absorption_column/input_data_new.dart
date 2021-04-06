@@ -53,6 +53,28 @@ class AbsorptionColumnInputData extends Model {
     notifyListeners();
   }
 
+  // void setPurity(String prt) {
+  //   if (prt != null) {
+  //     columnInput.purity = prt;
+  //     variables.setInValues(15.0);
+  //     variables.setOutValues(double.parse(prt));
+  //     variables.setFixedPoint();
+  //   }
+
+  //   notifyListeners();
+  // }
+
+  void setContaminantOut(String cont) {
+    if (cont != null) {
+      columnInput.contaminantOut = cont;
+      variables.setInValues(15.0);
+      variables.setOutValues(double.parse(cont));
+      variables.setFixedPoint();
+    }
+
+    notifyListeners();
+  }
+
   void contaminantsInputDropDownItems(context) {
     List<DropdownMenuItem<ContaminantsHelper>> teste =
         columnInput.contaminantsList.map((ContaminantsOptions contaminantName) {
@@ -65,26 +87,6 @@ class AbsorptionColumnInputData extends Model {
           ));
     }).toList();
     columnInput.dropdownList = teste;
-    notifyListeners();
-  }
-
-  void setPurity(String prt) {
-    if (prt != null) {
-      columnInput.purity = prt;
-      variables.setOutValues(double.parse(prt));
-      variables.setFixedPoint();
-    }
-
-    notifyListeners();
-  }
-
-  void setContaminantOut(String cont) {
-    if (cont != null) {
-      columnInput.contaminantOut = cont;
-      variables.setOutValues(double.parse(cont));
-      variables.setFixedPoint();
-    }
-
     notifyListeners();
   }
 
@@ -181,8 +183,8 @@ class ColumnInput {
   String purityValidator(String value) {
     if (value.isEmpty) return null;
 
-    double min = 60.0;
-    double max = 99.99;
+    double min = 0.05;
+    double max = 5.05;
     double _number;
 
     _number = double.tryParse(value) ?? null;
