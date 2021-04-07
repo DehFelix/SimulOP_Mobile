@@ -69,17 +69,21 @@ class AbsorptionColumnMethod {
   }
 
   void updateFeedDependencies(fromWho) {
-    if (fromWho == 'gasFeed' || fromWho == 'contaminant') {
+    if ((fromWho == 'gasFeed' || fromWho == 'contaminant') &&
+        columnType == 'absorption') {
       gasContaminantIn = gasFeed * percentOfContaminant / 100;
       airFeed = gasFeed - gasContaminantIn;
       airOut = airFeed;
+      gasContaminantOut = airOut * (contaminantOut) / (1 - contaminantOut);
       liquidContaminantOut = gasContaminantIn - gasContaminantOut;
     }
 
-    if (fromWho == 'liquidFeed' || fromWho == 'contaminant') {
+    if ((fromWho == 'liquidFeed' || fromWho == 'contaminant') &&
+        columnType == 'stripping') {
       liquidContaminantIn = liquidFeed * percentOfContaminant / 100;
       waterFeed = liquidFeed - liquidContaminantIn;
       waterOut = waterFeed;
+      liquidContaminantOut = waterOut * (contaminantOut) / (1 - contaminantOut);
       gasContaminantOut = liquidContaminantIn - liquidContaminantOut;
     }
 
@@ -93,10 +97,10 @@ class AbsorptionColumnMethod {
 
   void updatePurityDependencies() {
     if (columnType == 'absorption') {
-      gasContaminantOut = (airOut / (purity / 100)) * (1 - purity / 100);
+      gasContaminantOut = (airOut / (purity)) * (1 - purity);
       liquidContaminantOut = gasContaminantIn - gasContaminantOut;
     } else {
-      liquidContaminantOut = (waterOut / (purity / 100)) * (1 - purity / 100);
+      liquidContaminantOut = (waterOut / (purity)) * (1 - purity);
       gasContaminantOut = liquidContaminantIn - liquidContaminantOut;
     }
 
