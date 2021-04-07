@@ -7,6 +7,7 @@ import 'package:simulop_v1/core/units/units.dart';
 import 'package:simulop_v1/pages/unit_operation_3/absorption_column/setupColumn.dart';
 
 class AbsorptionColumnMethod {
+  String columnType;
   double gasFeed; // (kmol/h)
   double airFeed; // (kmol/h)
   double airOut; // (kmol/h)
@@ -19,6 +20,8 @@ class AbsorptionColumnMethod {
   double gasContaminantOut; // (kmol/h)
   double liquidContaminantIn; // (kmol/h)
   double liquidContaminantOut; // (kmol/h)
+  double waterFeed; // (kmol/h)
+  double waterOut; // (kmol/h)
   int stageNumbers;
   Map<String, double> fixedPoint; // (x, y)
 
@@ -26,6 +29,7 @@ class AbsorptionColumnMethod {
   math.Point get pointP => _fixedPoint;
 
   AbsorptionColumnMethod(AbsorptionVariables absorptionColumnData) {
+    columnType = absorptionColumnData.columnType;
     gasFeed = absorptionColumnData.gasFeed;
     airFeed = absorptionColumnData.airFeed;
     airOut = absorptionColumnData.airOut;
@@ -37,30 +41,49 @@ class AbsorptionColumnMethod {
     gasContaminantIn = absorptionColumnData.gasContaminantIn;
     gasContaminantOut = absorptionColumnData.gasContaminantOut;
     liquidContaminantOut = absorptionColumnData.liquidContaminantOut;
+    waterFeed = absorptionColumnData.waterFeed;
+    waterOut = absorptionColumnData.waterOut;
 
     computPointP();
     prints();
   }
 
   void computPointP() {
-    double x;
-    double y;
+    if (columnType == 'absorption') {
+      double x0;
+      double y1;
 
-    x = 0.0;
-    y = (gasContaminantOut / airOut);
+      x0 = 0.0;
+      y1 = (gasContaminantOut / airOut);
 
-    _fixedPoint = math.Point(x, y);
+      _fixedPoint = math.Point(x0, y1);
+    } else {
+      double x1;
+      double y0;
+
+      y0 = 0.0;
+      x1 = (liquidContaminantOut / waterOut);
+
+      _fixedPoint = math.Point(x1, y0);
+    }
   }
 
-  void updateFeedDependencies(who) {
-    if (who == 'gasFeed' || who == 'contaminant') {
+  void updateFeedDependencies(fromWho) {
+    if (fromWho == 'gasFeed' || fromWho == 'contaminant') {
       gasContaminantIn = gasFeed * percentOfContaminant / 100;
       airFeed = gasFeed - gasContaminantIn;
       airOut = airFeed;
       liquidContaminantOut = gasContaminantIn - gasContaminantOut;
     }
 
-    if (who == 'liquidFeed' || who == 'gasFeed') {
+    if (fromWho == 'liquidFeed' || fromWho == 'contaminant') {
+      liquidContaminantIn = liquidFeed * percentOfContaminant / 100;
+      waterFeed = liquidFeed - liquidContaminantIn;
+      waterOut = waterFeed;
+      gasContaminantOut = liquidContaminantIn - liquidContaminantOut;
+    }
+
+    if (fromWho == 'liquidFeed' || fromWho == 'gasFeed') {
       liquidPerGas = liquidFeed / airFeed;
     }
 
@@ -69,8 +92,14 @@ class AbsorptionColumnMethod {
   }
 
   void updatePurityDependencies() {
-    gasContaminantOut = (airOut / (purity / 100)) * (1 - purity / 100);
-    liquidContaminantOut = gasContaminantIn - gasContaminantOut;
+    if (columnType == 'absorption') {
+      gasContaminantOut = (airOut / (purity / 100)) * (1 - purity / 100);
+      liquidContaminantOut = gasContaminantIn - gasContaminantOut;
+    } else {
+      liquidContaminantOut = (waterOut / (purity / 100)) * (1 - purity / 100);
+      gasContaminantOut = liquidContaminantIn - liquidContaminantOut;
+    }
+
     computPointP();
     prints();
   }
@@ -82,6 +111,74 @@ class AbsorptionColumnMethod {
   //   computPointP();
   //   prints();
   // }
+  //
+  double yPoint(double xn) {
+    double part1 = xn * liquidPerGas;
+    double part2 = _fixedPoint.y;
+    double part3 = _fixedPoint.x * liquidPerGas;
+    return (part1 + part2 - part3);
+  }
+
+  List<math.Point> plotEquilibrium(int numberOfPoints, int henry) {
+    double x, y;
+    List<math.Point> plot = List<math.Point>();
+
+    for (double xi = 0.0; xi <= 1.01; xi = xi + (1.0 / numberOfPoints)) {
+      x = xi;
+      y = henry * xi;
+
+      plot.add(math.Point(x, y));
+    }
+
+    return plot;
+  }
+
+  List<math.Point> opCurveConstructor(int numberOfPoints) {
+    double x, y;
+    List<math.Point> plot = List<math.Point>();
+
+    computPointP();
+
+    for (double xn = 0.0; xn <= 1.01; xn = xn + (1.0 / numberOfPoints)) {
+      if (xn < _fixedPoint.x && (xn + (1.0 / numberOfPoints)) < _fixedPoint.x) {
+        x = _fixedPoint.x;
+        y = _fixedPoint.y;
+      } else {
+        x = xn;
+        y = yPoint(xn);
+      }
+
+      plot.add(math.Point(x, y));
+    }
+
+    return plot;
+  }
+
+  List<math.Point> plotOpCurve(
+      List<math.Point> eqCurve, List<math.Point> opCurve) {
+    List<math.Point> viewOpCurve = [];
+
+    int index = -1;
+    eqCurve.forEach((math.Point point) {
+      index = index + 1;
+      if (columnType == 'absorption' && opCurve[index].y >= point.y) {
+        viewOpCurve.add(opCurve[index]);
+      }
+
+      if (columnType == 'stripping' && opCurve[index].y <= point.y) {
+        viewOpCurve.add(opCurve[index]);
+      }
+    });
+
+    // final index = -1;
+    // opCurve.where((math.Point number) => {
+
+    //   if (eqCurve[index].y <= number.y) return true;
+    //   return false;
+    // });
+
+    return viewOpCurve;
+  }
 
   void prints() {
     print('');

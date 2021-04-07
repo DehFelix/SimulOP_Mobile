@@ -39,14 +39,14 @@ class Results {
 class PlotPoints {
   final List<math.Point> equilibrium;
   final List<math.Point> operationCurve;
-  final List<math.Point> qline;
-  final List<math.Point> stages;
+  // final List<math.Point> qline;
+  // final List<math.Point> stages;
 
   PlotPoints({
     @required this.equilibrium,
     @required this.operationCurve,
-    @required this.qline,
-    @required this.stages,
+    // @required this.qline,
+    // @required this.stages,
   });
 }
 
@@ -105,6 +105,10 @@ class AbsorptionColumnResultsBloc {
 
   Map<Variable, double> get simpleValue => _simpleValue;
 
+  List<math.Point> plotEqCurve;
+  List<math.Point> operationCurve;
+  List<math.Point> plotOperationCurve;
+
   void updateAll() {
     _currentValue.add(
       {
@@ -122,14 +126,19 @@ class AbsorptionColumnResultsBloc {
       },
     );
 
-    // _plotPoints.add(
-    //   PlotPoints(
-    //       // equilibrium: _simulation.mcCabeThiele.plotEquilibrium(40),
-    //       // operationCurve: _simulation.mcCabeThiele.plotOpCurve(40),
-    //       // qline: _simulation.mcCabeThiele.plotQLine(),
-    //       // stages: _simulation.mcCabeThiele.plotStages(),
-    //       ),
-    // );
+    plotEqCurve = _simulation.absorptionColumn.plotEquilibrium(40, 1);
+    operationCurve = _simulation.absorptionColumn.opCurveConstructor(40);
+    plotOperationCurve =
+        _simulation.absorptionColumn.plotOpCurve(plotEqCurve, operationCurve);
+
+    _plotPoints.add(
+      PlotPoints(
+        equilibrium: plotEqCurve,
+        operationCurve: plotOperationCurve,
+        // qline: _simulation.mcCabeThiele.plotQLine(),
+        // stages: _simulation.mcCabeThiele.plotStages(),
+      ),
+    );
 
     // _results.add(
     //   Results(

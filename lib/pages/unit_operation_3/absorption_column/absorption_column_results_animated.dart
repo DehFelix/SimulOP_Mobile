@@ -352,19 +352,23 @@ class _ChartCard extends StatelessWidget {
   List<charts.Series<math.Point, double>> _createSeries(
       List<math.Point> dataEquilibrium,
       List<math.Point> dataOperationCurves,
-      List<math.Point> dataStages,
-      List<math.Point> qLine,
+      // List<math.Point> dataStages,
+      // List<math.Point> qLine,
       BuildContext context) {
-    List<math.Point> linha = [math.Point(0.0, 0.0), math.Point(1.0, 1.0)];
+    // List<math.Point> linha = [math.Point(0.0, 0.0), math.Point(1.0, 1.0)];
+    // List<math.Point> opCurverPoints = simulation.absorptionColumn.compareCurves(
+    //   dataEquilibrium,
+    //   dataOperationCurves,
+    // );
     return [
-      charts.Series<math.Point, double>(
-        id: "45° Line",
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        dashPatternFn: (_, __) => [10, 10],
-        domainFn: (math.Point point, _) => point.x,
-        measureFn: (math.Point point, _) => point.y,
-        data: linha,
-      ),
+      // charts.Series<math.Point, double>(
+      //   id: "45° Line",
+      //   colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+      //   dashPatternFn: (_, __) => [10, 10],
+      //   domainFn: (math.Point point, _) => point.x,
+      //   measureFn: (math.Point point, _) => point.y,
+      //   data: linha,
+      // ),
       charts.Series<math.Point, double>(
         id: AppLocalizations.of(context).graphEquilibrium,
         domainFn: (math.Point point, _) => point.x,
@@ -373,33 +377,36 @@ class _ChartCard extends StatelessWidget {
       ),
       charts.Series<math.Point, double>(
         id: AppLocalizations.of(context).graphOperationCurves,
-        colorFn: (_, __) => charts.MaterialPalette.gray.shade500,
-        dashPatternFn: (_, __) => [3, 3],
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        // dashPatternFn: (_, __) => [3, 3],
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataOperationCurves,
       ),
-      charts.Series<math.Point, double>(
-        id: AppLocalizations.of(context).graphStages,
-        colorFn: (_, __) => charts.MaterialPalette.gray.shade800,
-        domainFn: (math.Point point, _) => point.x,
-        measureFn: (math.Point point, _) => point.y,
-        data: dataStages,
-      ),
-      charts.Series<math.Point, double>(
-        id: AppLocalizations.of(context).graphStages,
-        colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
-        domainFn: (math.Point point, _) => point.x,
-        measureFn: (math.Point point, _) => point.y,
-        data: qLine,
-      ),
+      // charts.Series<math.Point, double>(
+      //   id: AppLocalizations.of(context).graphStages,
+      //   colorFn: (_, __) => charts.MaterialPalette.gray.shade800,
+      //   domainFn: (math.Point point, _) => point.x,
+      //   measureFn: (math.Point point, _) => point.y,
+      //   data: dataStages,
+      // ),
+      // charts.Series<math.Point, double>(
+      //   id: AppLocalizations.of(context).graphStages,
+      //   colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
+      //   domainFn: (math.Point point, _) => point.x,
+      //   measureFn: (math.Point point, _) => point.y,
+      //   data: qLine,
+      // ),
     ];
   }
 
   Widget _chart(PlotPoints plotPoints, BuildContext context) {
     return charts.LineChart(
-      _createSeries(plotPoints.equilibrium, plotPoints.operationCurve,
-          plotPoints.stages, plotPoints.qline, context),
+      _createSeries(
+          plotPoints.equilibrium,
+          plotPoints.operationCurve,
+          /*plotPoints.stages, plotPoints.qline*/
+          context),
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(

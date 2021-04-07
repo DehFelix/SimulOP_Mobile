@@ -46,10 +46,8 @@ class AbsorptionColumnInputData extends Model {
         break;
     }
 
-    variables.setInValues(15.0);
-
+    variables.setColumn(type);
     contaminantsInputDropDownItems(context);
-
     notifyListeners();
   }
 
@@ -67,7 +65,7 @@ class AbsorptionColumnInputData extends Model {
   void setContaminantOut(String cont) {
     if (cont != null) {
       columnInput.contaminantOut = cont;
-      variables.setInValues(15.0);
+      variables.setInValues();
       variables.setOutValues(double.parse(cont));
       variables.setFixedPoint();
     }
