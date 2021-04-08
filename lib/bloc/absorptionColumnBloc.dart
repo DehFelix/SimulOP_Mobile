@@ -39,15 +39,17 @@ class Results {
 class PlotPoints {
   final List<math.Point> equilibrium;
   final List<math.Point> operationCurve;
+  final math.Point plotPoints;
   // final List<math.Point> qline;
   // final List<math.Point> stages;
 
-  PlotPoints({
-    @required this.equilibrium,
-    @required this.operationCurve,
-    // @required this.qline,
-    // @required this.stages,
-  });
+  PlotPoints(
+      {@required this.equilibrium,
+      @required this.operationCurve,
+      @required this.plotPoints
+      // @required this.qline,
+      // @required this.stages,
+      });
 }
 
 enum Variable {
@@ -55,6 +57,7 @@ enum Variable {
   liquidFeed,
   purity,
   percentOfContaminant,
+  contaminantOut,
   feedFraction,
   feedCondition,
   refluxRatio,
@@ -116,7 +119,8 @@ class AbsorptionColumnResultsBloc {
         Variable.liquidFeed: _simulation.absorptionColumn.liquidFeed,
         Variable.percentOfContaminant:
             _simulation.absorptionColumn.percentOfContaminant,
-        Variable.purity: _simulation.absorptionColumn.purity,
+        Variable.contaminantOut:
+            _simulation.absorptionColumn.contaminantOut * 100,
         // Variable.feedCondition: 1,
         // Variable.feedFraction: _simulation.mcCabeThiele.feedZf,
         // Variable.pressure: _simulation.mixture.pressure / 1e5,
@@ -125,19 +129,20 @@ class AbsorptionColumnResultsBloc {
         // Variable.targetXB: _simulation.mcCabeThiele.targetXB,
       },
     );
-
-    plotEqCurve = _simulation.absorptionColumn.plotEquilibrium(40, 1);
-    operationCurve = _simulation.absorptionColumn.opCurveConstructor(40);
+    operationCurve = _simulation.absorptionColumn.opCurveConstructor();
+    plotEqCurve = _simulation.absorptionColumn.plotEquilibrium(
+        _simulation.absorptionColumn.columnType == 'absorption' ? 1.3 : 1.2);
     plotOperationCurve =
         _simulation.absorptionColumn.plotOpCurve(plotEqCurve, operationCurve);
 
     _plotPoints.add(
       PlotPoints(
-        equilibrium: plotEqCurve,
-        operationCurve: plotOperationCurve,
-        // qline: _simulation.mcCabeThiele.plotQLine(),
-        // stages: _simulation.mcCabeThiele.plotStages(),
-      ),
+          equilibrium: plotEqCurve,
+          operationCurve: plotOperationCurve,
+          plotPoints: _simulation.absorptionColumn.plotPoints
+          // qline: _simulation.mcCabeThiele.plotQLine(),
+          // stages: _simulation.mcCabeThiele.plotStages(),
+          ),
     );
 
     // _results.add(
@@ -165,8 +170,8 @@ class AbsorptionColumnResultsBloc {
         _simulation.absorptionColumn.percentOfContaminant = input.value;
         _simulation.absorptionColumn.updateFeedDependencies('contaminant');
         break;
-      case Variable.purity:
-        _simulation.absorptionColumn.purity = input.value;
+      case Variable.contaminantOut:
+        _simulation.absorptionColumn.contaminantOut = input.value / 100;
         _simulation.absorptionColumn.updatePurityDependencies();
         break;
 

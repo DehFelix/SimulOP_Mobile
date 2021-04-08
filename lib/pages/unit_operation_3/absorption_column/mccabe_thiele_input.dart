@@ -235,7 +235,7 @@
 //                           initialValue: model.columnInput.purity,
 //                           decoration: InputDecoration(
 //                               labelText: AppLocalizations.of(context).purity),
-//                           validator: model.columnInput.purityValidator,
+//                           validator: model.columnInput.outContaminantValidator,
 //                           onSaved: model.setPurity,
 //                         ),
 //                       )

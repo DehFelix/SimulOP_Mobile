@@ -197,10 +197,8 @@ class ColumnInput {
   }
 
   bool validateInput() {
-    if (purity == null ||
-        columnType == null ||
-        purity.isEmpty ||
-        columnType.isEmpty) return false;
+    if (contaminantOut == null || columnType == null || contaminantOut.isEmpty)
+      return false;
     return true;
   }
 

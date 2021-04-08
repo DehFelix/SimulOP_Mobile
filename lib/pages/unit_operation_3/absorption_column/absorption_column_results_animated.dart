@@ -194,7 +194,7 @@ class _AbsorptionColumnDrawer extends StatelessWidget {
     final _gasFeedSlider = Slider(
       min: 50,
       max: 200,
-      divisions: 30,
+      divisions: 60,
       value: currentValue[Variable.gasFeed],
       onChanged: (val) =>
           bloc.inputSink.add(InputVar(variable: Variable.gasFeed, value: val)),
@@ -203,7 +203,7 @@ class _AbsorptionColumnDrawer extends StatelessWidget {
     final _liquidFeedSlider = Slider(
       min: 50,
       max: 200,
-      divisions: 30,
+      divisions: 60,
       value: currentValue[Variable.liquidFeed],
       onChanged: (val) => bloc.inputSink
           .add(InputVar(variable: Variable.liquidFeed, value: val)),
@@ -212,47 +212,48 @@ class _AbsorptionColumnDrawer extends StatelessWidget {
     final _percentOfContaminantSlider = Slider(
       min: 0.5,
       max: 20,
-      divisions: 30,
+      divisions: 39,
       value: currentValue[Variable.percentOfContaminant],
       onChanged: (val) => bloc.inputSink
           .add(InputVar(variable: Variable.percentOfContaminant, value: val)),
     );
 
     final _puritySlider = Slider(
-      min: 85,
-      max: 99.99,
-      divisions: 30,
-      value: currentValue[Variable.purity],
-      onChanged: (val) =>
-          bloc.inputSink.add(InputVar(variable: Variable.purity, value: val)),
+      min: 0.05,
+      max: 5.00,
+      divisions: 99,
+      value: currentValue[Variable.contaminantOut],
+      onChanged: (val) => bloc.inputSink
+          .add(InputVar(variable: Variable.contaminantOut, value: val)),
     );
 
     return Column(
       children: <Widget>[
-        ListTile(
-          title: Text(
-              'Vazão de Entrada de Gás (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
-          subtitle: _gasFeedSlider,
-          trailing: Text(currentValue[Variable.gasFeed].toStringAsFixed(2)),
-        ),
-        ListTile(
-          title: Text(
-              'Vazão de Entrada de Líquido (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
-          subtitle: _liquidFeedSlider,
-          trailing: Text(currentValue[Variable.liquidFeed].toStringAsFixed(2)),
-        ),
+        // ListTile(
+        //   title: Text(
+        //       'Vazão de Entrada de Gás (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
+        //   subtitle: _gasFeedSlider,
+        //   trailing: Text(currentValue[Variable.gasFeed].toStringAsFixed(2)),
+        // ),
+        // ListTile(
+        //   title: Text(
+        //       'Vazão de Entrada de Líquido (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
+        //   subtitle: _liquidFeedSlider,
+        //   trailing: Text(currentValue[Variable.liquidFeed].toStringAsFixed(2)),
+        // ),
         ListTile(
           title: Text(
               'Concentração de Contaminante na Entrada (%)' /*AppLocalizations.of(context).drawerLKFeed*/),
           subtitle: _percentOfContaminantSlider,
           trailing: Text(
-              currentValue[Variable.percentOfContaminant].toStringAsFixed(2)),
+              currentValue[Variable.percentOfContaminant].toStringAsFixed(3)),
         ),
         ListTile(
           title: Text(
-              'Pureza na Saída (%)' /*AppLocalizations.of(context).drawerLKFeed*/),
+              'Concentração Máxima de Contaminante na Saída (%)' /*AppLocalizations.of(context).drawerLKFeed*/),
           subtitle: _puritySlider,
-          trailing: Text(currentValue[Variable.purity].toStringAsFixed(2)),
+          trailing:
+              Text(currentValue[Variable.contaminantOut].toStringAsFixed(3)),
         )
       ],
     );
@@ -410,12 +411,12 @@ class _ChartCard extends StatelessWidget {
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
-        viewport: charts.NumericExtents(0.0, 1.0),
+        viewport: charts.NumericExtents(0.0, 0.32 /*plotPoints.plotPoints.y*/),
         tickProviderSpec: charts.BasicNumericTickProviderSpec(
             dataIsInWholeNumbers: false, desiredTickCount: 5),
       ),
       domainAxis: charts.NumericAxisSpec(
-        viewport: charts.NumericExtents(0.0, 1.0),
+        viewport: charts.NumericExtents(0.0, 0.32 /*plotPoints.plotPoints.x*/),
         tickProviderSpec: charts.BasicNumericTickProviderSpec(
             dataIsInWholeNumbers: false, desiredTickCount: 5),
       ),
@@ -430,7 +431,7 @@ class _ChartCard extends StatelessWidget {
 
   Widget _sliders(BuildContext context, Map<Variable, double> currentValue) {
     final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
-    final int _sliderDiv = 30;
+    final int _sliderDiv = 60;
 
     final _gasFeedSlider = Slider(
       min: 50,

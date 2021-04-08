@@ -24,6 +24,8 @@ class AbsorptionColumnMethod {
   double waterOut; // (kmol/h)
   int stageNumbers;
   Map<String, double> fixedPoint; // (x, y)
+  double numberOfPoints = 40;
+  math.Point plotPoints;
 
   math.Point _fixedPoint;
   math.Point get pointP => _fixedPoint;
@@ -96,11 +98,12 @@ class AbsorptionColumnMethod {
   }
 
   void updatePurityDependencies() {
+    purity = 1 - contaminantOut;
     if (columnType == 'absorption') {
-      gasContaminantOut = (airOut / (purity)) * (1 - purity);
+      gasContaminantOut = (airOut / (purity)) * contaminantOut;
       liquidContaminantOut = gasContaminantIn - gasContaminantOut;
     } else {
-      liquidContaminantOut = (waterOut / (purity)) * (1 - purity);
+      liquidContaminantOut = (waterOut / (purity)) * contaminantOut;
       gasContaminantOut = liquidContaminantIn - liquidContaminantOut;
     }
 
@@ -123,7 +126,7 @@ class AbsorptionColumnMethod {
     return (part1 + part2 - part3);
   }
 
-  List<math.Point> plotEquilibrium(int numberOfPoints, int henry) {
+  List<math.Point> plotEquilibrium(double henry) {
     double x, y;
     List<math.Point> plot = List<math.Point>();
 
@@ -137,7 +140,7 @@ class AbsorptionColumnMethod {
     return plot;
   }
 
-  List<math.Point> opCurveConstructor(int numberOfPoints) {
+  List<math.Point> opCurveConstructor() {
     double x, y;
     List<math.Point> plot = List<math.Point>();
 
@@ -150,6 +153,11 @@ class AbsorptionColumnMethod {
       } else {
         x = xn;
         y = yPoint(xn);
+        if (y >= gasContaminantIn / airFeed) {
+          print('esse é o ponto: $x, $y');
+          plotPoints = math.Point(y + 0.1, y + 0.1);
+          break;
+        }
       }
 
       plot.add(math.Point(x, y));
@@ -163,13 +171,13 @@ class AbsorptionColumnMethod {
     List<math.Point> viewOpCurve = [];
 
     int index = -1;
-    eqCurve.forEach((math.Point point) {
+    opCurve.forEach((math.Point point) {
       index = index + 1;
-      if (columnType == 'absorption' && opCurve[index].y >= point.y) {
+      if (columnType == 'absorption' && point.y >= eqCurve[index].y) {
         viewOpCurve.add(opCurve[index]);
       }
 
-      if (columnType == 'stripping' && opCurve[index].y <= point.y) {
+      if (columnType == 'stripping' && point.y <= eqCurve[index].y) {
         viewOpCurve.add(opCurve[index]);
       }
     });

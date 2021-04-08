@@ -385,7 +385,7 @@ class _SumaryCard extends StatelessWidget {
 
     if (model.columnInput.validateInput()) {
       purity =
-          "${AppLocalizations.of(context).desiredPurity} ${model.columnInput.purity}%\n";
+          "${AppLocalizations.of(context).desiredPurity} ${model.columnInput.contaminantOut}%\n";
       columnType =
           "${AppLocalizations.of(context).columnType}: ${model.columnInput.columnType}\n";
       liquid =
