@@ -5,7 +5,7 @@ import 'package:simulop_v1/pages/unit_operation_3/absorption_column/absorption_c
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
-import 'package:simulop_v1/pages/unit_operation_3/absorption_column/input_data_new.dart';
+import 'package:simulop_v1/pages/unit_operation_3/absorption_column/input_data.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
