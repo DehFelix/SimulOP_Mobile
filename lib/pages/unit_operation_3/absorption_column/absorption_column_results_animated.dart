@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+// import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:simulop_v1/locale/locales.dart';
 
 import 'package:simulop_v1/bloc/base_provider.dart';
 import 'package:simulop_v1/bloc/absorptionColumnBloc.dart';
-import 'package:simulop_v1/pages/helper_classes/animated_toast.dart';
+// import 'package:simulop_v1/pages/helper_classes/animated_toast.dart';
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
 
 final _headerTextStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
@@ -42,7 +42,7 @@ class AbsorptionColumnResultsAnimated extends StatelessWidget {
           appBar: _McCabeThieleResultsAppBar(),
           drawer: _AbsorptionColumnDrawer(),
           body: _mainBody(),
-          floatingActionButton: _FloatingButton(),
+          // floatingActionButton: _FloatingButton(),
         ),
       ),
     );
@@ -55,74 +55,75 @@ class AbsorptionColumnResultsAnimated extends StatelessWidget {
   }
 }
 
-class _FloatingButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
+// TODO ###############################################
+// class _FloatingButton extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
 
-    final List<SpeedDialChild> fabChildern = [
-      SpeedDialChild(
-        label: AppLocalizations.of(context).drawerReflxRatio.split(":")[0],
-        child: Center(child: Text("Rr")),
-        onTap: () {
-          AnimetedToast.createToast(
-            context,
-            title: AppLocalizations.of(context).drawerReflxRatio,
-            description: "Value:",
-            variableRange: Tween<double>(begin: 1.2, end: 10),
-            color: Theme.of(context).primaryColor,
-            duration: ToastDuration.medium,
-            pos: ToastPos.bottom,
-            updateVariable: (val) => bloc.inputSink
-                .add(InputVar(variable: Variable.refluxRatio, value: val)),
-            initialValue: bloc.simpleValue[Variable.refluxRatio],
-          );
-        },
-      ),
-      SpeedDialChild(
-        label: AppLocalizations.of(context).drawerLKFeed.split(":")[0],
-        child: Center(child: Text("Fz")),
-        onTap: () {
-          AnimetedToast.createToast(
-            context,
-            title: AppLocalizations.of(context).drawerLKFeed,
-            description: "Value:",
-            variableRange: Tween<double>(begin: 0.3, end: 0.7),
-            color: Theme.of(context).primaryColor,
-            duration: ToastDuration.medium,
-            updateVariable: (val) => bloc.inputSink
-                .add(InputVar(variable: Variable.feedFraction, value: val)),
-            initialValue: bloc.simpleValue[Variable.feedFraction],
-          );
-        },
-      ),
-      SpeedDialChild(
-        label: AppLocalizations.of(context).drawerFeedCond.split(":")[0],
-        child: Center(child: Text("Fc")),
-        onTap: () {
-          AnimetedToast.createToast(
-            context,
-            title: AppLocalizations.of(context).drawerFeedCond,
-            description: "Value:",
-            variableRange: Tween<double>(begin: -0.5, end: 1.5),
-            color: Theme.of(context).primaryColor,
-            duration: ToastDuration.long,
-            updateVariable: (val) => bloc.inputSink
-                .add(InputVar(variable: Variable.feedCondition, value: val)),
-            initialValue: bloc.simpleValue[Variable.feedCondition],
-          );
-        },
-      ),
-    ];
+//     final List<SpeedDialChild> fabChildern = [
+//       SpeedDialChild(
+//         label: AppLocalizations.of(context).drawerReflxRatio.split(":")[0],
+//         child: Center(child: Text("Rr")),
+//         onTap: () {
+//           AnimetedToast.createToast(
+//             context,
+//             title: AppLocalizations.of(context).drawerReflxRatio,
+//             description: "Value:",
+//             variableRange: Tween<double>(begin: 1.2, end: 10),
+//             color: Theme.of(context).primaryColor,
+//             duration: ToastDuration.medium,
+//             pos: ToastPos.bottom,
+//             updateVariable: (val) => bloc.inputSink
+//                 .add(InputVar(variable: Variable.refluxRatio, value: val)),
+//             initialValue: bloc.simpleValue[Variable.refluxRatio],
+//           );
+//         },
+//       ),
+//       SpeedDialChild(
+//         label: AppLocalizations.of(context).drawerLKFeed.split(":")[0],
+//         child: Center(child: Text("Fz")),
+//         onTap: () {
+//           AnimetedToast.createToast(
+//             context,
+//             title: AppLocalizations.of(context).drawerLKFeed,
+//             description: "Value:",
+//             variableRange: Tween<double>(begin: 0.3, end: 0.7),
+//             color: Theme.of(context).primaryColor,
+//             duration: ToastDuration.medium,
+//             updateVariable: (val) => bloc.inputSink
+//                 .add(InputVar(variable: Variable.feedFraction, value: val)),
+//             initialValue: bloc.simpleValue[Variable.feedFraction],
+//           );
+//         },
+//       ),
+//       SpeedDialChild(
+//         label: AppLocalizations.of(context).drawerFeedCond.split(":")[0],
+//         child: Center(child: Text("Fc")),
+//         onTap: () {
+//           AnimetedToast.createToast(
+//             context,
+//             title: AppLocalizations.of(context).drawerFeedCond,
+//             description: "Value:",
+//             variableRange: Tween<double>(begin: -0.5, end: 1.5),
+//             color: Theme.of(context).primaryColor,
+//             duration: ToastDuration.long,
+//             updateVariable: (val) => bloc.inputSink
+//                 .add(InputVar(variable: Variable.feedCondition, value: val)),
+//             initialValue: bloc.simpleValue[Variable.feedCondition],
+//           );
+//         },
+//       ),
+//     ];
 
-    return SpeedDial(
-      overlayColor: Colors.black,
-      overlayOpacity: 0.2,
-      animatedIcon: AnimatedIcons.menu_close,
-      children: fabChildern,
-    );
-  }
-}
+//     return SpeedDial(
+//       overlayColor: Colors.black,
+//       overlayOpacity: 0.2,
+//       animatedIcon: AnimatedIcons.menu_close,
+//       children: fabChildern,
+//     );
+//   }
+// }
 
 class _AbsorptionColumnDrawer extends StatelessWidget {
   Widget _variables(BuildContext context, Map<Variable, double> currentValue) {
