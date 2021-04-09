@@ -130,8 +130,7 @@ class AbsorptionColumnResultsBloc {
       },
     );
     operationCurve = _simulation.absorptionColumn.opCurveConstructor();
-    plotEqCurve = _simulation.absorptionColumn.plotEquilibrium(
-        _simulation.absorptionColumn.columnType == 'absorption' ? 1.3 : 1.2);
+    plotEqCurve = _simulation.absorptionColumn.plotEquilibrium();
     plotOperationCurve =
         _simulation.absorptionColumn.plotOpCurve(plotEqCurve, operationCurve);
 

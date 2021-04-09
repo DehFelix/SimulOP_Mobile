@@ -210,9 +210,9 @@ class _AbsorptionColumnDrawer extends StatelessWidget {
     );
 
     final _percentOfContaminantSlider = Slider(
-      min: 0.5,
-      max: 20,
-      divisions: 39,
+      min: 2,
+      max: 4,
+      divisions: 20,
       value: currentValue[Variable.percentOfContaminant],
       onChanged: (val) => bloc.inputSink
           .add(InputVar(variable: Variable.percentOfContaminant, value: val)),
@@ -220,8 +220,8 @@ class _AbsorptionColumnDrawer extends StatelessWidget {
 
     final _puritySlider = Slider(
       min: 0.05,
-      max: 5.00,
-      divisions: 99,
+      max: 1,
+      divisions: 95,
       value: currentValue[Variable.contaminantOut],
       onChanged: (val) => bloc.inputSink
           .add(InputVar(variable: Variable.contaminantOut, value: val)),
@@ -411,12 +411,12 @@ class _ChartCard extends StatelessWidget {
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
-        viewport: charts.NumericExtents(0.0, 0.32 /*plotPoints.plotPoints.y*/),
+        viewport: charts.NumericExtents(0.0, 0.08 /*plotPoints.plotPoints.y*/),
         tickProviderSpec: charts.BasicNumericTickProviderSpec(
             dataIsInWholeNumbers: false, desiredTickCount: 5),
       ),
       domainAxis: charts.NumericAxisSpec(
-        viewport: charts.NumericExtents(0.0, 0.32 /*plotPoints.plotPoints.x*/),
+        viewport: charts.NumericExtents(0.0, 0.08 /*plotPoints.plotPoints.x*/),
         tickProviderSpec: charts.BasicNumericTickProviderSpec(
             dataIsInWholeNumbers: false, desiredTickCount: 5),
       ),
@@ -564,18 +564,18 @@ class _ResultsCard extends StatelessWidget {
               builder: (context, snapshot) => RichText(
                 text: TextSpan(
                   children: <TextSpan>[
-                    TextSpan(
-                        text:
-                            "${AppLocalizations.of(context).alphaValue} ${snapshot.data.alpha}\n",
-                        style: _textStyle),
+                    // TextSpan(
+                    //     text:
+                    //         "${AppLocalizations.of(context).alphaValue} ${snapshot.data.alpha}\n",
+                    //     style: _textStyle),
                     TextSpan(
                         text:
                             "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
                         style: _textStyle),
-                    TextSpan(
-                        text:
-                            "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
-                        style: _textStyle),
+                    // TextSpan(
+                    //     text:
+                    //         "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
+                    //     style: _textStyle),
                   ],
                 ),
               ),

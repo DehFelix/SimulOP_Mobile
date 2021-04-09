@@ -10,34 +10,40 @@ class AbsorptionVariables extends Model {
   String columnType = 'absorption';
   double gasContaminantIn; // kmol/h;
   double gasContaminantOut; // kmol/h
-  double airFeed = 100; // kmol/h;
+  double airFeed = 150; // kmol/h;
   double airOut = 100; // kmol/h
   Map<String, double> fixedPoint; // (x, y)
-  double gasFeed = 100; // kmol/h
+  double gasFeed = 150; // kmol/h
   double purity; // (%)
-  double percentOfContaminantIn = 15.0; // (%)
+  double percentOfContaminantIn = 3.5; // (%)
   double contaminantOut; // (%)
   double liquidFeed = 100; // (kmol/h)
-  double liquidPerGas; // (undimensional)
+  double liquidPerGas = 100 / 150; // (undimensional)
   double liquidContaminantIn = 0.0; // (kmol/h)
   double liquidContaminantOut; // (kmol/h)
   double waterFeed = 100; // (kmol/h)
   double waterOut = 100; // (kmol/h)
+  double henryCte = 0.57;
 
   void setColumn(String column) {
     columnType = column;
+    henryCte = columnType == 'absorption' ? 0.57 : 1.43;
+    gasFeed = columnType == 'absorption' ? 150 : 100;
+    liquidFeed = columnType == 'absorption' ? 100 : 150;
   }
 
   void setInValues() {
-    liquidPerGas = liquidFeed / airFeed;
     if (columnType == 'absorption') {
       gasContaminantIn = gasFeed * (percentOfContaminantIn / 100);
       airFeed = gasFeed - gasContaminantIn;
+      waterFeed = liquidFeed;
     } else {
       // stripping case
       liquidContaminantIn = liquidFeed * (percentOfContaminantIn / 100);
       waterFeed = liquidFeed - liquidContaminantIn;
+      airFeed = gasFeed;
     }
+    liquidPerGas = waterFeed / airFeed;
   }
 
   // void setOutValues(double prt) {
