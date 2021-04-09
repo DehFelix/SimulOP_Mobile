@@ -16,10 +16,9 @@ final purityFormKey = GlobalKey<FormState>();
 final contaminantFormKey = GlobalKey<FormState>();
 final fluidInputsFormKey = GlobalKey<FormState>();
 
-final mixtureInputModel = MixtureInput();
 final columnInputModel = ColumnInput();
 
-class McCabeThieleMethodInput2 extends StatelessWidget {
+class AbsorptionColumnInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     helpItems = [
@@ -28,8 +27,7 @@ class McCabeThieleMethodInput2 extends StatelessWidget {
     ];
 
     return ScopedModel<AbsorptionColumnInputData>(
-      model: AbsorptionColumnInputData(
-          input: mixtureInputModel, columnInput: columnInputModel),
+      model: AbsorptionColumnInputData(columnInput: columnInputModel),
       child: Theme(
         data: ThemeData(primarySwatch: Colors.blueGrey),
         child: Scaffold(
@@ -38,13 +36,11 @@ class McCabeThieleMethodInput2 extends StatelessWidget {
             floatingActionButton:
                 ScopedModelDescendant<AbsorptionColumnInputData>(
               builder: (context, _, model) => FloatingActionButton(
-                child: Icon(model.getFabIcon),
+                child: Icon(model.getFabIcon(context)),
                 onPressed: () {
-                  if (!model.canCreateSimulation()) {
+                  if (!model.canCreateSimulation(context)) {
                     String erro =
-                        (model.getAlpha < 1.0 && model.getAlpha != 0.0)
-                            ? "HK more volatile than LK"
-                            : "Incomplete inputs";
+                        '${AppLocalizations.of(context).missingParameter}: "${model.columnInput.missingInputMessage}" !';
                     Scaffold.of(context).showSnackBar(SnackBar(
                       duration: Duration(seconds: 2),
                       content: Text(erro),
@@ -77,7 +73,6 @@ class McCabeThieleMethodInput2 extends StatelessWidget {
         Container(
           child: SizedBox(width: 250.0, child: _ColumnTypeRadio()),
         ),
-        // Container(child: SizedBox(width: 250.0, child: _ColumnInputCard())),
         Container(child: SizedBox(width: 250.0, child: _ColumnInputCard2())),
         Container(child: SizedBox(width: 250.0, child: _ColumnInputCard3())),
         _SumaryCard()
@@ -145,50 +140,6 @@ class _McCabeThieleInputAppBarState extends State<_McCabeThieleInputAppBar> {
   }
 }
 
-// class _ColumnInputCard extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       child: Form(
-//         key: purityFormKey,
-//         autovalidate: true,
-//         onChanged: () {
-//           if (purityFormKey.currentState.validate()) {
-//             purityFormKey.currentState.save();
-//           }
-//         },
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: <Widget>[
-//             ListTile(
-//                 leading: Icon(Icons.invert_colors_on),
-//                 title: Text(AppLocalizations.of(context).desiredPurity,
-//                     style: _headerTextStyle)),
-//             SizedBox(
-//                 width: 166,
-//                 child: Padding(
-//                     padding:
-//                         EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-//                     child: Column(children: <Widget>[
-//                       ScopedModelDescendant<AbsorptionColumnInputData>(
-//                         builder: (context, _, model) => TextFormField(
-//                           autocorrect: false,
-//                           keyboardType: TextInputType.number,
-//                           initialValue: model.columnInput.purity,
-//                           decoration: InputDecoration(
-//                               labelText: AppLocalizations.of(context).purity),
-//                           validator: model.columnInput.purityValidator,
-//                           onSaved: model.setPurity,
-//                         ),
-//                       ),
-//                     ]))),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class _ColumnInputCard3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -207,14 +158,14 @@ class _ColumnInputCard3 extends StatelessWidget {
             ListTile(
                 leading: Icon(Icons.invert_colors_on),
                 title: Text(
-                    /*AppLocalizations.of(context).desiredPurity*/ 'Selecione os Dados de Corrente',
-                    style: _headerTextStyle)),
+                  AppLocalizations.of(context).streamsSpecies,
+                  style: _headerTextStyle
+                )),
             Row(
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: Text(
-                      /*AppLocalizations.of(context).liquidLK*/ 'Líquido: '),
+                  child: Text(AppLocalizations.of(context).liquidInput),
                 ),
                 ScopedModelDescendant<AbsorptionColumnInputData>(
                   builder: (context, _, model) => DropdownButton(
@@ -231,8 +182,7 @@ class _ColumnInputCard3 extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: Text(
-                      /*AppLocalizations.of(context).liquidLK*/ 'Gás: '),
+                  child: Text(AppLocalizations.of(context).gasInput),
                 ),
                 ScopedModelDescendant<AbsorptionColumnInputData>(
                   builder: (context, _, model) => DropdownButton(
@@ -249,8 +199,7 @@ class _ColumnInputCard3 extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: Text(
-                      /*AppLocalizations.of(context).liquidLK*/ 'Contaminante: '),
+                  child: Text(AppLocalizations.of(context).contaminantInput),
                 ),
                 ScopedModelDescendant<AbsorptionColumnInputData>(
                   builder: (context, _, model) => DropdownButton(
@@ -289,8 +238,9 @@ class _ColumnInputCard2 extends StatelessWidget {
             ListTile(
                 leading: Icon(Icons.invert_colors_on),
                 title: Text(
-                    /*AppLocalizations.of(context).desiredPurity*/ 'Concentração Máxima de Contaminante na Saída',
-                    style: _headerTextStyle)),
+                    AppLocalizations.of(context).maxContaminantOut,
+                    style: _headerTextStyle)
+                ),
             SizedBox(
                 width: 166,
                 child: Padding(
@@ -303,7 +253,7 @@ class _ColumnInputCard2 extends StatelessWidget {
                             keyboardType: TextInputType.number,
                             initialValue: model.columnInput.contaminantOut,
                             decoration: InputDecoration(
-                                labelText: /*AppLocalizations.of(context).purity*/ 'Contaminante (%)'),
+                                labelText: AppLocalizations.of(context).contaminantPerCent),
                             validator: model.columnInput.purityValidator,
                             onSaved: (val) => model.setContaminantOut(val)),
                       )
@@ -339,7 +289,7 @@ class _ColumnTypeCard extends State<_ColumnTypeRadio> {
               ScopedModelDescendant<AbsorptionColumnInputData>(
                   builder: (context, _, model) => ButtonBar(children: <Widget>[
                         Radio(
-                            value: AppLocalizations.of(context).absorptionInput,
+                            value: AppLocalizations.of(context).absorption,
                             groupValue: columnInputModel.columnType,
                             activeColor: Colors.green,
                             onChanged: (String val) {
@@ -350,7 +300,7 @@ class _ColumnTypeCard extends State<_ColumnTypeRadio> {
                           child: Text(AppLocalizations.of(context).absorption),
                         ),
                         Radio(
-                            value: AppLocalizations.of(context).strippingInput,
+                            value: AppLocalizations.of(context).stripping,
                             groupValue: columnInputModel.columnType,
                             activeColor: Colors.green,
                             onChanged: (val) {
@@ -382,18 +332,20 @@ class _SumaryCard extends StatelessWidget {
     String liquid;
     String gas;
     String contaminant;
+    String hypothesis;
 
-    if (model.columnInput.validateInput()) {
+    if (model.columnInput.validateInput(context)) {
       purity =
-          "${AppLocalizations.of(context).desiredPurity} ${model.columnInput.contaminantOut}%\n";
+          "${AppLocalizations.of(context).desiredPurity} ${100 - double.parse(model.columnInput.contaminantOut)}%\n";
       columnType =
           "${AppLocalizations.of(context).columnType}: ${model.columnInput.columnType}\n";
       liquid =
-          "Liquid Flow: ${model.columnInput?.liquid?.name != null ? model.columnInput.liquid.name : "not selected"}\n";
+          "${AppLocalizations.of(context).liquidStream} ${model.columnInput?.liquid?.name != null ? model.columnInput.liquid.name : "not selected"}\n";
       gas =
-          "Gas Flow: ${model.columnInput?.gas?.name != null ? model.columnInput.gas.name : "not selected"}\n";
+          "${AppLocalizations.of(context).gasStream} ${model.columnInput?.gas?.name != null ? model.columnInput.gas.name : "not selected"}\n";
       contaminant =
-          "Contaminant: ${model.columnInput?.contaminant?.name != null ? model.columnInput.contaminant.name : "not selected"}\n";
+          "${AppLocalizations.of(context).contaminant} ${model.columnInput?.contaminant?.name != null ? model.columnInput.contaminant.name : "not selected"}\n";
+      hypothesis = "${AppLocalizations.of(context).hypothesis} ${AppLocalizations.of(context).dilutedSolutions}";
     }
 
     return TextSpan(children: <TextSpan>[
@@ -402,6 +354,7 @@ class _SumaryCard extends StatelessWidget {
       TextSpan(text: liquid, style: _textStyle),
       TextSpan(text: gas, style: _textStyle),
       TextSpan(text: contaminant, style: _textStyle),
+      TextSpan(text: hypothesis, style: _textStyle),
     ]);
   }
 

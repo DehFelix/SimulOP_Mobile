@@ -22,7 +22,7 @@ enum MaterialOptions {
 
 enum ContaminantsOptions {
   benzene,
-  acetone,
+  ethylAlcohol
 }
 
 class LiquidHelper {
@@ -110,17 +110,12 @@ class GasesHelper {
 
 class ContaminantsHelper {
   static final List<ContaminantsOptions> contaminantsAbsorption = [
-    ContaminantsOptions.acetone,
+    ContaminantsOptions.ethylAlcohol,
   ];
 
   static final List<ContaminantsOptions> contaminantsStripping = [
     ContaminantsOptions.benzene,
   ];
-
-  // static final List<ContaminantsOptions> contaminantsAbsorptionColumn = [
-  //   ContaminantsOptions.acetone,
-  //   ContaminantsOptions.benzene
-  // ];
 
   final ContaminantsOptions contaminant;
   String name;
@@ -128,15 +123,15 @@ class ContaminantsHelper {
   ContaminantsHelper({@required this.contaminant, BuildContext context}) {
     if (context != null) {
       switch (contaminant) {
-        case ContaminantsOptions.acetone:
-          name = AppLocalizations.of(context).acetone;
+        case ContaminantsOptions.ethylAlcohol:
+          name = AppLocalizations.of(context).ethylAlcohol;
           break;
         case ContaminantsOptions.benzene:
           name = AppLocalizations.of(context).benzene;
           break;
       }
     } else {
-      name = "Acetone";
+      name = 'Ethyl Alcohol';
     }
   }
 }

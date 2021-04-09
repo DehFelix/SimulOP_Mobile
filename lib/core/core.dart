@@ -27,4 +27,4 @@ export 'package:simulop_v1/core/units/units_uo2/double_pipe_heatx.dart';
 
 // Units III
 export 'package:simulop_v1/core/units/units_uo3/mccabe_thiele_metod.dart';
-export 'package:simulop_v1/core/units/units_uo3/absorption_column_metod.dart';
+export 'package:simulop_v1/core/units/units_uo3/absorption_column_method.dart';

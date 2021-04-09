@@ -22,7 +22,7 @@ class AbsorptionColumnMethod {
   double liquidContaminantOut; // (kmol/h)
   double waterFeed; // (kmol/h)
   double waterOut; // (kmol/h)
-  int stageNumbers;
+  double stageNumbers = 0.0;
   Map<String, double> fixedPoint; // (x, y)
   double numberOfPoints = 400;
   double henryCte;
@@ -52,11 +52,10 @@ class AbsorptionColumnMethod {
     henryCte = absorptionColumnData.henryCte;
 
     computPointP();
-    prints();
   }
 
   void computPointP() {
-    if (columnType == 'absorption') {
+    if (columnType == 'Absorption') {
       double x0;
       double y1;
 
@@ -81,7 +80,7 @@ class AbsorptionColumnMethod {
   }
 
   void updateFeedDependencies(fromWho) {
-    if (columnType == 'absorption') {
+    if (columnType == 'Absorption') {
       if (fromWho == 'gasFeed' || fromWho == 'contaminant') {
         gasContaminantIn = gasFeed * percentOfContaminant / 100;
         airFeed = gasFeed - gasContaminantIn;
@@ -108,36 +107,12 @@ class AbsorptionColumnMethod {
 
     liquidPerGas = waterFeed / airFeed;
 
-    // if ((fromWho == 'gasFeed' || fromWho == 'contaminant') &&
-    //     columnType == 'absorption') {
-    //   gasContaminantIn = gasFeed * percentOfContaminant / 100;
-    //   airFeed = gasFeed - gasContaminantIn;
-    //   airOut = airFeed;
-    //   gasContaminantOut = airOut * (contaminantOut) / (1 - contaminantOut);
-    //   liquidContaminantOut = gasContaminantIn - gasContaminantOut;
-    // }
-
-    // if ((fromWho == 'liquidFeed' || fromWho == 'contaminant') &&
-    //     columnType == 'stripping') {
-    //   liquidContaminantIn = liquidFeed * percentOfContaminant / 100;
-    //   waterFeed = liquidFeed - liquidContaminantIn;
-    //   waterOut = waterFeed;
-    //   liquidContaminantOut = waterOut * (contaminantOut) / (1 - contaminantOut);
-    //   gasContaminantOut = liquidContaminantIn - liquidContaminantOut;
-    // }
-
-    // if (fromWho == 'liquidFeed' || fromWho == 'gasFeed') {
-    //   if (columnType == 'absorption')
-    //   liquidPerGas = waterFeed / airFeed;
-    // }
-
     computPointP();
-    prints();
   }
 
   void updatePurityDependencies() {
     purity = 1 - contaminantOut;
-    if (columnType == 'absorption') {
+    if (columnType == 'Absorption') {
       gasContaminantOut = (airOut / (purity)) * contaminantOut;
       liquidContaminantOut = gasContaminantIn - gasContaminantOut;
     } else {
@@ -146,17 +121,8 @@ class AbsorptionColumnMethod {
     }
 
     computPointP();
-    prints();
   }
 
-  // void updateContaminantDependencies() {
-  //   gasContaminantOut =
-  //       (airOut / (1 - (contaminantOut / 100))) * (contaminantOut / 100);
-  //   liquidContaminantOut = gasContaminantIn - gasContaminantOut;
-  //   computPointP();
-  //   prints();
-  // }
-  //
   double yPoint(double xn) {
     double part1 = xn * liquidPerGas;
     double part2 = _fixedPoint.y;
@@ -196,14 +162,10 @@ class AbsorptionColumnMethod {
         y = _fixedPoint.y;
         plot.add(math.Point(x, y));
       }
-      // if (xn < _fixedPoint.x && (xn + (1.0 / numberOfPoints)) < _fixedPoint.x) {
-      //   x = _fixedPoint.x;
-      //   y = _fixedPoint.y;
-      // }
       else {
         x = xn;
         y = yPoint(xn);
-        if (columnType == 'absorption' && y >= gasContaminantIn / airFeed) {
+        if (columnType == 'Absorption' && y >= gasContaminantIn / airFeed) {
           y = gasContaminantIn / airFeed;
           x = liquidContaminantOut / waterFeed;
           // x = (y - _fixedPoint.y) * (airFeed / waterFeed);
@@ -212,11 +174,11 @@ class AbsorptionColumnMethod {
           shouldBreak = true;
         }
 
-        if (columnType == 'stripping' &&
+        if (columnType == 'Stripping' &&
             xn >= liquidContaminantIn / waterFeed) {
           x = liquidContaminantIn / waterFeed;
-          y = yPoint(x);
-          // y = gasContaminantOut / airFeed;
+          // y = yPoint(x);
+          y = gasContaminantOut / airFeed;
           print('esse é o pont: $x, $y');
           lastPoint = math.Point(x, y);
           shouldBreak = true;
@@ -244,13 +206,6 @@ class AbsorptionColumnMethod {
         return;
       }
 
-      // if (operationPoint == lastPoint) {
-      //   viewOpCurve.add(operationPoint);
-
-      //   shouldBreak = true;
-      //   return;
-      // }
-
       if (operationPoint == lastPoint) {
         if (lastPoint.y > interceptPoint.y && lastPoint.x > interceptPoint.x) {
           if (interceptPoint.y < 0)
@@ -266,34 +221,15 @@ class AbsorptionColumnMethod {
         return;
       }
 
-      // if (operationPoint == lastPoint) {
-      //   double xn = lastPoint.x;
-      //   double yn = henryCte * xn;
-      //   if (columnType == 'absorption') {
-      //     if (lastPoint.y > yn)
-      //       viewOpCurve.add(operationPoint);
-      //     else
-      //       viewOpCurve.add(math.Point(xn, yn));
-      //   } else {
-      //     if (lastPoint.y < yn)
-      //       viewOpCurve.add(operationPoint);
-      //     else
-      //       viewOpCurve.add(math.Point(xn, yn));
-      //   }
-
-      //   shouldBreak = true;
-      //   return;
-      // }
-
       eqCurve.forEach((math.Point equilibriumPoint) {
         if (shouldBreak) return;
 
         if (operationPoint.x == equilibriumPoint.x) {
-          if (columnType == 'absorption' &&
+          if (columnType == 'Absorption' &&
               operationPoint.y < equilibriumPoint.y) {
             shouldBreak = true;
             viewOpCurve.add(interceptPoint);
-          } else if (columnType == 'stripping' &&
+          } else if (columnType == 'Stripping' &&
               operationPoint.y > equilibriumPoint.y) {
             shouldBreak = true;
             viewOpCurve.add(interceptPoint);
@@ -301,37 +237,51 @@ class AbsorptionColumnMethod {
             viewOpCurve.add(operationPoint);
         }
       });
-// henryCte
-      // if (columnType == 'stripping' && point.y <= eqCurve[index].y) {
-      //   viewOpCurve.add(point);
-      // }
     });
-
-    // final index = -1;
-    // opCurve.where((math.Point number) => {
-
-    //   if (eqCurve[index].y <= number.y) return true;
-    //   return false;
-    // });
 
     return viewOpCurve;
   }
 
-  void prints() {
-    print('');
-    print('');
-    // print('gasFeed: $gasFeed');
-    // print('airFeed: $airFeed');
-    // print('airOut: $airOut');
-    // print('liquidFeed: $liquidFeed');
-    // print('liquidPerGas: $liquidPerGas');
-    // print('purity: $purity');
-    // print('percentOfContaminant: $percentOfContaminant');
-    // print('contaminantOut: $contaminantOut');
-    // print('gasContaminantIn: $gasContaminantIn');
-    // print('gasContaminantOut: $gasContaminantOut');
-    // print('liquidContaminantIn: $liquidContaminantIn');
-    // print('liquidContaminantOut: $liquidContaminantOut');
-    // print('fixedPoint: $_fixedPoint');
+  double eqCurveY(xn) {
+    return (henryCte * xn) / (1 + (xn * (1 - henryCte)));
+  }
+
+  double eqCurveX(yn) {
+    return yn / (henryCte + (henryCte * yn) - yn);
+  }
+
+  double opCurveX(yn) {
+    return (airFeed / waterFeed) * (yn - _fixedPoint.y) + _fixedPoint.x;
+  }
+
+  List<math.Point> plotStages(eqCurve, opCurve) {
+    List<math.Point> stagesCurve = [];
+    math.Point currentPoint = _fixedPoint; // operation line point
+    stagesCurve.add(currentPoint);
+    bool finish = false;
+
+    if (columnType == 'Absorption') {
+      while (!finish) {
+        currentPoint = math.Point(eqCurveX(currentPoint.y), currentPoint.y); // equilibrium curve point
+        stagesCurve.add(currentPoint);
+        stageNumbers = stagesCurve.length / 2;
+        currentPoint = math.Point(currentPoint.x, yPoint(currentPoint.x)); // operation line point
+        if (currentPoint.y < gasContaminantIn / airFeed && stageNumbers < 50) {
+          stagesCurve.add(currentPoint);
+        } else finish = true;
+      }
+    } else {
+      while (!finish) {
+        currentPoint = math.Point(currentPoint.x, eqCurveY(currentPoint.x)); // equilibrium curve point
+        stagesCurve.add(currentPoint);
+        stageNumbers = stagesCurve.length / 2;
+        currentPoint = math.Point(opCurveX(currentPoint.y), currentPoint.y); // operation line point
+        if (currentPoint.x < liquidContaminantIn / waterFeed && stageNumbers < 50) {
+          stagesCurve.add(currentPoint);
+        } else finish = true;
+      }
+    }
+
+    return stagesCurve;
   }
 }

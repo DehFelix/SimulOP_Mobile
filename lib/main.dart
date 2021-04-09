@@ -41,7 +41,7 @@ class SimulOPAPP extends StatelessWidget {
         "/pumpingOfFluidsInput": (context) => PumpingOfFluidsInput(),
         "/mcCabeThieleMethod": (context) => McCabeThieleMethodInput(),
         "/doublePipeHeatX": (context) => DoublePiPeInput(),
-        "/absorption_columns": (context) => McCabeThieleMethodInput2(),
+        "/absorption_columns": (context) => AbsorptionColumnInput(),
         "/about": (context) => DefaultPage(),
       },
     );

@@ -7,7 +7,7 @@ import 'package:scoped_model/scoped_model.dart';
 /// purity = pureza (%);
 /// gasIn = corrente gasoza (kmol/h);
 class AbsorptionVariables extends Model {
-  String columnType = 'absorption';
+  String columnType = 'Absorption';
   double gasContaminantIn; // kmol/h;
   double gasContaminantOut; // kmol/h
   double airFeed = 150; // kmol/h;
@@ -27,13 +27,13 @@ class AbsorptionVariables extends Model {
 
   void setColumn(String column) {
     columnType = column;
-    henryCte = columnType == 'absorption' ? 0.57 : 1.43;
-    gasFeed = columnType == 'absorption' ? 150 : 100;
-    liquidFeed = columnType == 'absorption' ? 100 : 150;
+    henryCte = columnType == 'Absorption' ? 0.57 : 1.43;
+    gasFeed = columnType == 'Absorption' ? 150 : 100;
+    liquidFeed = columnType == 'Absorption' ? 100 : 150;
   }
 
   void setInValues() {
-    if (columnType == 'absorption') {
+    if (columnType == 'Absorption') {
       gasContaminantIn = gasFeed * (percentOfContaminantIn / 100);
       airFeed = gasFeed - gasContaminantIn;
       waterFeed = liquidFeed;
@@ -46,19 +46,11 @@ class AbsorptionVariables extends Model {
     liquidPerGas = waterFeed / airFeed;
   }
 
-  // void setOutValues(double prt) {
-  //   purity = prt;
-  //   contaminantOut = 1 - (purity / 100);
-  //   airOut = airFeed;
-  //   gasContaminantOut = (airOut / (purity / 100)) * (1 - purity / 100);
-  //   liquidContaminantOut = gasContaminantIn - gasContaminantOut;
-  // }
-
   void setOutValues(double cntOut) {
     contaminantOut = cntOut / 100;
     purity = 1 - contaminantOut;
 
-    if (columnType == 'absorption') {
+    if (columnType == 'Absorption') {
       airOut = airFeed;
       gasContaminantOut = (airOut * contaminantOut / purity);
       liquidContaminantOut = gasContaminantIn - gasContaminantOut;

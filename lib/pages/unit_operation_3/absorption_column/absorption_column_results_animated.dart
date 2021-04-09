@@ -9,7 +9,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:simulop_v1/locale/locales.dart';
 
 import 'package:simulop_v1/bloc/base_provider.dart';
-// import 'package:simulop_v1/bloc/mcCabeResultsBloc.dart';
 import 'package:simulop_v1/bloc/absorptionColumnBloc.dart';
 import 'package:simulop_v1/pages/helper_classes/animated_toast.dart';
 import 'package:simulop_v1/pages/helper_classes/app_bar_menu_itens.dart';
@@ -38,9 +37,7 @@ class AbsorptionColumnResultsAnimated extends StatelessWidget {
           ),
       onDispose: (_, bloc) => bloc.dispose(),
       child: Theme(
-        data:
-            //Theme.of(context).copyWith(primaryColor: Colors.blueGrey),
-            ThemeData(primarySwatch: Colors.blueGrey),
+        data: ThemeData(primarySwatch: Colors.blueGrey),
         child: Scaffold(
           appBar: _McCabeThieleResultsAppBar(),
           drawer: _AbsorptionColumnDrawer(),
@@ -127,87 +124,9 @@ class _FloatingButton extends StatelessWidget {
   }
 }
 
-// class _ChartSlider extends StatelessWidget {
-//   final int _sliderDiv = 40;
-
-//   Widget _sliders(BuildContext context, Map<Variable, double> currentValue) {
-//     final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
-
-//     final _gasFeedSlider = Slider(
-//       min: 50,
-//       max: 200,
-//       divisions: _sliderDiv,
-//       value: currentValue[Variable.gasFeed],
-//       onChanged: (val) =>
-//           bloc.inputSink.add(InputVar(variable: Variable.gasFeed, value: val)),
-//     );
-
-//     final _liquidFeedSlider = Slider(
-//       min: 50,
-//       max: 200,
-//       divisions: _sliderDiv,
-//       value: currentValue[Variable.liquidFeed],
-//       onChanged: (val) => bloc.inputSink
-//           .add(InputVar(variable: Variable.liquidFeed, value: val)),
-//     );
-
-//     return Column(
-//       children: <Widget>[
-//         ListTile(
-//           title: Text(
-//               'Vazão de Entrada de Gás (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
-//           subtitle: _gasFeedSlider,
-//           trailing: Text(currentValue[Variable.gasFeed].toStringAsFixed(2)),
-//         ),
-//         ListTile(
-//           title: Text(
-//               'Vazão de Entrada de Líquido (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
-//           subtitle: _liquidFeedSlider,
-//           trailing: Text(currentValue[Variable.liquidFeed].toStringAsFixed(2)),
-//         ),
-//       ],
-//     );
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
-//     return Card(
-//       child: SizedBox(
-//           child: StreamBuilder<Map<Variable, double>>(
-//               stream: bloc.currentValue,
-//               builder: (context, snapshot) {
-//                 return (snapshot.hasError || !snapshot.hasData)
-//                     ? CircularProgressIndicator()
-//                     : _sliders(context, snapshot.data);
-//               })),
-//     );
-//   }
-// }
-
 class _AbsorptionColumnDrawer extends StatelessWidget {
-  final int _sliderDiv = 40;
-
   Widget _variables(BuildContext context, Map<Variable, double> currentValue) {
     final bloc = Provider.of<AbsorptionColumnResultsBloc>(context);
-
-    final _gasFeedSlider = Slider(
-      min: 50,
-      max: 200,
-      divisions: 60,
-      value: currentValue[Variable.gasFeed],
-      onChanged: (val) =>
-          bloc.inputSink.add(InputVar(variable: Variable.gasFeed, value: val)),
-    );
-
-    final _liquidFeedSlider = Slider(
-      min: 50,
-      max: 200,
-      divisions: 60,
-      value: currentValue[Variable.liquidFeed],
-      onChanged: (val) => bloc.inputSink
-          .add(InputVar(variable: Variable.liquidFeed, value: val)),
-    );
 
     final _percentOfContaminantSlider = Slider(
       min: 2,
@@ -229,28 +148,14 @@ class _AbsorptionColumnDrawer extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        // ListTile(
-        //   title: Text(
-        //       'Vazão de Entrada de Gás (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
-        //   subtitle: _gasFeedSlider,
-        //   trailing: Text(currentValue[Variable.gasFeed].toStringAsFixed(2)),
-        // ),
-        // ListTile(
-        //   title: Text(
-        //       'Vazão de Entrada de Líquido (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
-        //   subtitle: _liquidFeedSlider,
-        //   trailing: Text(currentValue[Variable.liquidFeed].toStringAsFixed(2)),
-        // ),
         ListTile(
-          title: Text(
-              'Concentração de Contaminante na Entrada (%)' /*AppLocalizations.of(context).drawerLKFeed*/),
+          title: Text(AppLocalizations.of(context).contaminantIn),
           subtitle: _percentOfContaminantSlider,
           trailing: Text(
               currentValue[Variable.percentOfContaminant].toStringAsFixed(3)),
         ),
         ListTile(
-          title: Text(
-              'Concentração Máxima de Contaminante na Saída (%)' /*AppLocalizations.of(context).drawerLKFeed*/),
+          title: Text(AppLocalizations.of(context).contaminantOut),
           subtitle: _puritySlider,
           trailing:
               Text(currentValue[Variable.contaminantOut].toStringAsFixed(3)),
@@ -353,23 +258,9 @@ class _ChartCard extends StatelessWidget {
   List<charts.Series<math.Point, double>> _createSeries(
       List<math.Point> dataEquilibrium,
       List<math.Point> dataOperationCurves,
-      // List<math.Point> dataStages,
-      // List<math.Point> qLine,
+      List<math.Point> dataStages,
       BuildContext context) {
-    // List<math.Point> linha = [math.Point(0.0, 0.0), math.Point(1.0, 1.0)];
-    // List<math.Point> opCurverPoints = simulation.absorptionColumn.compareCurves(
-    //   dataEquilibrium,
-    //   dataOperationCurves,
-    // );
     return [
-      // charts.Series<math.Point, double>(
-      //   id: "45° Line",
-      //   colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-      //   dashPatternFn: (_, __) => [10, 10],
-      //   domainFn: (math.Point point, _) => point.x,
-      //   measureFn: (math.Point point, _) => point.y,
-      //   data: linha,
-      // ),
       charts.Series<math.Point, double>(
         id: AppLocalizations.of(context).graphEquilibrium,
         domainFn: (math.Point point, _) => point.x,
@@ -379,53 +270,36 @@ class _ChartCard extends StatelessWidget {
       charts.Series<math.Point, double>(
         id: AppLocalizations.of(context).graphOperationCurves,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        // dashPatternFn: (_, __) => [3, 3],
         domainFn: (math.Point point, _) => point.x,
         measureFn: (math.Point point, _) => point.y,
         data: dataOperationCurves,
       ),
-      // charts.Series<math.Point, double>(
-      //   id: AppLocalizations.of(context).graphStages,
-      //   colorFn: (_, __) => charts.MaterialPalette.gray.shade800,
-      //   domainFn: (math.Point point, _) => point.x,
-      //   measureFn: (math.Point point, _) => point.y,
-      //   data: dataStages,
-      // ),
-      // charts.Series<math.Point, double>(
-      //   id: AppLocalizations.of(context).graphStages,
-      //   colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
-      //   domainFn: (math.Point point, _) => point.x,
-      //   measureFn: (math.Point point, _) => point.y,
-      //   data: qLine,
-      // ),
+      charts.Series<math.Point, double>(
+        id: AppLocalizations.of(context).graphStages,
+        colorFn: (_, __) => charts.MaterialPalette.gray.shade800,
+        domainFn: (math.Point point, _) => point.x,
+        measureFn: (math.Point point, _) => point.y,
+        data: dataStages,
+      ),
     ];
   }
 
   Widget _chart(PlotPoints plotPoints, BuildContext context) {
     return charts.LineChart(
-      _createSeries(
-          plotPoints.equilibrium,
-          plotPoints.operationCurve,
-          /*plotPoints.stages, plotPoints.qline*/
-          context),
+      _createSeries(plotPoints.equilibrium, plotPoints.operationCurve,
+          plotPoints.plotStages, context),
       animate: false,
       defaultInteractions: false,
       primaryMeasureAxis: charts.NumericAxisSpec(
-        viewport: charts.NumericExtents(0.0, 0.08 /*plotPoints.plotPoints.y*/),
+        viewport: charts.NumericExtents(0.0, 0.08),
         tickProviderSpec: charts.BasicNumericTickProviderSpec(
             dataIsInWholeNumbers: false, desiredTickCount: 5),
       ),
       domainAxis: charts.NumericAxisSpec(
-        viewport: charts.NumericExtents(0.0, 0.08 /*plotPoints.plotPoints.x*/),
+        viewport: charts.NumericExtents(0.0, 0.08),
         tickProviderSpec: charts.BasicNumericTickProviderSpec(
             dataIsInWholeNumbers: false, desiredTickCount: 5),
       ),
-      // behaviors: [
-      //   charts.SeriesLegend(
-      //     position: charts.BehaviorPosition.top,
-      //     cellPadding: EdgeInsets.all(4.0),
-      //   ),
-      // ],
     );
   }
 
@@ -454,14 +328,12 @@ class _ChartCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         ListTile(
-          title: Text(
-              'Vazão de Entrada de Gás (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
+          title: Text(AppLocalizations.of(context).inletGasFlow),
           subtitle: _gasFeedSlider,
           trailing: Text(currentValue[Variable.gasFeed].toStringAsFixed(2)),
         ),
         ListTile(
-          title: Text(
-              'Vazão de Entrada de Líquido (kmol/h)' /*AppLocalizations.of(context).drawerLKFeed*/),
+          title: Text(AppLocalizations.of(context).inletLiquidFlow),
           subtitle: _liquidFeedSlider,
           trailing: Text(currentValue[Variable.liquidFeed].toStringAsFixed(2)),
         ),
@@ -492,7 +364,7 @@ class _ChartCard extends StatelessWidget {
                   child: RotatedBox(
                       quarterTurns: 3,
                       child: Text(
-                        /*AppLocalizations.of(context).mcCabThieleFunctionAxis*/ 'Vapor Fraction',
+                        AppLocalizations.of(context).vaporFraction,
                         style: TextStyle(color: Colors.black87),
                       )),
                 ),
@@ -515,7 +387,7 @@ class _ChartCard extends StatelessWidget {
             ],
           ),
           Text(
-            /*AppLocalizations.of(context).mcCabThieleDomainAxis*/ 'Liquid Fraction',
+            AppLocalizations.of(context).liquidFraction,
             style: TextStyle(color: Colors.black87),
           ),
           Padding(
@@ -559,23 +431,14 @@ class _ResultsCard extends StatelessWidget {
             padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
             child: StreamBuilder<Results>(
               stream: bloc.results,
-              initialData:
-                  Results(idialStage: "0", numberOfStages: "0", alpha: "0"),
+              initialData: Results(numberOfStages: "0"),
               builder: (context, snapshot) => RichText(
                 text: TextSpan(
                   children: <TextSpan>[
-                    // TextSpan(
-                    //     text:
-                    //         "${AppLocalizations.of(context).alphaValue} ${snapshot.data.alpha}\n",
-                    //     style: _textStyle),
                     TextSpan(
                         text:
                             "${AppLocalizations.of(context).resultsNumberOfStages} ${snapshot.data.numberOfStages}\n",
                         style: _textStyle),
-                    // TextSpan(
-                    //     text:
-                    //         "${AppLocalizations.of(context).resultsIdialFeed} ${snapshot.data.idialStage}\n",
-                    //     style: _textStyle),
                   ],
                 ),
               ),

@@ -10,10 +10,9 @@ import 'package:simulop_v1/pages/unit_operation_3/absorption_column/setupColumn.
 final variables = AbsorptionVariables();
 
 class AbsorptionColumnInputData extends Model {
-  final MixtureInput input;
   final ColumnInput columnInput;
 
-  AbsorptionColumnInputData({this.input, this.columnInput});
+  AbsorptionColumnInputData({this.columnInput});
 
   static AbsorptionColumnInputData of(BuildContext context) =>
       ScopedModel.of<AbsorptionColumnInputData>(context);
@@ -37,11 +36,11 @@ class AbsorptionColumnInputData extends Model {
     columnInput.columnType = type;
     columnInput.contaminant = null;
     switch (type) {
-      case 'absorption':
+      case 'Absorption':
         columnInput.contaminantsList =
             ContaminantsHelper.contaminantsAbsorption;
         break;
-      case 'stripping':
+      case 'Stripping':
         columnInput.contaminantsList = ContaminantsHelper.contaminantsStripping;
         break;
     }
@@ -50,17 +49,6 @@ class AbsorptionColumnInputData extends Model {
     contaminantsInputDropDownItems(context);
     notifyListeners();
   }
-
-  // void setPurity(String prt) {
-  //   if (prt != null) {
-  //     columnInput.purity = prt;
-  //     variables.setInValues(15.0);
-  //     variables.setOutValues(double.parse(prt));
-  //     variables.setFixedPoint();
-  //   }
-
-  //   notifyListeners();
-  // }
 
   void setContaminantOut(String cont) {
     if (cont != null) {
@@ -88,54 +76,10 @@ class AbsorptionColumnInputData extends Model {
     notifyListeners();
   }
 
-  double get getAlpha {
-    if (input.validateInput()) {
-      var tempMixture = core.BinaryMixture(
-          core.Liquid(
-              material: core.Inicializer.liquidMaterial(input.liquidLK),
-              temperature: 298.0),
-          core.Liquid(
-              material: core.Inicializer.liquidMaterial(input.liquidHK),
-              temperature: 298.0),
-          0.5,
-          298.0,
-          1e5);
-      return tempMixture.alpha;
-    } else {
-      return 0.0;
-    }
+  bool canCreateSimulation(context) {
+    if (columnInput.validateInput(context)) return true;
+    return false;
   }
-
-  bool canCreateSimulation() {
-    return true;
-    // if (input.validateInput() && getAlpha > 1.0) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-  }
-
-  // McCabeThieleSimulation createSimulation() {
-  //   final liquidLK = core.Liquid(
-  //       material: core.Inicializer.liquidMaterial(input.liquidLK),
-  //       temperature: 298.0);
-  //   final liquidHK = core.Liquid(
-  //       material: core.Inicializer.liquidMaterial(input.liquidHK),
-  //       temperature: 298.0);
-  //   final mixture = core.BinaryMixture(liquidLK, liquidHK, 0.5, 298.0, 1e5);
-
-  //   final mcCabeThiele =
-  //       core.McCabeThieleMethod(mixture, 0.9, 0.1, 0.5, 1.0, 3.0);
-
-  //   final McCabeThieleSimulation simulation = McCabeThieleSimulation(
-  //     liquidLK: liquidLK,
-  //     liquidHK: liquidHK,
-  //     mixture: mixture,
-  //     mcCabeThiele: mcCabeThiele,
-  //   );
-
-  //   return simulation;
-  // }
 
   AbsorptionColumnSimulation createSimulation() {
     final absorptionColumn = core.AbsorptionColumnMethod(variables);
@@ -149,8 +93,8 @@ class AbsorptionColumnInputData extends Model {
     return simulation;
   }
 
-  IconData get getFabIcon {
-    if (canCreateSimulation()) {
+  IconData getFabIcon(context) {
+    if (canCreateSimulation(context)) {
       return Icons.send;
     } else {
       return Icons.not_interested;
@@ -159,8 +103,9 @@ class AbsorptionColumnInputData extends Model {
 }
 
 class ColumnInput {
+  String missingInputMessage;
   String purity;
-  String columnType = 'absorption';
+  String columnType = 'Absorption';
   LiquidHelper liquid;
   GasesHelper gas;
   ContaminantsHelper contaminant;
@@ -170,9 +115,9 @@ class ColumnInput {
   List<DropdownMenuItem<ContaminantsHelper>> contaminantOptions;
   List<DropdownMenuItem<ContaminantsHelper>> dropdownList = [
     DropdownMenuItem<ContaminantsHelper>(
-        value: ContaminantsHelper(contaminant: ContaminantsOptions.acetone),
+        value: ContaminantsHelper(contaminant: ContaminantsOptions.ethylAlcohol),
         child: Text(
-          'Acetone',
+          'Ethyl Alcohol',
         ))
   ];
   List<DropdownMenuItem<LiquidHelper>> liquidOptions;
@@ -182,7 +127,7 @@ class ColumnInput {
     if (value.isEmpty) return null;
 
     double min = 0.05;
-    double max = 5.05;
+    double max = 1.0;
     double _number;
 
     _number = double.tryParse(value) ?? null;
@@ -190,15 +135,33 @@ class ColumnInput {
     if (_number == null) return "Not a number.";
 
     if (_number < min || _number > max) {
-      return "$min <= Purity <= $max %";
+      return "$min <= C <= $max %";
     }
 
     return null;
   }
 
-  bool validateInput() {
-    if (contaminantOut == null || columnType == null || contaminantOut.isEmpty)
+  bool validateInput(context) {
+    if (contaminantOut == null || contaminantOut.isEmpty) {
+      missingInputMessage = 'Concentração Máxima de Contaminante na Saída';
       return false;
+    }
+
+    if (gas == null) {
+      missingInputMessage = 'Gás';
+      return false;
+    }
+
+    if (liquid == null) {
+      missingInputMessage = 'Líquido';
+      return false;
+    }
+
+    if (contaminant == null) {
+      missingInputMessage = 'Contaminante';
+      return false;
+    }
+
     return true;
   }
 
@@ -238,64 +201,3 @@ class ColumnInput {
     return gasOptions;
   }
 }
-
-class MixtureInput {
-  LiquidHelper liquidLK;
-  LiquidHelper liquidHK;
-
-  List<DropdownMenuItem<LiquidHelper>> liquidOptions;
-
-  // Create the dropDown for the possibles fluids
-  List<DropdownMenuItem<LiquidHelper>> fluidInputDropDownItems(
-      BuildContext context) {
-    if (liquidOptions == null) {
-      liquidOptions =
-          LiquidHelper.liquidsMcCabeThiele.map((LiquidOptions liquidName) {
-        var liquid = LiquidHelper(liquid: liquidName, context: context);
-        return DropdownMenuItem<LiquidHelper>(
-          value: liquid,
-          child: Text(
-            liquid.name,
-          ),
-        );
-      }).toList();
-    }
-    return liquidOptions;
-  }
-
-  bool validateInput() {
-    if (liquidLK == null || liquidHK == null) return false;
-    if (liquidHK == liquidLK) return false;
-    return true;
-  }
-
-  @override
-  String toString() {
-    return "Liquid LK = $liquidHK \n" + "Liquid HK = $liquidHK \n";
-  }
-}
-
-// class SimulationCreator {
-//   AbsorptionColumnSimulation createSimulation(
-//       ColumnInput purity, ColumnInput columnType) {
-//     final liquidLK = core.Liquid(
-//         material: core.Inicializer.liquidMaterial(input.liquidLK),
-//         temperature: 298.0);
-//     final liquidHK = core.Liquid(
-//         material: core.Inicializer.liquidMaterial(input.liquidHK),
-//         temperature: 298.0);
-//     final mixture = core.BinaryMixture(liquidLK, liquidHK, 0.5, 298.0, 1e5);
-
-//     final mcCabeThiele =
-//         core.McCabeThieleMethod(mixture, 0.9, 0.1, 0.5, 1.0, 3.0);
-
-//     final McCabeThieleSimulation simulation = McCabeThieleSimulation(
-//       liquidLK: liquidLK,
-//       liquidHK: liquidHK,
-//       mixture: mixture,
-//       mcCabeThiele: mcCabeThiele,
-//     );
-
-//     return simulation;
-//   }
-// }
