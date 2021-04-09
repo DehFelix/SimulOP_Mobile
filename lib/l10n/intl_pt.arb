@@ -45,6 +45,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "ethylAlcohol": "Álcool Etílico",
+  "@ethylAlcohol": {
+    "type": "text",
+    "placeholders": {}
+  },
   "air": "Ar",
   "@air": {
     "type": "text",
@@ -222,6 +227,16 @@
   },
   "liquidInput": "Líquido:",
   "@liquidInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "gasInput": "Gás:",
+  "@gasInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminantInput": "Contaminante:",
+  "@contaminantInput": {
     "type": "text",
     "placeholders": {}
   },
@@ -682,6 +697,71 @@
   },
   "purity": "pureza",
   "@purity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "missingParameter": "Falta o parâmetro",
+  "@missingParameter": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "maxContaminantOut": "Concentração Máxima de Contaminante na Saída",
+  "@maxContaminantOut": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "streamsSpecies": "Selecione as Espécies Químicas nas Correntes",
+  "@streamsSpecies": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminantPerCent": "Contaminante (%)",
+  "@contaminantPerCent": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hypothesis": "Hipóteses:",
+  "@hypothesis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dilutedSolutions": "Soluções Diluídas",
+  "@dilutedSolutions": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminant": "Contaminante:",
+  "@contaminant": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminantIn": "Concentração de Contaminante na Entrada (%)",
+  "@contaminantIn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminantOut": "Concentração Máxima de Contaminante na Saída (%)",
+  "@contaminantOut": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "inletGasFlow": "Vazão de Gás na Entrada (kmol/h)",
+  "@inletGasFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "inletLiquidFlow": "Vazão de Líquido na Entrada (kmol/h)",
+  "@inletLiquidFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "vaporFraction": "Fração Molar de Vapor",
+  "@vaporFraction": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "liquidFraction": "Fração Molar de Líquido",
+  "@liquidFraction": {
     "type": "text",
     "placeholders": {}
   },

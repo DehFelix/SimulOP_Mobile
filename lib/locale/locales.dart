@@ -84,6 +84,13 @@ class AppLocalizations {
     );
   }
 
+  String get ethylAlcohol {
+    return Intl.message(
+      "Ethyl Alcohol",
+      name: "ethylAlcohol",
+    );
+  }
+
   String get air {
     return Intl.message(
       "Air",
@@ -363,6 +370,20 @@ class AppLocalizations {
     return Intl.message(
       "Liquid Input:",
       name: "liquidInput",
+    );
+  }
+
+  String get gasInput {
+    return Intl.message(
+      "Gas Input:",
+      name: "gasInput",
+    );
+  }
+
+  String get contaminantInput {
+    return Intl.message(
+      "Contaminant Input:",
+      name: "contaminantInput",
     );
   }
 
@@ -981,6 +1002,111 @@ class AppLocalizations {
     return Intl.message(
       "Desired Purity:",
       name: "desiredPurity",
+    );
+  }
+
+  String get missingParameter {
+    return Intl.message(
+      "Missing parameter",
+      name: "missingParameter",
+    );
+  }
+
+  String get maxContaminantOut {
+    return Intl.message(
+      "Maximum Contaminant Concentration at Output",
+      name: "maxContaminantOut",
+    );
+  }
+
+  String get streamsSpecies {
+    return Intl.message(
+      "Select the Chemical Species in the Streams",
+      name: "streamsSpecies",
+    );
+  }
+
+  String get contaminantPerCent {
+    return Intl.message(
+      "Contaminant (%)",
+      name: "contaminantPerCent",
+    );
+  }
+
+  String get hypothesis {
+    return Intl.message(
+      "Hypothesis:",
+      name: "hypothesis",
+    );
+  }
+
+  String get dilutedSolutions {
+    return Intl.message(
+      "Diluted Solutions",
+      name: "dilutedSolutions",
+    );
+  }
+
+  String get liquidStream {
+    return Intl.message(
+      "Liquid Stream:",
+      name: "liquidStream",
+    );
+  }
+
+  String get gasStream {
+    return Intl.message(
+      "Gas Stream:",
+      name: "gasStream",
+    );
+  }
+
+  String get contaminant {
+    return Intl.message(
+      "Contaminant:",
+      name: "contaminant",
+    );
+  }
+
+  String get contaminantIn {
+    return Intl.message(
+      "Contaminant Concentration at Entry (%)",
+      name: "contaminantIn",
+    );
+  }
+
+  String get contaminantOut {
+    return Intl.message(
+      "Contaminant Concentration at Output (%)",
+      name: "contaminantOut",
+    );
+  }
+
+  String get inletGasFlow {
+    return Intl.message(
+      "Inlet Gas Flow (kmol/h)",
+      name: "inletGasFlow",
+    );
+  }
+
+  String get inletLiquidFlow {
+    return Intl.message(
+      "Inlet Liquid Flow (kmol/h)",
+      name: "inletLiquidFlow",
+    );
+  }
+
+  String get vaporFraction {
+    return Intl.message(
+      "Mole Fraction in Vapor Phase",
+      name: "vaporFraction",
+    );
+  }
+
+  String get liquidFraction {
+    return Intl.message(
+      "Mole Fraction in Liquid Phase",
+      name: "liquidFraction",
     );
   }
 
