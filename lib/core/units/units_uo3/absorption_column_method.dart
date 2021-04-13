@@ -25,7 +25,7 @@ class AbsorptionColumnMethod {
   double stageNumbers = 0.0;
   Map<String, double> fixedPoint; // (x, y)
   double numberOfPoints = 400;
-  double henryCte;
+  double kCte;
   math.Point interceptPoint;
   math.Point plotPoints;
   math.Point lastPoint;
@@ -49,7 +49,7 @@ class AbsorptionColumnMethod {
     liquidContaminantIn = absorptionColumnData.liquidContaminantIn;
     waterFeed = absorptionColumnData.waterFeed;
     waterOut = absorptionColumnData.waterOut;
-    henryCte = absorptionColumnData.henryCte;
+    kCte = absorptionColumnData.henryCte;
 
     computPointP();
   }
@@ -74,7 +74,7 @@ class AbsorptionColumnMethod {
     }
 
     double xP = xPoint();
-    double yP = xP * henryCte;
+    double yP = xP * kCte;
     interceptPoint = math.Point(xP, yP);
     // print('interceptPoint: $interceptPoint');
   }
@@ -132,7 +132,7 @@ class AbsorptionColumnMethod {
 
   double xPoint() {
     double part1 = (_fixedPoint.y * airFeed - _fixedPoint.x * waterFeed);
-    double part2 = (henryCte * airFeed - waterFeed);
+    double part2 = (kCte * airFeed - waterFeed);
     return part1 / part2;
   }
 
@@ -142,7 +142,7 @@ class AbsorptionColumnMethod {
 
     for (double xi = 0.0; xi <= 0.10; xi = xi + (1.0 / numberOfPoints)) {
       x = xi;
-      y = (henryCte * xi) / (1 + (xi * (1 - henryCte)));
+      y = (kCte * xi) / (1 + (xi * (1 - kCte)));
 
       plot.add(math.Point(x, y));
     }
@@ -168,8 +168,7 @@ class AbsorptionColumnMethod {
         if (columnType == 'Absorption' && y >= gasContaminantIn / airFeed) {
           y = gasContaminantIn / airFeed;
           x = liquidContaminantOut / waterFeed;
-          // x = (y - _fixedPoint.y) * (airFeed / waterFeed);
-          print('esse é o ponto: $x, $y');
+
           lastPoint = math.Point(x, y);
           shouldBreak = true;
         }
@@ -177,9 +176,8 @@ class AbsorptionColumnMethod {
         if (columnType == 'Stripping' &&
             xn >= liquidContaminantIn / waterFeed) {
           x = liquidContaminantIn / waterFeed;
-          // y = yPoint(x);
           y = gasContaminantOut / airFeed;
-          print('esse é o pont: $x, $y');
+
           lastPoint = math.Point(x, y);
           shouldBreak = true;
         }
@@ -243,11 +241,11 @@ class AbsorptionColumnMethod {
   }
 
   double eqCurveY(xn) {
-    return (henryCte * xn) / (1 + (xn * (1 - henryCte)));
+    return (kCte * xn) / (1 + (xn * (1 - kCte)));
   }
 
   double eqCurveX(yn) {
-    return yn / (henryCte + (henryCte * yn) - yn);
+    return yn / (kCte + (kCte * yn) - yn);
   }
 
   double opCurveX(yn) {

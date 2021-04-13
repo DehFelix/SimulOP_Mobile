@@ -31,7 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "benzene" : MessageLookupByLibrary.simpleMessage("Benzene"),
     "chartHeadLeg" : MessageLookupByLibrary.simpleMessage("Pump Head"),
     "chartNPSH" : MessageLookupByLibrary.simpleMessage("Avaliable NPSH"),
-    "columnType": MessageLookupByLibrary.simpleMessage("Column Type"),
+    "columnType": MessageLookupByLibrary.simpleMessage("Operation Type"),
     "compressorDescription" : MessageLookupByLibrary.simpleMessage("Not yet available."),
     "compressorName" : MessageLookupByLibrary.simpleMessage("Compressor"),
     "concrete" : MessageLookupByLibrary.simpleMessage("Concrete"),

@@ -986,7 +986,7 @@ class AppLocalizations {
 
   String get columnType {
     return Intl.message(
-      "Column Type",
+      "Operation Type",
       name: "columnType",
     );
   }

@@ -665,7 +665,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "columnType": "Column Type",
+  "columnType": "Operation Type",
   "@columnType": {
     "type": "text",
     "placeholders": {}
