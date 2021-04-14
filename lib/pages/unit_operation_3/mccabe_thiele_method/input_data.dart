@@ -119,7 +119,6 @@ class MixtureInput {
 
 class SimulationCreator {
   McCabeThieleSimulation createSimulation(MixtureInput input) {
-
     final liquidLK = core.Liquid(
         material: core.Inicializer.liquidMaterial(input.liquidLK),
         temperature: 298.0);

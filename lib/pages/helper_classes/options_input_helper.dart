@@ -9,11 +9,20 @@ enum LiquidOptions {
   oil,
 }
 
+enum GasesOptions {
+  air,
+}
+
 enum MaterialOptions {
   steel,
   copper,
   concrete,
   pvc,
+}
+
+enum ContaminantsOptions {
+  benzene,
+  ethylAlcohol
 }
 
 class LiquidHelper {
@@ -33,6 +42,10 @@ class LiquidHelper {
   static final List<LiquidOptions> liquidsMcCabeThiele = [
     LiquidOptions.benzene,
     LiquidOptions.toluene
+  ];
+
+  static final List<LiquidOptions> liquidsAbsorptionColumn = [
+    LiquidOptions.water
   ];
 
   final LiquidOptions liquid;
@@ -71,6 +84,55 @@ class LiquidHelper {
         return AppLocalizations.of(context).oil;
     }
     return "";
+  }
+}
+
+class GasesHelper {
+  static final List<GasesOptions> gasesAbsorptionColumn = [
+    GasesOptions.air,
+  ];
+
+  final GasesOptions gas;
+  String name;
+
+  GasesHelper({@required this.gas, BuildContext context}) {
+    if (context != null) {
+      switch (gas) {
+        case GasesOptions.air:
+          name = AppLocalizations.of(context).air;
+          break;
+      }
+    } else {
+      name = "";
+    }
+  }
+}
+
+class ContaminantsHelper {
+  static final List<ContaminantsOptions> contaminantsAbsorption = [
+    ContaminantsOptions.ethylAlcohol,
+  ];
+
+  static final List<ContaminantsOptions> contaminantsStripping = [
+    ContaminantsOptions.benzene,
+  ];
+
+  final ContaminantsOptions contaminant;
+  String name;
+
+  ContaminantsHelper({@required this.contaminant, BuildContext context}) {
+    if (context != null) {
+      switch (contaminant) {
+        case ContaminantsOptions.ethylAlcohol:
+          name = AppLocalizations.of(context).ethylAlcohol;
+          break;
+        case ContaminantsOptions.benzene:
+          name = AppLocalizations.of(context).benzene;
+          break;
+      }
+    } else {
+      name = 'Ethyl Alcohol';
+    }
   }
 }
 

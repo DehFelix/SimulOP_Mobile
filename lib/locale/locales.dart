@@ -70,10 +70,31 @@ class AppLocalizations {
     );
   }
 
-    String get oil {
+  String get oil {
     return Intl.message(
       "Oil",
       name: "oil",
+    );
+  }
+
+  String get acetone {
+    return Intl.message(
+      "Acetone",
+      name: "acetone",
+    );
+  }
+
+  String get ethylAlcohol {
+    return Intl.message(
+      "Ethyl Alcohol",
+      name: "ethylAlcohol",
+    );
+  }
+
+  String get air {
+    return Intl.message(
+      "Air",
+      name: "air",
     );
   }
 
@@ -255,8 +276,36 @@ class AppLocalizations {
 
   String get absorptionColumnDescription {
     return Intl.message(
-      "Not yet available",
+      "Coluna de absorção em construção",
       name: "absorptionColumnDescription",
+    );
+  }
+
+  String get absorption {
+    return Intl.message(
+      "Absorption",
+      name: "absorption",
+    );
+  }
+
+  String get absorptionInput {
+    return Intl.message(
+      "absorption",
+      name: "absorptionInput",
+    );
+  }
+
+  String get stripping {
+    return Intl.message(
+      "Stripping",
+      name: "stripping",
+    );
+  }
+
+  String get strippingInput {
+    return Intl.message(
+      "stripping",
+      name: "strippingInput",
     );
   }
 
@@ -321,6 +370,20 @@ class AppLocalizations {
     return Intl.message(
       "Liquid Input:",
       name: "liquidInput",
+    );
+  }
+
+  String get gasInput {
+    return Intl.message(
+      "Gas Input:",
+      name: "gasInput",
+    );
+  }
+
+  String get contaminantInput {
+    return Intl.message(
+      "Contaminant Input:",
+      name: "contaminantInput",
     );
   }
 
@@ -900,24 +963,150 @@ class AppLocalizations {
     );
   }
 
-    String get doublePipeFunctionLenghtAxis {
+  String get doublePipeFunctionLenghtAxis {
     return Intl.message(
       "Lenght (m)",
       name: "doublePipeFunctionLenghtAxis",
     );
   }
 
-    String get pumpingDomainAxis {
+  String get pumpingDomainAxis {
     return Intl.message(
       "Volumetric Flow (m^3/h)",
       name: "pumpingDomainAxis",
     );
   }
 
-    String get pumpingFunctionAxis {
+  String get pumpingFunctionAxis {
     return Intl.message(
       "Meters of Liquid column",
       name: "pumpingFunctionAxis",
+    );
+  }
+
+  String get columnType {
+    return Intl.message(
+      "Operation Type",
+      name: "columnType",
+    );
+  }
+
+  String get purity {
+    return Intl.message(
+      "Purity (%)",
+      name: "purity",
+    );
+  }
+
+  String get desiredPurity {
+    return Intl.message(
+      "Desired Purity:",
+      name: "desiredPurity",
+    );
+  }
+
+  String get missingParameter {
+    return Intl.message(
+      "Missing parameter",
+      name: "missingParameter",
+    );
+  }
+
+  String get maxContaminantOut {
+    return Intl.message(
+      "Maximum Contaminant Concentration at Output",
+      name: "maxContaminantOut",
+    );
+  }
+
+  String get streamsSpecies {
+    return Intl.message(
+      "Select the Chemical Species in the Streams",
+      name: "streamsSpecies",
+    );
+  }
+
+  String get contaminantPerCent {
+    return Intl.message(
+      "Contaminant (%)",
+      name: "contaminantPerCent",
+    );
+  }
+
+  String get hypothesis {
+    return Intl.message(
+      "Hypothesis:",
+      name: "hypothesis",
+    );
+  }
+
+  String get dilutedSolutions {
+    return Intl.message(
+      "Diluted Solutions",
+      name: "dilutedSolutions",
+    );
+  }
+
+  String get liquidStream {
+    return Intl.message(
+      "Liquid Stream:",
+      name: "liquidStream",
+    );
+  }
+
+  String get gasStream {
+    return Intl.message(
+      "Gas Stream:",
+      name: "gasStream",
+    );
+  }
+
+  String get contaminant {
+    return Intl.message(
+      "Contaminant:",
+      name: "contaminant",
+    );
+  }
+
+  String get contaminantIn {
+    return Intl.message(
+      "Contaminant Concentration at Entry (%)",
+      name: "contaminantIn",
+    );
+  }
+
+  String get contaminantOut {
+    return Intl.message(
+      "Contaminant Concentration at Output (%)",
+      name: "contaminantOut",
+    );
+  }
+
+  String get inletGasFlow {
+    return Intl.message(
+      "Inlet Gas Flow (kmol/h)",
+      name: "inletGasFlow",
+    );
+  }
+
+  String get inletLiquidFlow {
+    return Intl.message(
+      "Inlet Liquid Flow (kmol/h)",
+      name: "inletLiquidFlow",
+    );
+  }
+
+  String get vaporFraction {
+    return Intl.message(
+      "Mole Fraction in Vapor Phase",
+      name: "vaporFraction",
+    );
+  }
+
+  String get liquidFraction {
+    return Intl.message(
+      "Mole Fraction in Liquid Phase",
+      name: "liquidFraction",
     );
   }
 

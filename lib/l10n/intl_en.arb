@@ -40,6 +40,21 @@
     "type": "text",
     "placeholders": {}
   },
+  "acetone": "Acetone",
+  "@acetone": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ethylAlcohol": "Ethyl Alcohol",
+  "@ethylAlcohol": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "air": "Air",
+  "@air": {
+    "type": "text",
+    "placeholders": {}
+  },
   "simulop": "SimulOP",
   "@simulop": {
     "type": "text",
@@ -165,7 +180,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "absorptionColumnDescription": "Not yet available.",
+  "absorptionColumnDescription": "Coluna de absorção em construção",
   "@absorptionColumnDescription": {
     "type": "text",
     "placeholders": {}
@@ -212,6 +227,16 @@
   },
   "liquidInput": "Liquid Input:",
   "@liquidInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "gasInput": "Gas Input:",
+  "@gasInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminantInput": "Contaminant Input:",
+  "@contaminantInput": {
     "type": "text",
     "placeholders": {}
   },
@@ -639,5 +664,105 @@
   "@pumpingFunctionAxis": {
     "type": "text",
     "placeholders": {}
-  }
+  },
+  "columnType": "Operation Type",
+  "@columnType": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "absorption": "Absorption",
+  "@absorption": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "absorptionInput": "absorption",
+  "@absorptionInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "stripping": "Stripping",
+  "@absorption": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "strippingInput": "stripping",
+  "@strippingInput": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "desiredPurity": "Desired Purity:",
+  "@desiredPurity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "purity": "Purity (%)",
+  "@purity": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "missingParameter": "Missing parameter",
+  "@missingParameter": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "maxContaminantOut": "Maximum Contaminant Concentration at Output",
+  "@maxContaminantOut": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "streamsSpecies": "Select the Chemical Species in the Streams",
+  "@streamsSpecies": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminantPerCent": "Contaminant (%)",
+  "@contaminantPerCent": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hypothesis": "Hypothesis:",
+  "@hypothesis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dilutedSolutions": "Diluted Solutions",
+  "@dilutedSolutions": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminant": "Contaminant:",
+  "@contaminant": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminantIn": "Contaminant Concentration at Entry (%)",
+  "@contaminantIn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contaminantOut": "Contaminant Concentration at Output (%)",
+  "@contaminantOut": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "inletGasFlow": "Inlet Gas Flow (kmol/h)",
+  "@inletGasFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "inletLiquidFlow": "Inlet Liquid Flow (kmol/h)",
+  "@inletLiquidFlow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "vaporFraction": "Mole Fraction in Vapor Phase",
+  "@vaporFraction": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "liquidFraction": "Mole Fraction in Liquid Phase",
+  "@liquidFraction": {
+    "type": "text",
+    "placeholders": {}
+  },
 }

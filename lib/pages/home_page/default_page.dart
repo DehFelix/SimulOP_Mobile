@@ -21,13 +21,13 @@ class DefaultPage extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.only(top: 15),
                     child: Text(
-                      "André Antonio e Rafael Terras",
+                      "André Antonio, Rafael Terras e Roland Frauendorf",
                       style: TextStyle(fontSize: 20.0),
                     )),
                 Padding(
                     padding: EdgeInsets.only(top: 30),
                     child: Text(
-                      "Projeto de TCC - PQI - 2018",
+                      "Projeto de TCC - PQI - 2018 e 2021",
                       style: TextStyle(fontSize: 25.0),
                     )),
                 Padding(
