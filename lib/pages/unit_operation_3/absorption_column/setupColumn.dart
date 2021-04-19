@@ -28,8 +28,8 @@ class AbsorptionVariables extends Model {
   void setColumn(String column) {
     columnType = column;
     henryCte = columnType == 'Absorption' ? 0.57 : 1.43;
-    gasFeed = columnType == 'Absorption' ? 150 : 100;
-    liquidFeed = columnType == 'Absorption' ? 100 : 150;
+    gasFeed = columnType == 'Absorption' ? 150 : 125;
+    liquidFeed = columnType == 'Absorption' ? 100 : 125;
   }
 
   void setInValues() {
